@@ -1,5 +1,6 @@
 package org.aksw.simba.topicmodeling.io.xml;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class XmlWritingDocumentConsumer extends AbstractDocumentXmlWriter implements DocumentConsumer {
+public class XmlWritingDocumentConsumer extends AbstractDocumentXmlWriter implements DocumentConsumer, Closeable {
 
     private static final Logger LOGGER = LoggerFactory
             .getLogger(XmlWritingDocumentConsumer.class);

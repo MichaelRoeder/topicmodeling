@@ -1,7 +1,7 @@
 package org.aksw.simba.topicmodeling.io.xml;
 
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,7 +23,7 @@ abstract class AbstractDocumentXmlWriter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractDocumentXmlWriter.class);
 
-    protected void writeDocument(FileWriter fout, Document document) throws IOException {
+    protected void writeDocument(OutputStreamWriter fout, Document document) throws IOException {
         fout.write("<" + CorpusXmlTagHelper.DOCUMENT_TAG_NAME + " id=\"" + document.getDocumentId() + "\">\n");
         DocumentText text = null;
         NamedEntitiesInText nes = null;
@@ -56,7 +56,7 @@ abstract class AbstractDocumentXmlWriter {
         fout.write("</" + CorpusXmlTagHelper.DOCUMENT_TAG_NAME + ">\n");
     }
 
-    protected void writeDocumentProperty(FileWriter fout, ParseableDocumentProperty property) throws IOException {
+    protected void writeDocumentProperty(OutputStreamWriter fout, ParseableDocumentProperty property) throws IOException {
         String tagName = CorpusXmlTagHelper.getTagNameOfParseableDocumentProperty(property.getClass());
         if (tagName != null) {
             fout.write("<" + tagName + ">");
@@ -72,7 +72,7 @@ abstract class AbstractDocumentXmlWriter {
         }
     }
 
-    protected void writeArray(FileWriter fout, Object[] array, String elementTagName) throws IOException {
+    protected void writeArray(OutputStreamWriter fout, Object[] array, String elementTagName) throws IOException {
         for (int i = 0; i < array.length; ++i) {
             fout.write("<" + elementTagName + ">" + array[i].toString() + "</" + elementTagName + ">\n");
         }
