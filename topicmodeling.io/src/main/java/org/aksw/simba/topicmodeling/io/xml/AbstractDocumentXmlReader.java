@@ -1,5 +1,6 @@
 package org.aksw.simba.topicmodeling.io.xml;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,6 @@ import org.aksw.simba.topicmodeling.utils.doc.ner.NamedEntityInText;
 import org.aksw.simba.topicmodeling.utils.doc.ner.SignedNamedEntityInText;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 public abstract class AbstractDocumentXmlReader implements XMLParserObserver {
 
@@ -30,10 +30,12 @@ public abstract class AbstractDocumentXmlReader implements XMLParserObserver {
 
     @Override
     public void handleOpeningTag(String tagString) {
-        // SHOULDN'T THIS METHOD SET data=""? Otherwise it is possible that a closing tag gets data that was set
+        // SHOULDN'T THIS METHOD SET data=""? Otherwise it is possible that a
+        // closing tag gets data that was set
         // before its starting tag has been seen (in most cases this is "\n").
         data = "";
-        // Ok, this is done and the JUnit test is green. This comment will remain here if another problem should
+        // Ok, this is done and the JUnit test is green. This comment will
+        // remain here if another problem should
         // arose.
 
         int pos = tagString.indexOf(' ');
@@ -73,7 +75,8 @@ public abstract class AbstractDocumentXmlReader implements XMLParserObserver {
         if (tagString.equals(CorpusXmlTagHelper.DOCUMENT_TAG_NAME)) {
             finishedDocument(currentDocument);
             currentDocument = null;
-        } else if (tagString.equals(CorpusXmlTagHelper.TEXT_WITH_NAMED_ENTITIES_TAG_NAME) && (currentDocument != null)) {
+        } else
+            if (tagString.equals(CorpusXmlTagHelper.TEXT_WITH_NAMED_ENTITIES_TAG_NAME) && (currentDocument != null)) {
             currentDocument.addProperty(new DocumentText(textBuffer.toString()));
             textBuffer.delete(0, textBuffer.length());
             NamedEntitiesInText nes = new NamedEntitiesInText(namedEntities);
@@ -92,8 +95,8 @@ public abstract class AbstractDocumentXmlReader implements XMLParserObserver {
                 data = "";
             }
         } else if (tagString.equals(CorpusXmlTagHelper.DOCUMENT_CATEGORIES_TAG_NAME)) {
-            currentDocument.addProperty(new DocumentMultipleCategories(
-                    categories.toArray(new String[categories.size()])));
+            currentDocument
+                    .addProperty(new DocumentMultipleCategories(categories.toArray(new String[categories.size()])));
             categories.clear();
         } else if (tagString.equals(CorpusXmlTagHelper.DOCUMENT_CATEGORIES_SINGLE_CATEGORY_TAG_NAME)) {
             categories.add(data);
@@ -104,15 +107,25 @@ public abstract class AbstractDocumentXmlReader implements XMLParserObserver {
                         .getParseableDocumentPropertyClassForTagName(tagString);
                 if (propertyClazz != null) {
                     try {
-                        ParseableDocumentProperty property = propertyClazz.newInstance();
-                        property.parseValue(data);
-                        data = "";
+                        ParseableDocumentProperty property;
+                        Constructor<? extends ParseableDocumentProperty> constructor;
+                        try {
+                            constructor = propertyClazz.getConstructor(String.class);
+                            property = constructor.newInstance(data);
+                        } catch (NoSuchMethodException e) {
+                            // Couldn't get a constructor accepting a single
+                            // String. Lets try the normal constructor.
+                            constructor = propertyClazz.getConstructor();
+                            property = constructor.newInstance();
+                            property.parseValue(data);
+                        }
                         currentDocument.addProperty(property);
                     } catch (Exception e) {
-                        LOGGER.error("Couldn't parse property "
-                                + propertyClazz + " from the String \"" + data + "\".", e);
+                        LOGGER.error("Couldn't parse property " + propertyClazz + " from the String \"" + data + "\".",
+                                e);
                     }
                 }
+                data = "";
             }
         }
     }
@@ -148,11 +161,9 @@ public abstract class AbstractDocumentXmlReader implements XMLParserObserver {
                     namedEntitySource = value;
                 }
                 /*
-                 * else if (key.equals("start")) {
-                 * startPos = Integer.parseInt(value);
-                 * } else if (key.equals("length")) {
-                 * length = Integer.parseInt(value);
-                 * }
+                 * else if (key.equals("start")) { startPos =
+                 * Integer.parseInt(value); } else if (key.equals("length")) {
+                 * length = Integer.parseInt(value); }
                  */
                 ++start;
                 end = tag.indexOf('=', start);
