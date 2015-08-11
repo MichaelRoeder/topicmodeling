@@ -31,42 +31,51 @@ import org.aksw.simba.topicmodeling.concurrent.workers.WorkerObserver;
  * The {@link Overseer} manages the assignment of {@link Task}s to
  * {@link Worker}s.
  * 
- * @author Michael Röder <roeder@informatik.uni-leipzig.de>
+ * @author Michael Röder (roeder@informatik.uni-leipzig.de)
  * 
  */
 public interface Overseer extends WorkerObserver {
 
-    /**
-     * Starts the given {@link Task}.
-     * 
-     * @param task
-     *            the {@link Task} that should be executed
-     */
-    public void startTask(Task task);
+	/**
+	 * Starts the given {@link Task}.
+	 * 
+	 * @param task
+	 *            the {@link Task} that should be executed
+	 */
+	public void startTask(Task task);
 
-    /**
-     * Returns the state of the given {@link Task}.
-     * 
-     * @param task
-     *            the {@link Task} of which the state should be returned
-     * @return the state of the given {@link Task}
-     */
-    public TaskState getTaskState(Task task);
+	/**
+	 * Returns the state of the given {@link Task}.
+	 * 
+	 * @param task
+	 *            the {@link Task} of which the state should be returned
+	 * @return the state of the given {@link Task}
+	 */
+	public TaskState getTaskState(Task task);
 
-    /**
-     * Returns the state of all {@link Task}s managed by this Overseer.
-     * 
-     * @return the state of all {@link Task}s managed by this Overseer
-     */
-    public TaskState[] getTaskStates();
+	/**
+	 * Returns the state of all {@link Task}s managed by this Overseer.
+	 * 
+	 * @return the state of all {@link Task}s managed by this Overseer
+	 */
+	public TaskState[] getTaskStates();
 
-    /**
-     * Adds the given {@link TaskObserver} to the list of observers of this
-     * {@link Overseer} and is notified if the state of a task changes.
-     * 
-     * @param observer
-     *            the {@link TaskObserver} that should be a able to observe the
-     *            {@link Task}s managed by this overseer
-     */
-    public void addObserver(TaskObserver observer);
+	/**
+	 * Adds the given {@link TaskObserver} to the list of observers of this
+	 * {@link Overseer} and is notified if the state of a task changes.
+	 * 
+	 * @param observer
+	 *            the {@link TaskObserver} that should be a able to observe the
+	 *            {@link Task}s managed by this overseer
+	 */
+	public void addObserver(TaskObserver observer);
+
+	/**
+	 * Returns the {@link Worker} instance that is assigned to the given task.
+	 * 
+	 * @param task
+	 *            the task that is performed by the worker
+	 * @return the worker or null if the given task is not known
+	 */
+	public Worker getWorker(Task task);
 }

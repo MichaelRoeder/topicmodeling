@@ -29,38 +29,42 @@ import org.aksw.simba.topicmodeling.concurrent.workers.Worker;
 
 public class AbstractOverseerDecorator implements OverseerDecorator {
 
-    private Overseer overseer;
+	private Overseer overseer;
 
-    public AbstractOverseerDecorator(Overseer overseer) {
-        this.overseer = overseer;
-    }
+	public AbstractOverseerDecorator(Overseer overseer) {
+		this.overseer = overseer;
+	}
 
-    public void startTask(Task task) {
-        overseer.startTask(task);
-    }
+	public void startTask(Task task) {
+		overseer.startTask(task);
+	}
 
-    public void addObserver(TaskObserver observer) {
-        overseer.addObserver(observer);
-    }
+	public void addObserver(TaskObserver observer) {
+		overseer.addObserver(observer);
+	}
 
-    public void reportTaskFinished(Worker worker) {
-        overseer.reportTaskFinished(worker);
-    }
+	public void reportTaskFinished(Worker worker) {
+		overseer.reportTaskFinished(worker);
+	}
 
-    public void reportTaskThrowedException(Worker worker, Throwable t) {
-        overseer.reportTaskThrowedException(worker, t);
-    }
+	public void reportTaskThrowedException(Worker worker, Throwable t) {
+		overseer.reportTaskThrowedException(worker, t);
+	}
 
-    public Overseer getDecorated() {
-        return overseer;
-    }
+	public Overseer getDecorated() {
+		return overseer;
+	}
 
-    public TaskState getTaskState(Task task) {
-        return overseer.getTaskState(task);
-    }
+	public TaskState getTaskState(Task task) {
+		return overseer.getTaskState(task);
+	}
 
-    public TaskState[] getTaskStates() {
-        return overseer.getTaskStates();
-    }
+	public TaskState[] getTaskStates() {
+		return overseer.getTaskStates();
+	}
+
+	public Worker getWorker(Task task) {
+		return overseer.getWorker(task);
+	}
 
 }

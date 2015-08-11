@@ -39,109 +39,123 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractOverseer implements Overseer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractOverseer.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractOverseer.class);
 
-    protected Set<Worker> currentWorkers = new HashSet<Worker>();
-    protected Map<Task, Worker> taskWorkerMapping = new HashMap<Task, Worker>();
-    protected Semaphore workersSetMutex = new Semaphore(1);
-    protected List<TaskObserver> observers = new ArrayList<TaskObserver>();
+	protected Set<Worker> currentWorkers = new HashSet<Worker>();
+	protected Map<Task, Worker> taskWorkerMapping = new HashMap<Task, Worker>();
+	protected Semaphore workersSetMutex = new Semaphore(1);
+	protected List<TaskObserver> observers = new ArrayList<TaskObserver>();
 
-    public void startTask(Task task) {
-        Worker worker = createWorker(task);
-        try {
-            workersSetMutex.acquire();
-        } catch (InterruptedException e) {
-            LOGGER.error("Interrupted while wating for the worker set mutex. Aborting.", e);
-            return;
-        }
-        currentWorkers.add(worker);
-        taskWorkerMapping.put(task, worker);
-        workersSetMutex.release();
-        startWorker(worker);
-    }
+	public void startTask(Task task) {
+		Worker worker = createWorker(task);
+		try {
+			workersSetMutex.acquire();
+		} catch (InterruptedException e) {
+			LOGGER.error("Interrupted while wating for the worker set mutex. Aborting.", e);
+			return;
+		}
+		currentWorkers.add(worker);
+		taskWorkerMapping.put(task, worker);
+		workersSetMutex.release();
+		startWorker(worker);
+	}
 
-    protected abstract Worker createWorker(Task task);
+	protected abstract Worker createWorker(Task task);
 
-    protected abstract void startWorker(Worker worker);
+	protected abstract void startWorker(Worker worker);
 
-    public void reportTaskFinished(Worker worker) {
-        try {
-            workersSetMutex.acquire();
-        } catch (InterruptedException e) {
-            LOGGER.error("Interrupted while wating for the worker set mutex", e);
-        }
-        currentWorkers.remove(worker);
-        taskWorkerMapping.remove(worker.getTask());
-        workersSetMutex.release();
+	public void reportTaskFinished(Worker worker) {
+		try {
+			workersSetMutex.acquire();
+		} catch (InterruptedException e) {
+			LOGGER.error("Interrupted while wating for the worker set mutex", e);
+		}
+		currentWorkers.remove(worker);
+		taskWorkerMapping.remove(worker.getTask());
+		workersSetMutex.release();
 
-        for (TaskObserver observer : observers) {
-            observer.reportTaskFinished(worker.getTask());
-        }
-    }
+		for (TaskObserver observer : observers) {
+			observer.reportTaskFinished(worker.getTask());
+		}
+	}
 
-    public void reportTaskThrowedException(Worker worker, Throwable t) {
-        try {
-            workersSetMutex.acquire();
-        } catch (InterruptedException ie) {
-            LOGGER.error("Interrupted while wating for the worker set mutex", ie);
-        }
-        currentWorkers.remove(worker);
-        taskWorkerMapping.remove(worker.getTask());
-        workersSetMutex.release();
+	public void reportTaskThrowedException(Worker worker, Throwable t) {
+		try {
+			workersSetMutex.acquire();
+		} catch (InterruptedException ie) {
+			LOGGER.error("Interrupted while wating for the worker set mutex", ie);
+		}
+		currentWorkers.remove(worker);
+		taskWorkerMapping.remove(worker.getTask());
+		workersSetMutex.release();
 
-        for (TaskObserver observer : observers) {
-            observer.reportTaskThrowedException(worker.getTask(), t);
-        }
-    }
+		for (TaskObserver observer : observers) {
+			observer.reportTaskThrowedException(worker.getTask(), t);
+		}
+	}
 
-    public void addObserver(TaskObserver observer) {
-        observers.add(observer);
-    }
+	public void addObserver(TaskObserver observer) {
+		observers.add(observer);
+	}
 
-    public TaskState getTaskState(Task task) {
-        try {
-            workersSetMutex.acquire();
-        } catch (InterruptedException e) {
-            LOGGER.error("Interrupted while wating for the worker set mutex. Returning null.", e);
-            return null;
-        }
-        try {
-            if (taskWorkerMapping.containsKey(task)) {
-                LOGGER.warn("The given task {} is not known. Returning null.", TaskHelper.taskToString(task));
-                return null;
-            }
-            Worker worker = taskWorkerMapping.get(task);
-            return new TaskState(task, worker.getState(), worker.getStackTrace());
-        } catch (Exception e) {
-            LOGGER.error("Got an exception while requesting state of task " + TaskHelper.taskToString(task)
-                    + ". Returning null.", e);
-            return null;
-        } finally {
-            workersSetMutex.release();
-        }
-    }
+	public TaskState getTaskState(Task task) {
+		try {
+			workersSetMutex.acquire();
+		} catch (InterruptedException e) {
+			LOGGER.error("Interrupted while wating for the worker set mutex. Returning null.", e);
+			return null;
+		}
+		try {
+			if (taskWorkerMapping.containsKey(task)) {
+				LOGGER.warn("The given task {} is not known. Returning null.", TaskHelper.taskToString(task));
+				return null;
+			}
+			Worker worker = taskWorkerMapping.get(task);
+			return new TaskState(task, worker.getState(), worker.getStackTrace());
+		} catch (Exception e) {
+			LOGGER.error("Got an exception while requesting state of task " + TaskHelper.taskToString(task)
+					+ ". Returning null.", e);
+			return null;
+		} finally {
+			workersSetMutex.release();
+		}
+	}
 
-    public TaskState[] getTaskStates() {
-        try {
-            workersSetMutex.acquire();
-        } catch (InterruptedException e) {
-            LOGGER.error("Interrupted while wating for the worker set mutex. Returning null.", e);
-            return null;
-        }
-        try {
-            TaskState states[] = new TaskState[currentWorkers.size()];
-            int pos = 0;
-            for (Worker worker : currentWorkers) {
-                states[pos] = new TaskState(worker.getTask(), worker.getState(), worker.getStackTrace());
-                ++pos;
-            }
-            return states;
-        } catch (Exception e) {
-            LOGGER.error("Got an exception while requesting state of tasks. Returning null.", e);
-            return null;
-        } finally {
-            workersSetMutex.release();
-        }
-    }
+	public TaskState[] getTaskStates() {
+		try {
+			workersSetMutex.acquire();
+		} catch (InterruptedException e) {
+			LOGGER.error("Interrupted while wating for the worker set mutex. Returning null.", e);
+			return null;
+		}
+		try {
+			TaskState states[] = new TaskState[currentWorkers.size()];
+			int pos = 0;
+			for (Worker worker : currentWorkers) {
+				states[pos] = new TaskState(worker.getTask(), worker.getState(), worker.getStackTrace());
+				++pos;
+			}
+			return states;
+		} catch (Exception e) {
+			LOGGER.error("Got an exception while requesting state of tasks. Returning null.", e);
+			return null;
+		} finally {
+			workersSetMutex.release();
+		}
+	}
 
+	@Override
+	public Worker getWorker(Task task) {
+		Worker worker = null;
+		try {
+			workersSetMutex.acquire();
+		} catch (InterruptedException e) {
+			LOGGER.error("Interrupted while wating for the worker set mutex", e);
+		}
+		if (taskWorkerMapping.containsKey(task)) {
+			worker = taskWorkerMapping.get(task);
+		}
+		workersSetMutex.release();
+		return worker;
+	}
 }

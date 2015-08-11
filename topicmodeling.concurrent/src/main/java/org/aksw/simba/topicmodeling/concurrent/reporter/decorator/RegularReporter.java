@@ -27,26 +27,27 @@ import org.slf4j.LoggerFactory;
 
 public class RegularReporter extends AbstractReporterDecorator implements Runnable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegularReporter.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RegularReporter.class);
 
-    private long timeInterval;
+	private long timeInterval;
 
-    public RegularReporter(Reporter reporter, long timeInterval) {
-        super(reporter);
-        this.timeInterval = timeInterval;
+	public RegularReporter(Reporter reporter, long timeInterval) {
+		super(reporter);
+		this.timeInterval = timeInterval;
 
-        Thread t = new Thread(this);
-        t.start();
-    }
+		Thread t = new Thread(this);
+		t.setDaemon(true);
+		t.start();
+	}
 
-    public void run() {
-        while (true) {
-            try {
-                Thread.sleep(timeInterval);
-            } catch (InterruptedException e) {
-                LOGGER.warn("Interrupted while sleeping.", e);
-            }
-            reportCurrentState();
-        }
-    }
+	public void run() {
+		while (true) {
+			try {
+				Thread.sleep(timeInterval);
+			} catch (InterruptedException e) {
+				LOGGER.warn("Interrupted while sleeping.", e);
+			}
+			reportCurrentState();
+		}
+	}
 }

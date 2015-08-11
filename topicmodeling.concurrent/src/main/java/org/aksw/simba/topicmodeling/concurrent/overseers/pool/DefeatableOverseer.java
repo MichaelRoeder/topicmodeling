@@ -25,5 +25,8 @@ import org.aksw.simba.topicmodeling.concurrent.overseers.Overseer;
 
 public interface DefeatableOverseer extends Overseer {
 
+	/**
+	 * Shuts down the overseers resources.
+	 */
     public void shutdown();
 }

@@ -26,9 +26,9 @@ import org.aksw.simba.topicmodeling.concurrent.tasks.TaskObserver;
 
 public interface Reporter extends TaskObserver, TaskStateReporter {
 
-    public void reportCurrentState();
-    
-    public void setOverseer(Overseer overseer);
-    
-    public Overseer getOverseer();
+	public void reportCurrentState();
+
+	public void setOverseer(Overseer overseer);
+
+	public Overseer getOverseer();
 }

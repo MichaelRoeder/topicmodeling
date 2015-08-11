@@ -32,41 +32,41 @@ import org.slf4j.LoggerFactory;
 
 public class LogReporter extends AbstractReporter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LogReporter.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(LogReporter.class);
 
-    public LogReporter(Overseer overseer) {
-        super(overseer);
-    }
+	public LogReporter(Overseer overseer) {
+		super(overseer);
+	}
 
-    public void reportTaskState(TaskState state) {
-        if (LOGGER.isInfoEnabled() || (state.throwable != null)) {
-            StringBuilder builder = new StringBuilder();
-            builder.append("Task=");
-            builder.append(TaskHelper.taskToString(state.task));
-            builder.append("\tstate=");
-            builder.append(state.state);
-            
-            String taskProgress = state.task.getProgress();
-            if(taskProgress != null) {
-                builder.append("\tprogress=");
-                builder.append(taskProgress);
-            }
-            
-            if ((state.stackTrace != null) && (state.stackTrace.length > 0)) {
-                builder.append("\tposition=");
-                builder.append(state.stackTrace[0].toString());
-            }
-            if (state.throwable != null) {
-                StringWriter stringWriter = new StringWriter();
-                PrintWriter writer = new PrintWriter(stringWriter);
-                state.throwable.printStackTrace(writer);
-                writer.close();
-                builder.append("\twith exception: ");
-                builder.append(stringWriter.getBuffer().toString());
-                LOGGER.error(builder.toString());
-            } else {
-                LOGGER.info(builder.toString());
-            }
-        }
-    }
+	public void reportTaskState(TaskState state) {
+		if (LOGGER.isInfoEnabled() || (state.throwable != null)) {
+			StringBuilder builder = new StringBuilder();
+			builder.append("Task=");
+			builder.append(TaskHelper.taskToString(state.task));
+			builder.append("\tstate=");
+			builder.append(state.state);
+
+			String taskProgress = state.task.getProgress();
+			if (taskProgress != null) {
+				builder.append("\tprogress=");
+				builder.append(taskProgress);
+			}
+
+			if ((state.stackTrace != null) && (state.stackTrace.length > 0)) {
+				builder.append("\tposition=");
+				builder.append(state.stackTrace[0].toString());
+			}
+			if (state.throwable != null) {
+				StringWriter stringWriter = new StringWriter();
+				PrintWriter writer = new PrintWriter(stringWriter);
+				state.throwable.printStackTrace(writer);
+				writer.close();
+				builder.append("\twith exception: ");
+				builder.append(stringWriter.getBuffer().toString());
+				LOGGER.error(builder.toString());
+			} else {
+				LOGGER.info(builder.toString());
+			}
+		}
+	}
 }

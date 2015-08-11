@@ -32,28 +32,38 @@ import org.aksw.simba.topicmodeling.concurrent.workers.WorkerImpl;
 
 public class ExecutorBasedOverseer extends AbstractOverseer implements DefeatableOverseer {
 
-    private ExecutorService executor;
+	private ExecutorService executor;
 
-    public ExecutorBasedOverseer(int poolSize) {
-        executor = Executors.newFixedThreadPool(poolSize);
-    }
+	public ExecutorBasedOverseer(int poolSize) {
+		executor = Executors.newFixedThreadPool(poolSize);
+	}
 
-    public ExecutorBasedOverseer(int poolSize, ThreadFactory factory) {
-        executor = Executors.newFixedThreadPool(poolSize, factory);
-    }
+	public ExecutorBasedOverseer(int poolSize, ThreadFactory factory) {
+		executor = Executors.newFixedThreadPool(poolSize, factory);
+	}
 
-    @Override
-    protected Worker createWorker(Task task) {
-        return new WorkerImpl(task, this);
-    }
+	/**
+	 * Constructor. Note that calling the {@link #shutdown()} method closes the
+	 * given executor service.
+	 * 
+	 * @param executor
+	 */
+	public ExecutorBasedOverseer(ExecutorService executor) {
+		executor = this.executor;
+	}
 
-    @Override
-    protected void startWorker(Worker worker) {
-        executor.execute(worker);
-    }
+	@Override
+	protected Worker createWorker(Task task) {
+		return new WorkerImpl(task, this);
+	}
 
-    @Override
-    public void shutdown() {
-        executor.shutdown();
-    }
+	@Override
+	protected void startWorker(Worker worker) {
+		executor.execute(worker);
+	}
+
+	@Override
+	public void shutdown() {
+		executor.shutdown();
+	}
 }

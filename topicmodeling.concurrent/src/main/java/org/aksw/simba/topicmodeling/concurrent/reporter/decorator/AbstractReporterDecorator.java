@@ -28,39 +28,39 @@ import org.aksw.simba.topicmodeling.concurrent.tasks.TaskState;
 
 public class AbstractReporterDecorator implements ReporterDecorator {
 
-    private Reporter reporter;
+	private Reporter reporter;
 
-    public AbstractReporterDecorator(Reporter reporter) {
-        super();
-        this.reporter = reporter;
-    }
+	public AbstractReporterDecorator(Reporter reporter) {
+		super();
+		this.reporter = reporter;
+	}
 
-    public void reportCurrentState() {
-        reporter.reportCurrentState();
-    }
+	public void reportCurrentState() {
+		reporter.reportCurrentState();
+	}
 
-    public void setOverseer(Overseer overseer) {
-        reporter.setOverseer(overseer);
-    }
+	public void setOverseer(Overseer overseer) {
+		reporter.setOverseer(overseer);
+	}
 
-    public Overseer getOverseer() {
-        return reporter.getOverseer();
-    }
+	public Overseer getOverseer() {
+		return reporter.getOverseer();
+	}
 
-    public void reportTaskFinished(Task task) {
-        reporter.reportTaskFinished(task);
-    }
+	public void reportTaskFinished(Task task) {
+		reporter.reportTaskFinished(task);
+	}
 
-    public void reportTaskThrowedException(Task task, Throwable t) {
-        reporter.reportTaskThrowedException(task, t);
-    }
+	public void reportTaskThrowedException(Task task, Throwable t) {
+		reporter.reportTaskThrowedException(task, t);
+	}
 
-    public void reportTaskState(TaskState state) {
-        reporter.reportTaskState(state);
-    }
+	public void reportTaskState(TaskState state) {
+		reporter.reportTaskState(state);
+	}
 
-    public Reporter getDecorated() {
-        return reporter;
-    }
+	public Reporter getDecorated() {
+		return reporter;
+	}
 
 }

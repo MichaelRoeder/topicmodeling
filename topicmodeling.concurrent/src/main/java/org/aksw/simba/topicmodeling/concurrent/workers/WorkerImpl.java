@@ -30,49 +30,60 @@ import org.slf4j.LoggerFactory;
 
 public class WorkerImpl implements Worker {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WorkerImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(WorkerImpl.class);
 
-    protected Task task;
-    protected Overseer overseer;
-    protected Thread thread = null;
+	protected Task task;
+	protected Overseer overseer;
+	protected Thread thread = null;
+	protected boolean interrupted = false;
 
-    public WorkerImpl(Task task, Overseer overseer) {
-        this.task = task;
-        this.overseer = overseer;
-    }
+	public WorkerImpl(Task task, Overseer overseer) {
+		this.task = task;
+		this.overseer = overseer;
+	}
 
-    public void run() {
-        try {
-            thread = Thread.currentThread();
-            task.run();
-            overseer.reportTaskFinished(this);
-        } catch (Exception e) {
-            LOGGER.error("Got an exception from task {}.", task.getId());
-            overseer.reportTaskThrowedException(this, e);
-        } catch (Error e) {
-            LOGGER.error("Got an error from task {}.", task.getId());
-            overseer.reportTaskThrowedException(this, e);
-        }
-    }
+	public void run() {
+		try {
+			thread = Thread.currentThread();
+			if (!interrupted) {
+				task.run();
+			}
+			overseer.reportTaskFinished(this);
+		} catch (Exception e) {
+			LOGGER.error("Got an exception from task {}.", task.getId());
+			overseer.reportTaskThrowedException(this, e);
+		} catch (Error e) {
+			LOGGER.error("Got an error from task {}.", task.getId());
+			overseer.reportTaskThrowedException(this, e);
+		}
+	}
 
-    public Task getTask() {
-        return task;
-    }
+	public Task getTask() {
+		return task;
+	}
 
-    public State getState() {
-        if (thread == null) {
-            return State.NEW;
-        } else {
-            return thread.getState();
-        }
-    }
+	public State getState() {
+		if (thread == null) {
+			return State.NEW;
+		} else {
+			return thread.getState();
+		}
+	}
 
-    public StackTraceElement[] getStackTrace() {
-        if (thread == null) {
-            return null;
-        } else {
-            return thread.getStackTrace();
-        }
-    }
+	public StackTraceElement[] getStackTrace() {
+		if (thread == null) {
+			return null;
+		} else {
+			return thread.getStackTrace();
+		}
+	}
+
+	@Override
+	public void interrupt() {
+		interrupted = true;
+		if (thread != null) {
+			thread.interrupt();
+		}
+	}
 
 }

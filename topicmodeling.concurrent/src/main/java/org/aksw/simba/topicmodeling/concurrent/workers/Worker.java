@@ -58,4 +58,6 @@ public interface Worker extends Runnable {
      *         running.
      */
     public StackTraceElement[] getStackTrace();
+    
+    public void interrupt();
 }

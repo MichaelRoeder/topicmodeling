@@ -19,12 +19,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.aksw.simba.topicmodeling.concurrent.reporter;
+package org.aksw.simba.topicmodeling.concurrent.tasks;
 
-import org.aksw.simba.topicmodeling.concurrent.tasks.TaskState;
+import org.aksw.simba.topicmodeling.concurrent.tasks.waiting.AbstractWaitingTask;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+public class SleepingTask extends AbstractWaitingTask {
 
-public interface TaskStateReporter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SleepingTask.class);
 
-    public void reportTaskState(TaskState state);
+    private String id;
+    private long duration;
+    private long startTime;
+
+    public SleepingTask(String id, long duration) {
+        this.id = id;
+        this.duration = duration;
+    }
+
+    @Override
+    public void run() {
+        startTime = System.currentTimeMillis();
+        startWaiting();
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            LOGGER.warn("Interrupted while sleeping.");
+        }
+        stopWaiting();
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public String getProgress() {
+        return Double.toString(((System.currentTimeMillis() - startTime) / (double) duration) * 100.0) + "%";
+    }
 }

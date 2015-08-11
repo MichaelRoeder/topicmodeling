@@ -29,33 +29,33 @@ import org.aksw.simba.topicmodeling.concurrent.tasks.TaskState;
 
 public abstract class AbstractReporter implements Reporter {
 
-    private Overseer overseer;
+	private Overseer overseer;
 
-    public AbstractReporter(Overseer overseer) {
-        setOverseer(overseer);
-    }
+	public AbstractReporter(Overseer overseer) {
+		setOverseer(overseer);
+	}
 
-    public void reportTaskFinished(Task task) {
-        reportTaskState(new TaskState(task, State.TERMINATED));
-    }
+	public void reportTaskFinished(Task task) {
+		reportTaskState(new TaskState(task, State.TERMINATED));
+	}
 
-    public void reportTaskThrowedException(Task task, Throwable t) {
-        reportTaskState(new TaskState(task, State.TERMINATED, t));
-    }
+	public void reportTaskThrowedException(Task task, Throwable t) {
+		reportTaskState(new TaskState(task, State.TERMINATED, t));
+	}
 
-    public void reportCurrentState() {
-        TaskState states[] = overseer.getTaskStates();
-        for (int i = 0; i < states.length; ++i) {
-            reportTaskState(states[i]);
-        }
-    }
+	public void reportCurrentState() {
+		TaskState states[] = overseer.getTaskStates();
+		for (int i = 0; i < states.length; ++i) {
+			reportTaskState(states[i]);
+		}
+	}
 
-    public void setOverseer(Overseer overseer) {
-        this.overseer = overseer;
-        overseer.addObserver(this);
-    }
+	public void setOverseer(Overseer overseer) {
+		this.overseer = overseer;
+		overseer.addObserver(this);
+	}
 
-    public Overseer getOverseer() {
-        return overseer;
-    }
+	public Overseer getOverseer() {
+		return overseer;
+	}
 }

@@ -29,11 +29,11 @@ public class MaxDurationCheckingThread implements Runnable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MaxDurationCheckingThread.class);
 
-    private int duration;
+    private long duration;
     private boolean finished;
     private Thread watchedThread;
 
-    public MaxDurationCheckingThread(Thread watchedThread, int duration) {
+    public MaxDurationCheckingThread(Thread watchedThread, long duration) {
         this.duration = duration;
         this.watchedThread = watchedThread;
     }

@@ -25,5 +25,5 @@ import org.aksw.simba.topicmodeling.concurrent.reporter.Reporter;
 
 public interface ReporterDecorator extends Reporter {
 
-    public Reporter getDecorated();
+	public Reporter getDecorated();
 }
