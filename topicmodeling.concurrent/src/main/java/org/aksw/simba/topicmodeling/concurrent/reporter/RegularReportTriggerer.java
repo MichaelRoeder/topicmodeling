@@ -23,6 +23,8 @@ package org.aksw.simba.topicmodeling.concurrent.reporter;
 
 import java.util.concurrent.Semaphore;
 
+import org.aksw.simba.topicmodeling.concurrent.trigger.RegularTriggerer;
+import org.aksw.simba.topicmodeling.concurrent.trigger.Triggerable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * @author Michael R&ouml;der (roeder@informatik.uni-leipzig.de)
  *
  */
-public class RegularReportTriggerer implements Runnable {
+public class RegularReportTriggerer implements Triggerable {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RegularReportTriggerer.class);
 
@@ -45,21 +47,15 @@ public class RegularReportTriggerer implements Runnable {
 	private long timeInterval;
 
 	/**
-	 * Simple flag used to stop the thread after the {@link #stop()} method is
-	 * called.
+	 * Mutex to manage the access to the {@link #triggerer} instance.
 	 */
-	private boolean isAllowedToRun = false;
+	private Semaphore triggererMutex = new Semaphore(1);
 
 	/**
-	 * Mutex to manage the access to the {@link #isAllowedToRun} flag.
+	 * {@link RegularTriggerer} that is used to trigger the reporting in
+	 * parallel to the running program.
 	 */
-	private Semaphore flagMutex = new Semaphore(1);
-
-	/**
-	 * Thread that is used to trigger the reporting in parallel to the running
-	 * program.
-	 */
-	private Thread thread = null;
+	private RegularTriggerer triggerer = null;
 
 	/**
 	 * Array of reporters that are triggered.
@@ -83,75 +79,45 @@ public class RegularReportTriggerer implements Runnable {
 	 * Starts the internal deamon thread if it is not already existing.
 	 */
 	public void start() {
-		if (thread == null) {
-			try {
-				flagMutex.acquire();
-			} catch (InterruptedException e) {
-				LOGGER.error("Interrupted while waiting for mutex. Returning.", e);
-				return;
-			}
-			isAllowedToRun = true;
-			thread = new Thread(this);
-			thread.setDaemon(true);
-			thread.setName("ReportTriggerThread");
-			thread.start();
-			flagMutex.release();
-		} else {
-			LOGGER.warn("RegularReporter is already running.");
-		}
-	}
-
-	/**
-	 * Run method that implements the regular triggering.
-	 */
-	public void run() {
 		try {
-			flagMutex.acquire();
+			triggererMutex.acquire();
 		} catch (InterruptedException e) {
 			LOGGER.error("Interrupted while waiting for mutex. Returning.", e);
 			return;
 		}
-		while (isAllowedToRun) {
-			flagMutex.release();
-
-			try {
-				Thread.sleep(timeInterval);
-			} catch (InterruptedException e) {
-				LOGGER.warn("Interrupted while sleeping.", e);
-			}
-
-			reportCurrentState();
-
-			try {
-				flagMutex.acquire();
-			} catch (InterruptedException e) {
-				LOGGER.error("Interrupted while waiting for mutex. Returning.", e);
-				return;
-			}
+		if (triggerer == null) {
+			triggerer = new RegularTriggerer(this, timeInterval);
+			Thread thread = new Thread(triggerer);
+			thread.setDaemon(true);
+			thread.setName("ReportTriggerThread");
+			thread.start();
+		} else {
+			LOGGER.warn("RegularReporter is already running.");
 		}
-		flagMutex.release();
-	}
-
-	private void reportCurrentState() {
-		for (int i = 0; i < reporters.length; ++i) {
-			reporters[i].reportCurrentState();
-		}
+		triggererMutex.release();
 	}
 
 	/**
 	 * Stops the triggering thread if it is existing.
 	 */
 	public void stop() {
-		if (thread != null) {
-			try {
-				flagMutex.acquire();
-			} catch (InterruptedException e) {
-				LOGGER.error("Interrupted while waiting for mutex. Returning.", e);
-				return;
-			}
-			isAllowedToRun = false;
-			thread = null;
-			flagMutex.release();
+		try {
+			triggererMutex.acquire();
+		} catch (InterruptedException e) {
+			LOGGER.error("Interrupted while waiting for mutex. Returning.", e);
+			return;
+		}
+		if (triggerer != null) {
+			triggerer.stop();
+			triggerer = null;
+		}
+		triggererMutex.release();
+	}
+
+	@Override
+	public void trigger() {
+		for (int i = 0; i < reporters.length; ++i) {
+			reporters[i].reportCurrentState();
 		}
 	}
 }

@@ -13,6 +13,8 @@ public class WaitingThreadInterrupter extends AbstractReporter implements Runnab
 	private static final Logger LOGGER = LoggerFactory.getLogger(WaitingThreadInterrupter.class);
 
 	public static final long DEFAULT_TIME_INTERVAL = 1000;
+	
+	private static final String THREAD_NAME = "Interrupter"; 
 
 	private long timeInterval;
 	private long maximumWaitingTime;
@@ -24,6 +26,7 @@ public class WaitingThreadInterrupter extends AbstractReporter implements Runnab
 
 		Thread t = new Thread(this);
 		t.setDaemon(true);
+		t.setName(THREAD_NAME);
 		t.start();
 	}
 
