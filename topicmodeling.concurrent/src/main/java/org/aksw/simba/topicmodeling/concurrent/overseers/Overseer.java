@@ -71,6 +71,15 @@ public interface Overseer extends WorkerObserver {
 	public void addObserver(TaskObserver observer);
 
 	/**
+	 * Removes the given {@link TaskObserver} from the list of observers if it
+	 * exists.
+	 * 
+	 * @param observer
+	 *            the {@link TaskObserver} that should be removed
+	 */
+	public void removeObserver(TaskObserver observer);
+
+	/**
 	 * Returns the {@link Worker} instance that is assigned to the given task.
 	 * 
 	 * @param task

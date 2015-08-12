@@ -98,6 +98,11 @@ public abstract class AbstractOverseer implements Overseer {
 		observers.add(observer);
 	}
 
+	@Override
+	public void removeObserver(TaskObserver observer) {
+		observers.remove(observer);
+	}
+
 	public TaskState getTaskState(Task task) {
 		try {
 			workersSetMutex.acquire();

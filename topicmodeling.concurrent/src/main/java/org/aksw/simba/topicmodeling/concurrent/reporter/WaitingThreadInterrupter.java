@@ -1,7 +1,6 @@
 package org.aksw.simba.topicmodeling.concurrent.reporter;
 
 import org.aksw.simba.topicmodeling.concurrent.overseers.Overseer;
-import org.aksw.simba.topicmodeling.concurrent.reporter.decorator.RegularReporter;
 import org.aksw.simba.topicmodeling.concurrent.tasks.Task;
 import org.aksw.simba.topicmodeling.concurrent.tasks.TaskState;
 import org.aksw.simba.topicmodeling.concurrent.tasks.waiting.WaitingTask;

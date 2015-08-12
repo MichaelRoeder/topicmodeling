@@ -16,12 +16,12 @@ public abstract class AbstractWaitingTask implements WaitingTask {
 	/**
 	 * The time stamp at which the current task started waiting.
 	 */
-	protected long startWaiting = NOT_WAITING_SENTINEL;
+	protected long waitingStarted = NOT_WAITING_SENTINEL;
 
 	@Override
 	public long getTimeWaiting() {
-		if (startWaiting != NOT_WAITING_SENTINEL) {
-			return System.currentTimeMillis() - startWaiting;
+		if (waitingStarted != NOT_WAITING_SENTINEL) {
+			return System.currentTimeMillis() - waitingStarted;
 		} else {
 			return 0;
 		}
@@ -32,7 +32,7 @@ public abstract class AbstractWaitingTask implements WaitingTask {
 	 * it might wait a long time.
 	 */
 	protected void startWaiting() {
-		startWaiting = System.currentTimeMillis();
+		waitingStarted = System.currentTimeMillis();
 	}
 
 	/**
@@ -40,6 +40,6 @@ public abstract class AbstractWaitingTask implements WaitingTask {
 	 * which it might wait a long time.
 	 */
 	protected void stopWaiting() {
-		startWaiting = NOT_WAITING_SENTINEL;
+		waitingStarted = NOT_WAITING_SENTINEL;
 	}
 }

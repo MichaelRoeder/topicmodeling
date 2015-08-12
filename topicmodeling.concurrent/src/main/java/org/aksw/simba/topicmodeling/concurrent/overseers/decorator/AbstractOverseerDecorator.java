@@ -43,6 +43,11 @@ public class AbstractOverseerDecorator implements OverseerDecorator {
 		overseer.addObserver(observer);
 	}
 
+	@Override
+	public void removeObserver(TaskObserver observer) {
+		overseer.removeObserver(observer);
+	}
+
 	public void reportTaskFinished(Worker worker) {
 		overseer.reportTaskFinished(worker);
 	}
