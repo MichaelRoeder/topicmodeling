@@ -49,11 +49,8 @@ public class WorkerImpl implements Worker {
 				task.run();
 			}
 			overseer.reportTaskFinished(this);
-		} catch (Exception e) {
-			LOGGER.error("Got an exception from task {}.", task.getId());
-			overseer.reportTaskThrowedException(this, e);
-		} catch (Error e) {
-			LOGGER.error("Got an error from task {}.", task.getId());
+		} catch (Throwable e) {
+			LOGGER.error("Got a throwable from task {}.", task.getId());
 			overseer.reportTaskThrowedException(this, e);
 		}
 	}
