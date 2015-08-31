@@ -11,7 +11,7 @@ import java.util.HashMap;
  * {@link AssociativeSort} class. It should only be run if these classes should
  * be changed.
  * 
- * @author Michael R&ouml;der <roeder@informatik.uni-leipzig.de>
+ * @author Michael R&ouml;der (roeder@informatik.uni-leipzig.de)
  * 
  */
 class AssociativeSortClassGenerator {
@@ -282,8 +282,8 @@ class AssociativeSortClassGenerator {
                     }
                 }
             } else {
-                System.out.println("There is no example for the type " + primitiveSortTypes[i]
-                        + "! Can't generate Testcase.");
+                System.out.println(
+                        "There is no example for the type " + primitiveSortTypes[i] + "! Can't generate Testcase.");
             }
         }
     }
@@ -334,20 +334,13 @@ class AssociativeSortClassGenerator {
      * Head of the {@link AssociativeSort} class.
      * 
      */
-    private static final String CLASS_HEAD = "package org.aksw.simba.topicmodeling.commons.sort;\n"
-            + "\n"
-            + "/**\n"
-            + " * This class is a container for some static functions to sort associative.\n"
-            + " * \n"
+    private static final String CLASS_HEAD = "package org.aksw.simba.topicmodeling.commons.sort;\n" + "\n" + "/**\n"
+            + " * This class is a container for some static functions to sort associative.\n" + " * \n"
             + " * <b>Note</b> that this class has been generated automatically using the {@link AssociativeSortClassGenerator} class.\n"
             + " * Do never change the source code in this class because changes could be overwritten by the genrating class. Change the\n"
-            + " * source code of the {@link AssociativeSortClassGenerator} class instead.\n"
-            + " * \n"
-            + " * @author Martin Nettling\n"
-            + " * @author Michael R&ouml;der <roeder@informatik.uni-leipzig.de>\n"
-            + " */\n"
-            + "public class AssociativeSort {\n\n"
-            + "    /**\n"
+            + " * source code of the {@link AssociativeSortClassGenerator} class instead.\n" + " * \n"
+            + " * @author Martin Nettling\n" + " * @author Michael R&ouml;der <roeder@informatik.uni-leipzig.de>\n"
+            + " */\n" + "public class AssociativeSort {\n\n" + "    /**\n"
             + "     * Constant defining at which array size quicksort or insertion sort is used.\n\n"
             + "     * This parameter was chosen by making performance tests for arrays of the sizes 50 - 500000 and different\n"
             + "     * parameters in the range 2 - 200.\n" + "     */\n"
@@ -371,10 +364,11 @@ class AssociativeSortClassGenerator {
      * String defining the quick sort method
      */
     private static final String QUICK_SORT_METHOD1 = "    /**\n"
-            + "     * Quicksort for {@link AbstractKVStorable}s. <br />\n"
-            + "     * Algorithm of O( n*log(n) ) asymptotic upper bound.\n" + "     * \n" + "     * @param A\n"
-            + "     *            The array to be sorted.\n" + "     * @param Assoc\n"
-            + "     *            The Array to sort associative to the given Array A\n"
+            + "     * Quicksort for two arrays. The first array will be sorted. All swaps that\n"
+            + "     * are done to this array during the sorting will be done to the second,\n"
+            + "     * associative array, too. <br />\n" + "     * Algorithm of O( n*log(n) ) asymptotic upper bound.\n"
+            + "     * \n" + "     * @param A\n" + "     *            The array to be sorted.\n"
+            + "     * @param Assoc\n" + "     *            The Array to sort associative to the given Array A\n"
             + "     * @return A reference to the array that was sorted.\n" + "     */\n" + "    public static "
             + GENERIC_DECLARATION_KEY + " " + SORTED_TYPE_KEY + "[] quickSort(" + SORTED_TYPE_KEY + "[] A, "
             + ASSOCIATED_TYPE_KEY + "[] Assoc) {\n" + "        quickSort(A, Assoc, 0, A.length - 1);\n"
@@ -384,9 +378,8 @@ class AssociativeSortClassGenerator {
      * String defining the quick sort method
      */
     private static final String QUICK_SORT_METHOD2 = "    /**\n"
-            + "     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />\n"
-            + "     * <br />\n"
-            + "     * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />\n"
+            + "     * Quicksort. The bounds specify which part of the array is to be sorted.<br />\n"
+            + "     * <br />\n" + "     * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />\n"
             + "     * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />\n"
             + "     * The part of the array that lies between <b>left</b> and <b>right</b> is the only part that will be sorted.\n"
             + "     * \n" + "     * @param A\n" + "     *            The array to be sorted.\n"
@@ -408,7 +401,7 @@ class AssociativeSortClassGenerator {
      * String defining the partitioning method
      */
     private static final String PARTITION_METHOD = "    /**\n"
-            + "     * Partitions part of an array of {@link AbstractKVStorable}s. <br />\n"
+            + "     * Partitions part of an array. <br />\n"
             + "     * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at\n"
             + "     * A[right-1].\n" + "     * \n" + "     * @param A\n"
             + "     *            The array to be partitioned.\n" + "     * @param Assoc\n"
@@ -416,37 +409,20 @@ class AssociativeSortClassGenerator {
             + "     *            The left bound of the array.\n" + "     * @param right\n"
             + "     *            The right bound of the array.\n"
             + "     * @return The index of the pivot after the partition has occured.\n" + "     */\n"
-            + "    private static "
-            + GENERIC_DECLARATION_KEY
-            + " int partition("
-            + SORTED_TYPE_KEY
-            + " A[], "
-            + ASSOCIATED_TYPE_KEY
-            + "[] Assoc, int left, int right) {\n"
-            + "        int i = left;\n"
-            + "        int j = right;\n"
-            + "        "
-            + SORTED_TYPE_KEY
-            + " pivot = A[(left + right) / 2];\n"
-            + "        while (i <= j) {\n"
-            + "            while (A[i] < pivot)\n"
-            + "                i++;\n"
-            + "            while (A[j] > pivot)\n"
-            + "                j--;\n"
-            + "\n"
-            + "            if (i <= j) {\n"
-            + "                swap(A, Assoc, i, j);\n"
-            + "                i++;\n"
-            + "                j--;\n"
+            + "    private static " + GENERIC_DECLARATION_KEY + " int partition(" + SORTED_TYPE_KEY + " A[], "
+            + ASSOCIATED_TYPE_KEY + "[] Assoc, int left, int right) {\n" + "        int i = left;\n"
+            + "        int j = right;\n" + "        " + SORTED_TYPE_KEY + " pivot = A[(left + right) / 2];\n"
+            + "        while (i <= j) {\n" + "            while (A[i] < pivot)\n" + "                i++;\n"
+            + "            while (A[j] > pivot)\n" + "                j--;\n" + "\n" + "            if (i <= j) {\n"
+            + "                swap(A, Assoc, i, j);\n" + "                i++;\n" + "                j--;\n"
             + "            }\n" + "        }\n" + "\n" + "        return i;\n" + "    }\n\n";
 
     /**
      * String defining the insertion sort.
      */
     private static final String INSERTION_SORT_METHOD1 = "    /**\n"
-            + "     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />\n"
-            + "     * <br />\n"
-            + "     * Algorithm of O( n² ). <br />\n"
+            + "     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />\n"
+            + "     * <br />\n" + "     * Algorithm of O( n² ). <br />\n"
             + "     * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />\n"
             + "     * The part of the array that lies between <b>left</b> and <b>right</b> is the only part that will be sorted.\n"
             + "     * \n" + "     * @param A\n" + "     *            an array of Comparable items.\n"
@@ -462,9 +438,8 @@ class AssociativeSortClassGenerator {
      * String defining the insertion sort.
      */
     private static final String INSERTION_SORT_METHOD2 = "    /**\n"
-            + "     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />\n"
-            + "     * <br />\n"
-            + "     * Algorithm of O( n² ). <br />\n"
+            + "     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />\n"
+            + "     * <br />\n" + "     * Algorithm of O( n² ). <br />\n"
             + "     * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />\n"
             + "     * The part of the array that lies between <b>left</b> and <b>right</b> is the only part that will be sorted.\n"
             + "     * \n" + "     * @param A\n" + "     *            an array of Comparable items.\n"
@@ -472,27 +447,12 @@ class AssociativeSortClassGenerator {
             + "     *            the left-most index of the subarray.\n" + "     * @param right\n"
             + "     *            the right-most index of the subarray.\n"
             + "     * @return A reference to the array that was sorted.\n" + "     */\n" + "    public static "
-            + GENERIC_DECLARATION_KEY
-            + " "
-            + SORTED_TYPE_KEY
-            + "[] insertionSort("
-            + SORTED_TYPE_KEY
-            + "[] A, "
-            + ASSOCIATED_TYPE_KEY
-            + "[] Assoc, int left, int right) {\n"
-            + "        for (int p = left + 1; p <= right; p++) {\n"
-            + "            "
-            + SORTED_TYPE_KEY
-            + " tmp = A[p];\n"
-            + "            "
-            + ASSOCIATED_TYPE_KEY
-            + " temp = Assoc[p];\n"
-            + "            int j;\n"
-            + "            for (j = p; j > left && tmp < A[j - 1]; j--) {\n"
-            + "                A[j] = A[j - 1];\n"
-            + "                Assoc[j] = Assoc[j - 1];\n"
-            + "            }\n"
-            + "            A[j] = tmp;\n"
+            + GENERIC_DECLARATION_KEY + " " + SORTED_TYPE_KEY + "[] insertionSort(" + SORTED_TYPE_KEY + "[] A, "
+            + ASSOCIATED_TYPE_KEY + "[] Assoc, int left, int right) {\n"
+            + "        for (int p = left + 1; p <= right; p++) {\n" + "            " + SORTED_TYPE_KEY
+            + " tmp = A[p];\n" + "            " + ASSOCIATED_TYPE_KEY + " temp = Assoc[p];\n" + "            int j;\n"
+            + "            for (j = p; j > left && tmp < A[j - 1]; j--) {\n" + "                A[j] = A[j - 1];\n"
+            + "                Assoc[j] = Assoc[j - 1];\n" + "            }\n" + "            A[j] = tmp;\n"
             + "            Assoc[j] = temp;\n" + "        }\n" + "        return A;\n" + "    }\n\n";
 
     /**
@@ -504,13 +464,8 @@ class AssociativeSortClassGenerator {
      * Head of the {@link AssociativeSortTest} class.
      */
     private static final String TEST_CLASS_HEAD = "package org.aksw.simba.topicmodeling.commons.sort;\n\n"
-            + "import java.util.Random;\n\n"
-            + "import org.junit.Assert;\n"
-            + "import org.junit.Test;\n\n"
-            + "\n"
-            + "/**\n"
-            + " * This class contains JUnit tests for the {@link AssociativeSort} class.\n"
-            + " * \n"
+            + "import java.util.Random;\n\n" + "import org.junit.Assert;\n" + "import org.junit.Test;\n\n" + "\n"
+            + "/**\n" + " * This class contains JUnit tests for the {@link AssociativeSort} class.\n" + " * \n"
             + " * <b>Note</b> that this class has been generated automatically using the {@link AssociativeSortClassGenerator} class.\n"
             + " * Do never change the source code in this class because changes could be overwritten by the genrating class. Change the\n"
             + " * source code of the {@link AssociativeSortClassGenerator} class instead.\n" + " * \n"

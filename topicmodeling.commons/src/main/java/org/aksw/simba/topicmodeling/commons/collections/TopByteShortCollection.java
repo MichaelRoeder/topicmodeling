@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
  * they should be made inside the generator class.
  * </p>
  * 
- * @author Michael R&ouml;der <roeder@informatik.uni-leipzig.de>
+ * @author Michael R&ouml;der (roeder@informatik.uni-leipzig.de)
  * 
  */
 public class TopByteShortCollection {

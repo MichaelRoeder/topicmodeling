@@ -43,7 +43,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -58,7 +60,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -87,7 +89,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -122,7 +124,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -143,7 +145,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -197,7 +199,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -212,7 +216,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -241,7 +245,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -276,7 +280,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -297,7 +301,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -351,7 +355,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -366,7 +372,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -395,7 +401,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -430,7 +436,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -451,7 +457,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -505,7 +511,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -520,7 +528,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -549,7 +557,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -584,7 +592,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -605,7 +613,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -659,7 +667,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -674,7 +684,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -703,7 +713,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -738,7 +748,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -759,7 +769,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -813,7 +823,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -828,7 +840,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -857,7 +869,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -892,7 +904,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -913,7 +925,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -967,7 +979,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -982,7 +996,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1011,7 +1025,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -1046,7 +1060,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1067,7 +1081,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1121,7 +1135,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -1136,7 +1152,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1165,7 +1181,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -1200,7 +1216,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1221,7 +1237,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1275,7 +1291,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -1290,7 +1308,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1319,7 +1337,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -1354,7 +1372,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1375,7 +1393,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1429,7 +1447,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -1444,7 +1464,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1473,7 +1493,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -1508,7 +1528,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1529,7 +1549,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1583,7 +1603,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -1598,7 +1620,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1627,7 +1649,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -1662,7 +1684,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1683,7 +1705,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1737,7 +1759,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -1752,7 +1776,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1781,7 +1805,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -1816,7 +1840,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1837,7 +1861,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1891,7 +1915,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -1906,7 +1932,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1935,7 +1961,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -1970,7 +1996,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -1991,7 +2017,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2045,7 +2071,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -2060,7 +2088,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2089,7 +2117,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -2124,7 +2152,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2145,7 +2173,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2199,7 +2227,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -2214,7 +2244,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2243,7 +2273,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -2278,7 +2308,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2299,7 +2329,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2353,7 +2383,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -2368,7 +2400,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2397,7 +2429,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -2432,7 +2464,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2453,7 +2485,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2507,7 +2539,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -2522,7 +2556,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2551,7 +2585,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -2586,7 +2620,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2607,7 +2641,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2661,7 +2695,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -2676,7 +2712,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2705,7 +2741,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -2740,7 +2776,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2761,7 +2797,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2815,7 +2851,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -2830,7 +2868,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2859,7 +2897,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -2894,7 +2932,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2915,7 +2953,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -2969,7 +3007,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -2984,7 +3024,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3013,7 +3053,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -3048,7 +3088,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3069,7 +3109,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3123,7 +3163,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -3138,7 +3180,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3167,7 +3209,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -3202,7 +3244,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3223,7 +3265,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3277,7 +3319,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -3292,7 +3336,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3321,7 +3365,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -3356,7 +3400,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3377,7 +3421,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3431,7 +3475,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -3446,7 +3492,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3475,7 +3521,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -3510,7 +3556,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3531,7 +3577,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3585,7 +3631,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -3600,7 +3648,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3629,7 +3677,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -3664,7 +3712,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3685,7 +3733,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3739,7 +3787,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -3754,7 +3804,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3783,7 +3833,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -3818,7 +3868,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3839,7 +3889,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3893,7 +3943,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -3908,7 +3960,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3937,7 +3989,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -3972,7 +4024,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -3993,7 +4045,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4047,7 +4099,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -4062,7 +4116,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4091,7 +4145,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -4126,7 +4180,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4147,7 +4201,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4201,7 +4255,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -4216,7 +4272,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4245,7 +4301,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -4280,7 +4336,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4301,7 +4357,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4355,7 +4411,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -4370,7 +4428,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4399,7 +4457,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -4434,7 +4492,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4455,7 +4513,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4509,7 +4567,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -4524,7 +4584,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4553,7 +4613,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -4588,7 +4648,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4609,7 +4669,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4663,7 +4723,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -4678,7 +4740,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4707,7 +4769,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -4742,7 +4804,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4763,7 +4825,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4817,7 +4879,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -4832,7 +4896,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4861,7 +4925,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -4896,7 +4960,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4917,7 +4981,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -4971,7 +5035,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -4986,7 +5052,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5015,7 +5081,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -5050,7 +5116,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5071,7 +5137,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5125,7 +5191,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -5140,7 +5208,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5169,7 +5237,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -5204,7 +5272,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5225,7 +5293,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5279,7 +5347,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -5294,7 +5364,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5323,7 +5393,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -5358,7 +5428,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5379,7 +5449,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5433,7 +5503,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -5448,7 +5520,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5477,7 +5549,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -5512,7 +5584,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5533,7 +5605,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5587,7 +5659,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -5602,7 +5676,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5631,7 +5705,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -5666,7 +5740,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5687,7 +5761,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5741,7 +5815,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -5756,7 +5832,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5785,7 +5861,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -5820,7 +5896,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5841,7 +5917,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5895,7 +5971,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -5910,7 +5988,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5939,7 +6017,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -5974,7 +6052,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -5995,7 +6073,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6049,7 +6127,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -6064,7 +6144,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6093,7 +6173,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -6128,7 +6208,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6149,7 +6229,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6203,7 +6283,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -6218,7 +6300,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6247,7 +6329,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -6282,7 +6364,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6303,7 +6385,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6357,7 +6439,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -6372,7 +6456,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6401,7 +6485,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -6436,7 +6520,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6457,7 +6541,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6511,7 +6595,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -6526,7 +6612,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6555,7 +6641,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -6590,7 +6676,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6611,7 +6697,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6665,7 +6751,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -6680,7 +6768,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6709,7 +6797,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -6744,7 +6832,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6765,7 +6853,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6819,7 +6907,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -6834,7 +6924,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6863,7 +6953,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -6898,7 +6988,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6919,7 +7009,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -6973,7 +7063,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -6988,7 +7080,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7017,7 +7109,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -7052,7 +7144,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7073,7 +7165,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7127,7 +7219,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -7142,7 +7236,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7171,7 +7265,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -7206,7 +7300,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7227,7 +7321,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7281,7 +7375,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -7296,7 +7392,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7325,7 +7421,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -7360,7 +7456,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7381,7 +7477,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7435,7 +7531,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -7450,7 +7548,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7479,7 +7577,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -7514,7 +7612,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7535,7 +7633,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7589,7 +7687,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -7604,7 +7704,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7633,7 +7733,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -7668,7 +7768,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7689,7 +7789,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7743,7 +7843,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -7758,7 +7860,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7787,7 +7889,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -7822,7 +7924,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7843,7 +7945,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7897,7 +7999,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -7912,7 +8016,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7941,7 +8045,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -7976,7 +8080,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -7997,7 +8101,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8051,7 +8155,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -8066,7 +8172,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8095,7 +8201,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -8130,7 +8236,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8151,7 +8257,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8205,7 +8311,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -8220,7 +8328,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8249,7 +8357,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -8284,7 +8392,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8305,7 +8413,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8359,7 +8467,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -8374,7 +8484,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8403,7 +8513,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -8438,7 +8548,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8459,7 +8569,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8513,7 +8623,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -8528,7 +8640,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8557,7 +8669,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -8592,7 +8704,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8613,7 +8725,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8667,7 +8779,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -8682,7 +8796,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8711,7 +8825,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -8746,7 +8860,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8767,7 +8881,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8821,7 +8935,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -8836,7 +8952,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8865,7 +8981,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -8900,7 +9016,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8921,7 +9037,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -8975,7 +9091,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -8990,7 +9108,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -9019,7 +9137,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -9054,7 +9172,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -9075,7 +9193,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -9129,7 +9247,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -9144,7 +9264,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -9173,7 +9293,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -9208,7 +9328,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -9229,7 +9349,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -9283,7 +9403,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -9298,7 +9420,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -9327,7 +9449,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -9362,7 +9484,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -9383,7 +9505,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -9437,7 +9559,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -9452,7 +9576,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -9481,7 +9605,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -9516,7 +9640,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -9537,7 +9661,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -9591,7 +9715,9 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for {@link AbstractKVStorable}s. <br />
+     * Quicksort for two arrays. The first array will be sorted. All swaps that
+     * are done to this array during the sorting will be done to the second,
+     * associative array, too. <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound.
      * 
      * @param A
@@ -9606,7 +9732,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Quicksort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Quicksort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n*log(n) ) asymptotic upper bound. <br />
      * This version of quicksort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -9635,7 +9761,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Partitions part of an array of {@link AbstractKVStorable}s. <br />
+     * Partitions part of an array. <br />
      * The part of the array between <b>left</b> and <b>right</b> will be partitioned around the value held at
      * A[right-1].
      * 
@@ -9670,7 +9796,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />
@@ -9691,7 +9817,7 @@ public class AssociativeSort {
     }
 
     /**
-     * Insertion sort for AbstractKVStorable. The bounds specify which part of the array is to be sorted.<br />
+     * Insertion sort. The bounds specify which part of the array is to be sorted.<br />
      * <br />
      * Algorithm of O( n² ). <br />
      * This version of insertion sort also allows for bounds to be put in to specify what part of the array will be sorted. <br />

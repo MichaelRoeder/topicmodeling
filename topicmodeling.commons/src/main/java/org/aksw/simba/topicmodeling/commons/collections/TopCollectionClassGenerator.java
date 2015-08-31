@@ -10,7 +10,7 @@ import java.io.PrintStream;
  * Changes which should be made to these classes should be made inside this
  * class or the loaded resources.
  * 
- * @author Michael R&ouml;der <roeder@informatik.uni-leipzig.de>
+ * @author Michael R&ouml;der (roeder@informatik.uni-leipzig.de)
  * 
  */
 class TopCollectionClassGenerator {
