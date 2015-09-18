@@ -21,7 +21,7 @@ public abstract class AbstractPropertyAppendingDocumentSupplierDecorator<T exten
     protected Document prepareDocument(Document document) {
         T property = createPropertyForDocument(document);
         if (property == null) {
-            LOGGER.debug("Couldn't create document property for document #" + document + ".("
+            LOGGER.debug("Couldn't create document property for document #" + + document.getDocumentId() + ".("
                     + this.getClass().getSimpleName() + ")");
         } else {
             document.addProperty(property);

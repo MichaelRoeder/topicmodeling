@@ -6,9 +6,8 @@ import org.aksw.simba.topicmodeling.utils.doc.DocumentProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-public abstract class AbstractPropertyEditingDocumentSupplierDecorator<T extends DocumentProperty> extends
-        AbstractDocumentSupplierDecorator {
+public abstract class AbstractPropertyEditingDocumentSupplierDecorator<T extends DocumentProperty>
+        extends AbstractDocumentSupplierDecorator {
 
     private static final Logger LOGGER = LoggerFactory
             .getLogger(AbstractPropertyAppendingDocumentSupplierDecorator.class);
@@ -24,8 +23,8 @@ public abstract class AbstractPropertyEditingDocumentSupplierDecorator<T extends
     protected Document prepareDocument(Document document) {
         T property = document.getProperty(propertyClass);
         if (property == null) {
-            LOGGER.info("Couldn't get property " + propertyClass.getSimpleName() + " for document #" + document + ".("
-                    + this.getClass().getSimpleName() + ")");
+            LOGGER.info("Couldn't get property " + propertyClass.getSimpleName() + " for document #"
+                    + document.getDocumentId() + ".(" + this.getClass().getSimpleName() + ")");
         } else {
             editDocumentProperty(property);
         }
