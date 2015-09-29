@@ -8,10 +8,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.regex.Pattern;
 
+import org.aksw.simba.topicmodeling.algorithms.LDAModel;
 import org.aksw.simba.topicmodeling.algorithms.Model;
 import org.aksw.simba.topicmodeling.algorithms.ModelingAlgorithm;
 import org.aksw.simba.topicmodeling.algorithms.ProbTopicModelingAlgorithmStateSupplier;
-import org.aksw.simba.topicmodeling.algorithms.ProbabilisticWordTopicModel;
 import org.aksw.simba.topicmodeling.algorithms.WordCounter;
 import org.aksw.simba.topicmodeling.algorithms.WordCounterImpl;
 import org.aksw.simba.topicmodeling.lang.Language;
@@ -35,6 +35,10 @@ import org.aksw.simba.topicmodeling.utils.vocabulary.VocabularyMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.carrotsearch.hppc.IntArrayList;
+import com.carrotsearch.hppc.IntIntOpenHashMap;
+import com.carrotsearch.hppc.cursors.IntIntCursor;
+
 import cc.mallet.pipe.CharSequence2TokenSequence;
 import cc.mallet.pipe.CharSequenceLowercase;
 import cc.mallet.pipe.Pipe;
@@ -51,10 +55,6 @@ import cc.mallet.types.InstanceList;
 import cc.mallet.types.LabelAlphabet;
 import cc.mallet.types.MalletAlphabetWrapper;
 import cc.mallet.util.Randoms;
-
-import com.carrotsearch.hppc.IntArrayList;
-import com.carrotsearch.hppc.IntIntOpenHashMap;
-import com.carrotsearch.hppc.cursors.IntIntCursor;
 
 public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlgorithmStateSupplier {
 
@@ -109,8 +109,8 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
 
     @Override
     public Preprocessor createPreprocessor(DocumentSupplier supplier, Language lang) {
-        return new ListCorpusCreator<LinkedList<Document>>(supplier, new DocumentListCorpus<LinkedList<Document>>(
-                new LinkedList<Document>()));
+        return new ListCorpusCreator<LinkedList<Document>>(supplier,
+                new DocumentListCorpus<LinkedList<Document>>(new LinkedList<Document>()));
     }
 
     @Override
@@ -119,7 +119,8 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
         if (cVocab != null) {
             directInitialization(corpus, cVocab.get());
         } else {
-            LOGGER.warn("Couldn't find a vocabulary for this corpus. I will have to recreate every document to initialize Mallet (deprecated and expensive)!");
+            LOGGER.warn(
+                    "Couldn't find a vocabulary for this corpus. I will have to recreate every document to initialize Mallet (deprecated and expensive)!");
             // Begin by importing documents from text to feature sequences
             ArrayList<Pipe> pipeList = new ArrayList<Pipe>();
             // Pipes: lowercase, tokenize, remove stopwords, map to features
@@ -312,7 +313,7 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
         topicModel.setOptimizeInterval(interval);
     }
 
-    protected static class MalletLDATopicModeler extends ParallelTopicModel implements ProbabilisticWordTopicModel {
+    protected static class MalletLDATopicModeler extends ParallelTopicModel implements LDAModel {
         private static final long serialVersionUID = 6008315609404219023L;
 
         protected static final Logger logger = LoggerFactory.getLogger(MalletLDATopicModeler.class);
@@ -320,7 +321,7 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
         protected transient WorkerRunnable[] runnables = new WorkerRunnable[1];
         protected int iteration;
         protected transient int inferencerVersion = 0;
-        protected transient TopicInferencer inferencer;
+        protected transient MalletLdaInferenceWrapper inferencer;
         protected Vocabulary vocabulary = null;
 
         protected double wordTopicWeights[][];
@@ -451,7 +452,7 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
         @Override
         public double[] getTopicProbabilitiesForDocument(DocumentWordCounts wordCounts) {
             if (inferencerVersion < iteration) {
-                inferencer = this.getInferencer();
+                inferencer = (MalletLdaInferenceWrapper) this.getInferencer();
             }
             double inferencedTopicProbabilities[];
 
@@ -491,6 +492,11 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
             }
         }
 
+        public TopicInferencer getInferencer() {
+            return new MalletLdaInferenceWrapper(typeTopicCounts, tokensPerTopic,
+                    data.get(0).instance.getDataAlphabet(), alpha, beta, betaSum);
+        }
+
         public void setVocabularyDecorator(VocabularyDecorator vocabulary) {
             this.vocabulary = vocabulary;
         }
@@ -514,10 +520,53 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
         public DocumentClassificationResult getClassificationForDocument(Document document) {
             DocumentWordCounts wordCounts = document.getProperty(DocumentWordCounts.class);
             if (wordCounts == null) {
-                throw new IllegalArgumentException("Expected a Document with the " + DocumentWordCounts.class
-                        + " property.");
+                throw new IllegalArgumentException(
+                        "Expected a Document with the " + DocumentWordCounts.class + " property.");
             }
             return new ProbabilisticClassificationResult(getTopicProbabilitiesForDocument(wordCounts), this);
+        }
+
+        public int[] inferTopicAssignmentsForDocument(Document document) {
+            DocumentTextWordIds ids = document.getProperty(DocumentTextWordIds.class);
+            if (ids == null) {
+                DocumentWordCounts wordCounts = document.getProperty(DocumentWordCounts.class);
+                if (wordCounts == null) {
+                    throw new IllegalArgumentException("Expected a Document with the a " + DocumentTextWordIds.class
+                            + " or a " + DocumentWordCounts.class + " property.");
+                } else {
+                    return inferTopicAssignmentsForDocument(wordCounts);
+                }
+            } else {
+                return inferTopicAssignmentsForDocument(ids.getWordIds());
+            }
+        }
+
+        public int[] inferTopicAssignmentsForDocument(DocumentWordCounts wordCounts) {
+            return inferTopicAssignmentsForDocument(DocumentTextWordIds.fromSummedWordCounts(wordCounts).getWordIds());
+        }
+
+        public int[] inferTopicAssignmentsForDocument(int tokens[]) {
+            if (inferencerVersion < iteration) {
+                inferencer = (MalletLdaInferenceWrapper) this.getInferencer();
+            }
+            FeatureSequence fs = new FeatureSequence(this.alphabet, tokens);
+            Instance instance = new Instance(fs, null, null, null);
+            int inferencedTopicAssignments[] = inferencer.getSampledTopicAssignments(instance, 50);
+            return inferencedTopicAssignments;
+        }
+
+        @Override
+        public double getBeta() {
+            return beta;
+        }
+
+        @Override
+        public double[] getAlphas() {
+            if (usingSymmetricAlpha) {
+                return new double[] { alpha[0] };
+            } else {
+                return Arrays.copyOf(alpha, alpha.length);
+            }
         }
     }
 }
