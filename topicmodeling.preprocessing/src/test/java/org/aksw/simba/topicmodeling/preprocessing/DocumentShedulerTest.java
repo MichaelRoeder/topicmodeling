@@ -16,13 +16,20 @@
  */
 package org.aksw.simba.topicmodeling.preprocessing;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.aksw.simba.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
+import org.aksw.simba.topicmodeling.preprocessing.shedule.AbstractDocumentSheduler.PartialDocumentSupplier;
 import org.aksw.simba.topicmodeling.preprocessing.shedule.DeterministicPercentageDocumentSheduler;
+import org.aksw.simba.topicmodeling.preprocessing.shedule.ListBasedDocumentSheduler;
 import org.aksw.simba.topicmodeling.preprocessing.shedule.NFoldCrossValidationSheduler;
 import org.aksw.simba.topicmodeling.preprocessing.shedule.RandomDocumentSheduler;
-import org.aksw.simba.topicmodeling.preprocessing.shedule.AbstractDocumentSheduler.PartialDocumentSupplier;
 import org.aksw.simba.topicmodeling.utils.doc.AbstractDocumentProperty;
 import org.aksw.simba.topicmodeling.utils.doc.Document;
+import org.aksw.simba.topicmodeling.utils.doc.StringContainingDocumentProperty;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -40,17 +47,15 @@ public class DocumentShedulerTest implements DocumentSupplier {
 
         int parts = 5;
         double portions[] = { 0.1, 0.3, 0.2, 0.2 };
-        assert (portions.length == (parts - 1));
+        assert(portions.length == (parts - 1));
 
-        RandomDocumentSheduler sheduler = new RandomDocumentSheduler(this,
-                parts);
+        RandomDocumentSheduler sheduler = new RandomDocumentSheduler(this, parts);
         PartialDocumentSupplier docSuppliers[] = new PartialDocumentSupplier[parts];
         for (int i = 0; i < portions.length; ++i) {
             sheduler.setPortionOfPart(i, portions[i]);
             docSuppliers[i] = sheduler.getPartialDocumentSupplier(i);
         }
-        docSuppliers[parts - 1] = sheduler
-                .getPartialDocumentSupplier(parts - 1);
+        docSuppliers[parts - 1] = sheduler.getPartialDocumentSupplier(parts - 1);
 
         Document tempDoc;
         int tempDocCount;
@@ -61,18 +66,15 @@ public class DocumentShedulerTest implements DocumentSupplier {
                 ++tempDocCount;
                 tempDoc = docSuppliers[i].getNextDocument();
             } while (tempDoc != null);
-            System.out.println("docSupplier" + i + "\t" + tempDocCount);
             sum += tempDocCount;
         }
-        System.out.println("sum         \t" + sum);
         Assert.assertEquals(documentsAvailable, sum);
     }
 
     @Test
     public void TestDeterministicPercentageDocumentShedulerExceptions() {
         int parts = 3;
-        DeterministicPercentageDocumentSheduler sheduler = new DeterministicPercentageDocumentSheduler(
-                this, parts);
+        DeterministicPercentageDocumentSheduler sheduler = new DeterministicPercentageDocumentSheduler(this, parts);
         boolean gotIllegalArgumentException = false;
         try {
             sheduler.setPercentageOfPart(0, 110);
@@ -103,16 +105,14 @@ public class DocumentShedulerTest implements DocumentSupplier {
         int percentages[] = { 9, 16, 20, 25 };
         double percentagesSum = 0;
 
-        DeterministicPercentageDocumentSheduler sheduler = new DeterministicPercentageDocumentSheduler(
-                this, parts);
+        DeterministicPercentageDocumentSheduler sheduler = new DeterministicPercentageDocumentSheduler(this, parts);
         PartialDocumentSupplier docSuppliers[] = new PartialDocumentSupplier[parts];
         for (int i = 0; i < percentages.length; ++i) {
             sheduler.setPercentageOfPart(i, percentages[i]);
             docSuppliers[i] = sheduler.getPartialDocumentSupplier(i);
             percentagesSum += percentages[i];
         }
-        docSuppliers[parts - 1] = sheduler
-                .getPartialDocumentSupplier(parts - 1);
+        docSuppliers[parts - 1] = sheduler.getPartialDocumentSupplier(parts - 1);
 
         Document tempDoc;
         int tempDocCount;
@@ -124,17 +124,12 @@ public class DocumentShedulerTest implements DocumentSupplier {
                 tempDoc = docSuppliers[i].getNextDocument();
             } while (tempDoc != null);
             sum += tempDocCount;
-            System.out.println("docSupplier" + i + "\t" + tempDocCount);
             if (i < (parts - 1)) {
-                Assert.assertEquals(
-                        percentages[i] * documentsAvailable / 100.0,
-                        (double) tempDocCount, 1.0);
+                Assert.assertEquals(percentages[i] * documentsAvailable / 100.0, (double) tempDocCount, 1.0);
             } else {
-                Assert.assertEquals((100 - percentagesSum) * documentsAvailable / 100.0,
-                        (double) tempDocCount, 1.0);
+                Assert.assertEquals((100 - percentagesSum) * documentsAvailable / 100.0, (double) tempDocCount, 1.0);
             }
         }
-        System.out.println("sum         \t" + sum);
         Assert.assertEquals(documentsAvailable, sum);
     }
 
@@ -161,10 +156,8 @@ public class DocumentShedulerTest implements DocumentSupplier {
                 tempDoc = docSuppliers[NFoldCrossValidationSheduler.TRAIN_DOCUMENTS_SUPPLIER_ID].getNextDocument();
             } while (tempDoc != null);
             sum = tempDocCount;
-            System.out.println("TrainDocSupplier \t" + tempDocCount);
-            Assert.assertEquals(
-                    ((folds - 1.0) / (double) folds) * documentsAvailable,
-                    (double) tempDocCount, 1.0);
+            // System.out.println("TrainDocSupplier \t" + tempDocCount);
+            Assert.assertEquals(((folds - 1.0) / (double) folds) * documentsAvailable, (double) tempDocCount, 1.0);
 
             tempDocCount = -1;
             do {
@@ -172,23 +165,69 @@ public class DocumentShedulerTest implements DocumentSupplier {
                 tempDoc = docSuppliers[NFoldCrossValidationSheduler.TEST_DOCUMENTS_SUPPLIER_ID].getNextDocument();
                 if (tempDoc != null) {
                     traceId = tempDoc.getProperty(DocumentTracer.class).getTraceId();
-                    Assert.assertFalse(
-                            "Got a test document which has already been used as test document before. (id = "
-                                    + tempDoc.getDocumentId() + ")",
-                            testDocumentIds.contains(traceId));
+                    Assert.assertFalse("Got a test document which has already been used as test document before. (id = "
+                            + tempDoc.getDocumentId() + ")", testDocumentIds.contains(traceId));
                     testDocumentIds.add(traceId);
                 }
             } while (tempDoc != null);
             sum += tempDocCount;
-            System.out.println("TestDocSupplier \t" + tempDocCount);
-            Assert.assertEquals(
-                    (1.0 / (double) folds) * documentsAvailable,
-                    (double) tempDocCount, 1.0);
-            System.out.println("sum              \t" + sum + " of " + documentsAvailable);
+            // System.out.println("TestDocSupplier \t" + tempDocCount);
+            Assert.assertEquals((1.0 / (double) folds) * documentsAvailable, (double) tempDocCount, 1.0);
+            // System.out.println("sum \t" + sum + " of " + documentsAvailable);
             Assert.assertEquals(documentsAvailable, sum);
         }
-        System.out.println("Documents used for testing\t" + testDocumentIds.size() + " of " + documentsAvailable);
+        // System.out.println("Documents used for testing\t" +
+        // testDocumentIds.size() + " of " + documentsAvailable);
         Assert.assertEquals(documentsAvailable, testDocumentIds.size());
+    }
+
+    @Test
+    public void TestListBasedDocumentSheduler() {
+        documentCount = 0;
+        documentsAvailable = 10000;
+
+        String values[][] = new String[][] { { "2", "7", "18", "99" }, { "105", "100", "22", "1", "9" } };
+        @SuppressWarnings("unchecked")
+        ListBasedDocumentSheduler sheduler = new ListBasedDocumentSheduler((DocumentSupplier) this,
+                DocumentTracer.class, (Set<String>[]) new Set[] { new HashSet<String>(Arrays.asList(values[0])),
+                        new HashSet<String>(Arrays.asList(values[1])) });
+        PartialDocumentSupplier docSuppliers[] = new PartialDocumentSupplier[values.length + 1];
+        for (int i = 0; i < docSuppliers.length; ++i) {
+            docSuppliers[i] = sheduler.getPartialDocumentSupplier(i);
+        }
+
+        int sum = 0;
+        int expectedDocumentCounts[] = new int[values.length + 1];
+        for (int i = 0; i < values.length; ++i) {
+            expectedDocumentCounts[i + 1] = values[i].length;
+            sum += values[i].length;
+        }
+        expectedDocumentCounts[0] = documentsAvailable - sum;
+
+        Document tempDoc;
+        sum = -1;
+        do {
+            ++sum;
+            tempDoc = docSuppliers[0].getNextDocument();
+        } while (tempDoc != null);
+        Assert.assertEquals(expectedDocumentCounts[0], sum);
+
+        int tempDocCount;
+        for (int i = 1; i < docSuppliers.length; ++i) {
+            tempDocCount = -1;
+            do {
+                ++tempDocCount;
+                tempDoc = docSuppliers[i].getNextDocument();
+                if (tempDoc != null) {
+                    Assert.assertNotNull(tempDoc.getProperty(DocumentTracer.class));
+                    Assert.assertTrue(ArrayUtils.indexOf(values[i - 1],
+                            tempDoc.getProperty(DocumentTracer.class).getStringValue()) != ArrayUtils.INDEX_NOT_FOUND);
+                }
+            } while (tempDoc != null);
+            Assert.assertEquals(expectedDocumentCounts[i], tempDocCount);
+            sum += tempDocCount;
+        }
+        Assert.assertEquals(documentsAvailable, sum);
     }
 
     @Override
@@ -208,7 +247,7 @@ public class DocumentShedulerTest implements DocumentSupplier {
         /* nothing to do */
     }
 
-    private static class DocumentTracer extends AbstractDocumentProperty {
+    private static class DocumentTracer extends AbstractDocumentProperty implements StringContainingDocumentProperty {
 
         private static final long serialVersionUID = 5062085480180086424L;
 
@@ -225,6 +264,11 @@ public class DocumentShedulerTest implements DocumentSupplier {
 
         public int getTraceId() {
             return traceId;
+        }
+
+        @Override
+        public String getStringValue() {
+            return Integer.toString(getTraceId());
         }
     }
 }
