@@ -1,4 +1,4 @@
-package org.aksw.simba.topicmodeling.commons.collections;
+package org.dice_research.topicmodeling.commons.collections;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
  * they should be made inside the generator class.
  * </p>
  * 
- * @author Michael R&ouml;der (roeder@informatik.uni-leipzig.de)
+ * @author Michael R&ouml;der (michael.roeder@uni-paderborn.de)
  * 
  */
 public class $CLASS$ {

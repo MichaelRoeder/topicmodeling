@@ -20,9 +20,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.aksw.simba</groupId>
+		<groupId>org.dice-research</groupId>
 		<artifactId>topicmodeling.parent</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.3-SNAPSHOT</version>
 		<relativePath>../topicmodeling.parent</relativePath>
 	</parent>
 	<artifactId>topicmodeling.mallet</artifactId>
@@ -30,15 +30,13 @@
 	<dependencies>
 		<!-- Topicmodeling Datatypes -->
 		<dependency>
-			<groupId>org.aksw.simba</groupId>
+			<groupId>org.dice-research</groupId>
 			<artifactId>topicmodeling.datatypes</artifactId>
-			<version>${project.parent.version}</version>
 		</dependency>
 		<!-- Topicmodeling Preprocessing -->
 		<dependency>
-			<groupId>org.aksw.simba</groupId>
+			<groupId>org.dice-research</groupId>
 			<artifactId>topicmodeling.preprocessing</artifactId>
-			<version>${project.parent.version}</version>
 		</dependency>
 		<!-- Mallet -->
 		<dependency>
@@ -46,11 +44,5 @@
 			<artifactId>mallet</artifactId>
 			<version>2.0.7-RC2</version>
 		</dependency>
-        <!-- make Logging with java.util.Logging possible -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jul-to-slf4j</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
 	</dependencies>
 </project>

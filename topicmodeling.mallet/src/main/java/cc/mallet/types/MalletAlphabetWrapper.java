@@ -16,7 +16,7 @@
  */
 package cc.mallet.types;
 
-import org.aksw.simba.topicmodeling.utils.vocabulary.Vocabulary;
+import org.dice_research.topicmodeling.utils.vocabulary.Vocabulary;
 
 @SuppressWarnings("unchecked")
 public class MalletAlphabetWrapper extends Alphabet implements Vocabulary {

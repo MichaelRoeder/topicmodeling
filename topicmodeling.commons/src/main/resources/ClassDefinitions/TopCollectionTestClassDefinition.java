@@ -1,8 +1,8 @@
-package org.aksw.simba.topicmodeling.commons.collections;
+package org.dice_research.topicmodeling.commons.collections;
 
 import java.util.Random;
 
-import org.aksw.simba.topicmodeling.commons.sort.AssociativeSort;
+import org.dice_research.topicmodeling.commons.sort.AssociativeSort;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Assert;
 import org.junit.Test;

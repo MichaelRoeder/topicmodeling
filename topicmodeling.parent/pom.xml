@@ -20,9 +20,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.aksw.simba</groupId>
+		<groupId>org.dice-research</groupId>
 		<artifactId>topicmodeling</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.3-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<artifactId>topicmodeling.parent</artifactId>
@@ -33,10 +33,7 @@
 		<java.version>1.7</java.version>
 		<slf4j.version>1.7.10</slf4j.version>
 		<lucene.version>4.4.0</lucene.version>
-		<com.carrotsearch.hppc.version>0.6.1</com.carrotsearch.hppc.version>
 		<junit.version>4.8.2</junit.version>
-		<org.apache.commons.commons-lang3.version>3.3.2</org.apache.commons.commons-lang3.version>
-		<org.apache.commons.commons-io.version>2.4</org.apache.commons.commons-io.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -67,6 +64,78 @@
 		</dependency>
 		<!-- ~~~~~~~~~~~~~~~~~~~ End Testing ~~~~~~~~~~~~~~~~~~~~~~ -->
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+            <!-- ~~~~~~~~~~~~~~~~~~~ Topicmodeling modules ~~~~~~~~~~~~~~~~~~~~~~ -->
+	        <!-- Topicmodeling Automatons -->
+	        <dependency>
+	            <groupId>org.dice-research</groupId>
+	            <artifactId>topicmodeling.automaton</artifactId>
+	            <version>${project.parent.version}</version>
+	        </dependency>
+	        <!-- Topicmodeling Commons -->
+	        <dependency>
+	            <groupId>org.dice-research</groupId>
+	            <artifactId>topicmodeling.commons</artifactId>
+	            <version>${project.parent.version}</version>
+	        </dependency>
+	        <!-- Topicmodeling Datatypes -->
+	        <dependency>
+	            <groupId>org.dice-research</groupId>
+	            <artifactId>topicmodeling.datatypes</artifactId>
+	            <version>${project.parent.version}</version>
+	        </dependency>
+	        <!-- Topicmodeling IO -->
+	        <dependency>
+	            <groupId>org.dice-research</groupId>
+	            <artifactId>topicmodeling.io</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+	        <!-- Topicmodeling lang -->
+	        <dependency>
+	            <groupId>org.dice-research</groupId>
+	            <artifactId>topicmodeling.lang</artifactId>
+                <version>${project.parent.version}</version>
+	        </dependency>
+	        <!-- Topicmodeling Preprocessing -->
+	        <dependency>
+	            <groupId>org.dice-research</groupId>
+	            <artifactId>topicmodeling.preprocessing</artifactId>
+	            <version>${project.parent.version}</version>
+	        </dependency>
+            <!-- ~~~~~~~~~~~~~~~~~~~ End Topicmodeling modules ~~~~~~~~~~~~~~~~~~~~~~ -->
+	        <!-- Apache Commons IO -->
+	        <dependency>
+	            <groupId>commons-io</groupId>
+	            <artifactId>commons-io</artifactId>
+	            <version>2.4</version>
+	        </dependency>
+	        <!-- Apache Commons Collections -->
+	        <dependency>
+	            <groupId>commons-collections</groupId>
+	            <artifactId>commons-collections</artifactId>
+	            <version>3.0</version>
+	        </dependency>
+	        <!-- Apache Commons Lang 3 -->
+	        <dependency>
+	            <groupId>org.apache.commons</groupId>
+	            <artifactId>commons-lang3</artifactId>
+	            <version>3.3.2</version>
+	        </dependency>
+	        <!-- High Performance Primitive Collections -->
+	        <dependency>
+	            <groupId>com.carrotsearch</groupId>
+	            <artifactId>hppc</artifactId>
+	            <version>0.6.1</version>
+	        </dependency>
+	        <!-- Jackson datatype serialization (for HPPC datatypes) -->
+	        <dependency>
+	            <groupId>com.fasterxml.jackson.datatype</groupId>
+	            <artifactId>jackson-datatype-hppc</artifactId>
+	            <version>2.5.1</version>
+	        </dependency>
+        </dependencies>
+	</dependencyManagement>
 
 	<!-- BUILD -->
 	<build>
@@ -93,11 +162,17 @@
 				<version>2.4</version>
 				<executions>
 					<execution>
-						<id>attach-sources</id>
+						<id>attach-sources-package</id>
+						<phase>package</phase>
 						<goals>
 							<goal>jar</goal>
 						</goals>
 					</execution>
+        			<execution>
+						<id>attach-sources-deploy</id>
+						<phase>deploy</phase>
+			          	<goals><goal>jar-no-fork</goal></goals> 
+        			</execution>
 				</executions>
 			</plugin>
 			<!-- Javadoc plugin for generating documentation -->
@@ -119,6 +194,11 @@
 							<goal>jar</goal>
 						</goals>
 					</execution>
+			        <execution> 
+			          	<id>attach-javadocs</id>
+			          	<phase>deploy</phase>
+			          	<goals><goal>jar</goal></goals> 
+			        </execution> 
 				</executions>
 			</plugin>
 			<!-- Resources management plugin -->
@@ -130,6 +210,18 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			<plugin> 
+				<!-- explicitly define maven-deploy-plugin after other to force exec order -->
+      			<artifactId>maven-deploy-plugin</artifactId> 
+				<version>2.8.2</version>
+				<executions> 
+					<execution> 
+						<id>deploy</id>
+						<phase>deploy</phase>
+						<goals><goal>deploy</goal></goals> 
+					</execution> 
+				</executions> 
+	    	</plugin>
 		</plugins>
 	</build>
 </project>

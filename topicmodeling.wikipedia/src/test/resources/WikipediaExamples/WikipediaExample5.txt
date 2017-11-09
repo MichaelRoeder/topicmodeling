@@ -1,0 +1,54 @@
+{| class="prettytable" align="right"
+|- bgcolor=#DDDDDD
+| colspan=8 align="center" | '''Taiwanesische Kinospielfilmproduktion'''<ref>[http://www.fafo.at/download/WorldFilmProduction06.pdf Weltfilmproduktionsbericht (Auszug)], Screen Digest, Juni 2006, S. 205–207 (eingesehen am 15. Juni 2007)</ref>
+|- style="background:#efefef" align="center"
+! Jahr
+! Anzahl
+|- align="center"
+| 1995 || 28
+|- align="center"
+| 2005 || 17
+|}
+Die Geschichte des chinesischsprachigen [[Filmkunst|Films]] verläuft in drei unterschiedlichen Entwicklungslinien: dem [[Chinesischer Film|Film in China]], dem [[Hongkong-Kino|Film in Hongkong]] und dem Film in Taiwan. Der Film in [[Republik China|Taiwan]] bildet neben dem vom Unterhaltungskino dominierten Film in [[Hongkong]] und dem staatlichen Reglementierungen unterworfenen Film in [[China]] eine eigenständige Filmkultur.
+
+== Bekannte Regisseure ==
+*[[King Hu]] (1931-1997)
+*[[Hou Hsiao-Hsien]] (* 1947)
+*[[Edward Yang]] (1947-2007)
+*[[Ang Lee]] (* 1954)
+*[[Tsai Ming-Liang]] (* 1957)
+
+== Bekannte Schauspieler ==
+*[[Takeshi Kaneshiro]]
+*[[Qi Shu]]
+*[[Brigitte Lin]]
+*[[Joey Wong]]
+*[[Hsu Feng]]
+
+== Filmfestival ==
+*[[Golden Horse Film Festival]] ([[Taipei]])
+
+== Literatur ==
+*Andreas Balemi, Der Neue Taiwanische Film der 80er Jahre, Peter Lang Verlag, Bern 1996
+*Emilie Yueh-Yu Yeh, Darrell William Davis: Taiwan Film Directors. A Treasure Island. New York 2005
+
+== Weblinks ==
+*[http://www.ctfa.org.tw/ Chinese Taipei Film Archive]
+
+== Einzelnachweise ==
+<references/>
+
+[[Kategorie:Taiwanischer Film| ]]
+
+{{Link GA|zh}}
+
+[[en:Cinema of Taiwan]]
+[[es:Cine de Taiwán]]
+[[fr:Cinéma taïwanais]]
+[[hu:Tajvani filmművészet]]
+[[ja:台湾映画]]
+[[ko:타이완의 영화]]
+[[pt:Cinema de Taiwan]]
+[[ru:Кинематограф Китайской республики]]
+[[vi:Điện ảnh Đài Loan]]
+[[zh:台灣電影]]

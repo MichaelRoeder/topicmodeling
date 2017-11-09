@@ -19,17 +19,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.aksw.simba</groupId>
+	<groupId>org.dice-research</groupId>
 	<artifactId>topicmodeling</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<inceptionYear>2015</inceptionYear>
 
 	<!-- LICENSE -->
 	<licenses>
 		<license>
-			<name>LGPL 3.0</name>
-			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+			<name>AGPL 3.0</name>
+			<url>http://www.gnu.org/licenses/agpl-3.0.txt</url>
 		</license>
 	</licenses>
 
@@ -45,7 +45,7 @@
 	<!-- PROPERTIES -->
 	<properties>
 		<developer.name>Michael Röder</developer.name>
-		<developer.mail>roeder@informatik.uni-leipzig.de</developer.mail>
+		<developer.mail>michael.roeder@uni-paderborn.de</developer.mail>
 	</properties>
 
 	<!-- MODULES -->
@@ -59,6 +59,7 @@
 		<module>topicmodeling.io</module>
 		<module>topicmodeling.preprocessing</module>
 		<module>topicmodeling.mallet</module>
+        <module>topicmodeling.wikipedia</module>
 	</modules>
 	
 	<build>
@@ -69,7 +70,7 @@
 				<artifactId>license-maven-plugin</artifactId>
 				<version>2.6</version>
 				<configuration>
-					<header>com/mycila/maven/plugin/license/templates/LGPL-3.txt</header>
+					<header>com/mycila/maven/plugin/license/templates/AGPL-3.txt</header>
 					<excludes>
 						<exclude>**/README</exclude>
 						<exclude>**/LICENSE</exclude>
