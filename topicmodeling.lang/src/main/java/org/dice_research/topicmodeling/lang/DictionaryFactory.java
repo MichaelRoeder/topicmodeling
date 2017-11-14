@@ -16,7 +16,7 @@
  */
 package org.dice_research.topicmodeling.lang;
 
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 import org.dice_research.topicmodeling.lang.Language;
 
 public class DictionaryFactory {

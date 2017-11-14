@@ -18,6 +18,7 @@ package org.dice_research.topicmodeling.lang.postagging;
 
 import org.dice_research.topicmodeling.lang.Term;
 
+@FunctionalInterface
 public interface PosTaggingTermFilter {
 
     public boolean isTermGood(Term term);

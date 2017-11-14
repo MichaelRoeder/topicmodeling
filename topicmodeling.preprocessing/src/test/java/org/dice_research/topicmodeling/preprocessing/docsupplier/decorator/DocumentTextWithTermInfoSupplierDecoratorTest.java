@@ -19,15 +19,8 @@ package org.dice_research.topicmodeling.preprocessing.docsupplier.decorator;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.dice_research.topicmodeling.lang.Language;
-import org.dice_research.topicmodeling.lang.Term;
-import org.dice_research.topicmodeling.lang.postagging.PosTaggerFactory;
-import org.dice_research.topicmodeling.lang.postagging.PosTaggingTermFilter;
+import org.dice_research.topicmodeling.lang.postagging.StanfordPipelineWrapper;
 import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
-import org.dice_research.topicmodeling.preprocessing.docsupplier.decorator.DocumentTextWithTermInfoCreatingSupplierDecorator;
-import org.dice_research.topicmodeling.preprocessing.docsupplier.decorator.DocumentTextWithTermInfoParsingSupplierDecorator;
-import org.dice_research.topicmodeling.preprocessing.docsupplier.decorator.PosTaggingSupplierDecorator;
-import org.dice_research.topicmodeling.preprocessing.docsupplier.decorator.PropertyRemovingSupplierDecorator;
 import org.dice_research.topicmodeling.utils.doc.Document;
 import org.dice_research.topicmodeling.utils.doc.DocumentText;
 import org.dice_research.topicmodeling.utils.doc.TermTokenizedText;
@@ -62,12 +55,7 @@ public class DocumentTextWithTermInfoSupplierDecoratorTest extends AbstractDocum
     @Test
     public void test() {
         DocumentSupplier supplier = new PosTaggingSupplierDecorator(this,
-                PosTaggerFactory.getPosTaggingStep(Language.ENG, new PosTaggingTermFilter() {
-                    @Override
-                    public boolean isTermGood(Term term) {
-                        return term.getWordForm().length() > 3;
-                    }
-                }));
+                StanfordPipelineWrapper.createDefaultStanfordPipelineWrapper((term -> term.getWordForm().length() > 2)));
         SimpleDocumentPropertyStorage<DocumentText> origDocTextStorage = new SimpleDocumentPropertyStorage<DocumentText>(
                 supplier, DocumentText.class);
         supplier = origDocTextStorage;

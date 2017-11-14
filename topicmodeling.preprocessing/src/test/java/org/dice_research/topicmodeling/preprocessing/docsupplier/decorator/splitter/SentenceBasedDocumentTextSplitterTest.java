@@ -21,13 +21,10 @@ import java.util.Collection;
 
 import org.dice_research.topicmodeling.lang.Language;
 import org.dice_research.topicmodeling.lang.SentenceSplitterFactory;
-import org.dice_research.topicmodeling.lang.Term;
-import org.dice_research.topicmodeling.lang.postagging.PosTaggerFactory;
-import org.dice_research.topicmodeling.lang.postagging.PosTaggingTermFilter;
+import org.dice_research.topicmodeling.lang.postagging.StanfordPipelineWrapper;
 import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
 import org.dice_research.topicmodeling.preprocessing.docsupplier.decorator.AbstractDocumentSupplierDecoratorTest;
 import org.dice_research.topicmodeling.preprocessing.docsupplier.decorator.PosTaggingSupplierDecorator;
-import org.dice_research.topicmodeling.preprocessing.docsupplier.decorator.splitter.SentenceBasedDocumentTextSplitter;
 import org.dice_research.topicmodeling.utils.doc.Document;
 import org.dice_research.topicmodeling.utils.doc.DocumentText;
 import org.dice_research.topicmodeling.utils.doc.TermTokenizedText;
@@ -99,12 +96,7 @@ public class SentenceBasedDocumentTextSplitterTest extends AbstractDocumentSuppl
     @Test
     public void testWithTerms() {
         DocumentSupplier supplier = new PosTaggingSupplierDecorator(this,
-                PosTaggerFactory.getPosTaggingStep(Language.ENG, new PosTaggingTermFilter() {
-                    @Override
-                    public boolean isTermGood(Term term) {
-                        return term.getWordForm().length() > 2;
-                    }
-                }));
+                StanfordPipelineWrapper.createDefaultStanfordPipelineWrapper((term -> term.getWordForm().length() > 2)));
         supplier = new SentenceBasedDocumentTextSplitter(supplier,
                 SentenceSplitterFactory.createSentenceSplitter(Language.ENG));
 

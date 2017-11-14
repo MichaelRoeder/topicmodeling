@@ -30,7 +30,7 @@
 
 	<!-- PROPERTIES -->
 	<properties>
-		<java.version>1.7</java.version>
+		<java.version>1.8</java.version>
 		<slf4j.version>1.7.10</slf4j.version>
 		<lucene.version>4.4.0</lucene.version>
 		<junit.version>4.8.2</junit.version>
@@ -103,6 +103,12 @@
 	            <artifactId>topicmodeling.preprocessing</artifactId>
 	            <version>${project.parent.version}</version>
 	        </dependency>
+            <!-- Topicmodeling Stanford Adapter -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.stanford-nlp</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
             <!-- ~~~~~~~~~~~~~~~~~~~ End Topicmodeling modules ~~~~~~~~~~~~~~~~~~~~~~ -->
 	        <!-- Apache Commons IO -->
 	        <dependency>
