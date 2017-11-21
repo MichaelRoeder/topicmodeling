@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with topicmodeling.io.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.dice_research.topicmodeling.io.xml;
+package org.dice_research.topicmodeling.io.json;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -35,11 +35,29 @@ import org.dice_research.topicmodeling.utils.doc.ner.SignedNamedEntityInText;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-abstract class AbstractDocumentXmlWriter {
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractDocumentXmlWriter.class);
+abstract class AbstractDocumentJsonWriter {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractDocumentJsonWriter.class);
+
+    protected GsonBuilder builder;
+    protected Gson gson;
+
+    public AbstractDocumentJsonWriter() {
+        this(new GsonBuilder());
+    }
+
+    public AbstractDocumentJsonWriter(GsonBuilder builder) {
+        this.builder = builder;
+        this.builder.registerTypeAdapter(Document.class, new DocumentAdapter());
+        gson = this.builder.create();
+    }
+
 
     protected void writeDocument(Writer writer, Document document) throws IOException {
+        gson.newJsonWriter(writer)
         writer.write("<" + CorpusXmlTagHelper.DOCUMENT_TAG_NAME + " id=\"" + document.getDocumentId() + "\">\n");
         DocumentText text = null;
         NamedEntitiesInText nes = null;

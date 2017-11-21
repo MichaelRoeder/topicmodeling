@@ -16,9 +16,16 @@
  */
 package org.dice_research.topicmodeling.preprocessing.docconsumer;
 
+import java.util.function.Consumer;
+
 import org.dice_research.topicmodeling.utils.doc.Document;
 
-public interface DocumentConsumer {
+public interface DocumentConsumer extends Consumer<Document> {
 
     public void consumeDocument(Document document);
+
+    @Override
+    public default void accept(Document document) {
+        consumeDocument(document);
+    }
 }

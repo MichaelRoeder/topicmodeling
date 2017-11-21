@@ -1,10 +1,15 @@
 package org.dice_research.topicmodeling.wikipedia;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
 
+import org.apache.commons.io.Charsets;
 import org.dice_research.topicmodeling.io.xml.XMLParserObserver;
 import org.dice_research.topicmodeling.io.xml.stream.SimpleReaderBasedXMLParser;
 import org.dice_research.topicmodeling.preprocessing.docsupplier.AbstractDocumentSupplier;
@@ -29,23 +34,34 @@ public class WikipediaDumpReader extends AbstractDocumentSupplier implements XML
     private static final String REDIRECT_XML_TAG_NAME = "redirect";
     private static final String NAMESPACE_XML_TAG_NAME = "ns";
 
-    private FileReader dumpReader;
+    private Reader dumpReader;
     private SimpleReaderBasedXMLParser xmlParser;
     private String data;
     private Document document;
     private String lastIdContainingTag;
 
     public static WikipediaDumpReader createReader(String filename) throws FileNotFoundException {
-        FileReader reader = new FileReader(filename);
-        return new WikipediaDumpReader(reader);
+        return createReader(new File(filename));
+    }
+
+    public static WikipediaDumpReader createReader(String filename, Charset charset) throws FileNotFoundException {
+        return createReader(new File(filename), charset);
     }
 
     public static WikipediaDumpReader createReader(File file) throws FileNotFoundException {
-        FileReader reader = new FileReader(file);
+        return createReader(file, Charsets.UTF_8);
+    }
+
+    public static WikipediaDumpReader createReader(File file, Charset charset) throws FileNotFoundException {
+        return createReader(new FileInputStream(file), charset);
+    }
+
+    public static WikipediaDumpReader createReader(InputStream input, Charset charset) {
+        Reader reader = new InputStreamReader(input, charset);
         return new WikipediaDumpReader(reader);
     }
 
-    private WikipediaDumpReader(FileReader reader) {
+    private WikipediaDumpReader(Reader reader) {
         this.dumpReader = reader;
         xmlParser = new SimpleReaderBasedXMLParser(reader, this);
     }

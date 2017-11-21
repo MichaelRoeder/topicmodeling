@@ -16,6 +16,7 @@
  */
 package org.dice_research.topicmodeling.io.xml;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 
@@ -25,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class XmlBasedCorpusPartWriter extends AbstractDocumentXmlWriter implements DocumentConsumer {
+public class XmlBasedCorpusPartWriter extends AbstractDocumentXmlWriter implements DocumentConsumer, Closeable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(XmlBasedCorpusPartWriter.class);
 
@@ -44,7 +45,7 @@ public class XmlBasedCorpusPartWriter extends AbstractDocumentXmlWriter implemen
     }
 
     @Override
-    public void consumeDocument(Document document) {
+    public synchronized void consumeDocument(Document document) {
         if (currentXmlWriter == null) {
             currentXmlWriter = XmlWritingDocumentConsumer.createXmlWritingDocumentConsumer(new File(outputFolder
                     .getAbsolutePath() + File.separator + PART_FILE_PREFIX + currentPartId + PART_FILE_SUFFIX));
@@ -68,6 +69,7 @@ public class XmlBasedCorpusPartWriter extends AbstractDocumentXmlWriter implemen
         }
     }
 
+    @Override
     public void close() {
         if (currentXmlWriter != null) {
             try {

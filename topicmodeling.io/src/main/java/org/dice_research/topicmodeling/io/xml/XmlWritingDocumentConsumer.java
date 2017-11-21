@@ -16,11 +16,16 @@
  */
 package org.dice_research.topicmodeling.io.xml;
 
+import java.io.BufferedOutputStream;
 import java.io.Closeable;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
+import org.apache.commons.io.Charsets;
+import org.apache.commons.io.IOUtils;
 import org.dice_research.topicmodeling.preprocessing.docconsumer.DocumentConsumer;
 import org.dice_research.topicmodeling.utils.doc.Document;
 import org.slf4j.Logger;
@@ -32,31 +37,26 @@ public class XmlWritingDocumentConsumer extends AbstractDocumentXmlWriter implem
     private static final Logger LOGGER = LoggerFactory
             .getLogger(XmlWritingDocumentConsumer.class);
 
-    protected FileWriter fout;
+    protected Writer fout;
 
     public static XmlWritingDocumentConsumer createXmlWritingDocumentConsumer(File file) {
-        FileWriter fout = null;
+        Writer writer = null;
         if(!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
         try {
-            fout = new FileWriter(file);
-            XmlWritingDocumentConsumer consumer = new XmlWritingDocumentConsumer(fout);
+            writer = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(file)), Charsets.UTF_8);
+            XmlWritingDocumentConsumer consumer = new XmlWritingDocumentConsumer(writer);
             consumer.writeHead();
             return consumer;
         } catch (Exception e) {
             LOGGER.error("Error while trying to write corpus to XML file. Returning null.", e);
-            if (fout != null) {
-                try {
-                    fout.close();
-                } catch (IOException ioe) {
-                }
-            }
+            IOUtils.closeQuietly(writer);
         }
         return null;
     }
 
-    private XmlWritingDocumentConsumer(FileWriter fout) {
+    private XmlWritingDocumentConsumer(Writer fout) {
         this.fout = fout;
     }
 

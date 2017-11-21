@@ -16,11 +16,13 @@
  */
 package org.dice_research.topicmodeling.preprocessing.docsupplier.decorator;
 
+import java.util.function.Function;
+
 import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
 import org.dice_research.topicmodeling.utils.doc.Document;
 
 
-public abstract class AbstractDocumentSupplierDecorator implements DocumentSupplierDecorator {
+public abstract class AbstractDocumentSupplierDecorator implements DocumentSupplierDecorator, Function<Document, Document> {
 
     protected DocumentSupplier documentSource;
 
@@ -54,4 +56,9 @@ public abstract class AbstractDocumentSupplierDecorator implements DocumentSuppl
     }
 
     protected abstract Document prepareDocument(Document document);
+    
+    @Override
+    public Document apply(Document document) {
+        return prepareDocument(document);
+    }
 }

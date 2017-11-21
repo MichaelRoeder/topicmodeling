@@ -16,9 +16,16 @@
  */
 package org.dice_research.topicmodeling.preprocessing.docsupplier.decorator.filter;
 
+import java.util.function.Predicate;
+
 import org.dice_research.topicmodeling.utils.doc.Document;
 
-public interface DocumentFilter {
+public interface DocumentFilter extends Predicate<Document> {
 
     public boolean isDocumentGood(Document document);
+
+    @Override
+    public default boolean test(Document document) {
+        return isDocumentGood(document);
+    }
 }
