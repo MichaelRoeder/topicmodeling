@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dice_research.topicmodeling.io.json.AbstractDocumentXmlReader;
 import org.dice_research.topicmodeling.utils.doc.Document;
 import org.dice_research.topicmodeling.utils.doc.DocumentProperty;
 import org.slf4j.Logger;
@@ -79,14 +78,14 @@ public class DocumentAdapter extends TypeAdapter<Document> {
             }
         }
         in.endObject();
-        return new Document(id, properties.toArray(Document[properties.size()]));
+        return new Document(id, properties.toArray(new DocumentProperty[properties.size()]));
     }
 
     private void readDocumentProperty(JsonReader in, List<DocumentProperty> properties) throws IOException {
         in.beginObject();
         String key;
         String type = null;
-        DocumentProperty value;
+        DocumentProperty value = null;
         while (in.peek() != JsonToken.END_OBJECT) {
             key = in.nextName();
             switch (key) {
@@ -103,8 +102,7 @@ public class DocumentAdapter extends TypeAdapter<Document> {
                     }
                 } else {
                     LOGGER.error(
-                            "Couldn't read Object of {} because the value type was not defined before reading the value. It will be skipped.",
-                            name);
+                            "Couldn't read DocumentProperty instance because the type was not defined before reading the value. It will be skipped.");
                     in.skipValue();
                 }
                 break;
@@ -114,8 +112,8 @@ public class DocumentAdapter extends TypeAdapter<Document> {
             }
             }
         }
-        if ((name != null) && (value != null)) {
-            data.put(name, value);
+        if (value != null) {
+            properties.add(value);
         }
         in.endObject();
     }

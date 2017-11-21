@@ -16,8 +16,7 @@
  */
 package org.dice_research.topicmodeling.io.json;
 
-import java.io.IOException;
-import java.io.Writer;
+import java.io.Reader;
 
 import org.dice_research.topicmodeling.io.json.adapters.DocumentAdapter;
 import org.dice_research.topicmodeling.utils.doc.Document;
@@ -25,22 +24,27 @@ import org.dice_research.topicmodeling.utils.doc.Document;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-abstract class AbstractDocumentJsonWriter {
+public abstract class AbstractDocumentJsonReader {
 
     protected GsonBuilder builder;
     protected Gson gson;
 
-    public AbstractDocumentJsonWriter() {
+    public AbstractDocumentJsonReader() {
         this(new GsonBuilder());
     }
 
-    public AbstractDocumentJsonWriter(GsonBuilder builder) {
+    public AbstractDocumentJsonReader(GsonBuilder builder) {
         this.builder = builder;
         this.builder.registerTypeAdapter(Document.class, new DocumentAdapter());
         gson = this.builder.create();
     }
 
-    protected void writeDocument(Writer writer, Document document) throws IOException {
-        gson.toJson(document, writer);
+    public Document readDocument(Reader reader) {
+        try {
+            return gson.fromJson(reader, Document.class);
+        } catch (Exception e) {
+            return null;
+        }
     }
+
 }

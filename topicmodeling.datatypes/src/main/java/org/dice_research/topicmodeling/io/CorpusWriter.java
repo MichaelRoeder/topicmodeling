@@ -16,9 +16,33 @@
  */
 package org.dice_research.topicmodeling.io;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import org.dice_research.topicmodeling.utils.corpus.Corpus;
 
 public interface CorpusWriter {
 
+    public void writeCorpus(Corpus corpus, OutputStream out) throws IOException;
+
+    public default void writeCorpus(Corpus corpus, File file) throws IOException {
+        OutputStream out = null;
+        try {
+            out = new BufferedOutputStream(new FileOutputStream(file));
+            writeCorpus(corpus, out);
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (Exception e) {
+                }
+            }
+        }
+    }
+
+    @Deprecated
     public void writeCorpus(Corpus corpus);
 }

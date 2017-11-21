@@ -50,7 +50,7 @@ public class CorpusObjectWriter implements CorpusWriter {
         }
     }
 
-    protected void writeCorpus(Corpus corpus, OutputStream out) throws IOException {
+    public void writeCorpus(Corpus corpus, OutputStream out) throws IOException {
         ObjectOutputStream oOut = null;
         try {
             oOut = new ObjectOutputStream(out);
