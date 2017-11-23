@@ -23,6 +23,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 import org.apache.commons.io.Charsets;
+import org.apache.commons.io.IOUtils;
 import org.dice_research.topicmodeling.io.CorpusWriter;
 import org.dice_research.topicmodeling.utils.corpus.Corpus;
 import org.dice_research.topicmodeling.utils.doc.Document;
@@ -53,19 +54,23 @@ public class CorpusXmlWriter extends AbstractDocumentXmlWriter implements Corpus
 
     @Override
     public void writeCorpus(Corpus corpus, OutputStream out) throws IOException {
-        Writer writer = new OutputStreamWriter(out, Charsets.UTF_8);
-        writer.write(CorpusXmlTagHelper.XML_FILE_HEAD);
-        writer.write("<");
-        writer.write(CorpusXmlTagHelper.CORPUS_TAG_NAME);
-        writer.write(" ");
-        writer.write(CorpusXmlTagHelper.NAMESPACE_DECLARATION);
-        writer.write(">\n");
-        for (Document d : corpus) {
-            writeDocument(writer, d);
+        Writer writer = null;
+        try {
+            writer = new OutputStreamWriter(out, Charsets.UTF_8);
+            writer.write(CorpusXmlTagHelper.XML_FILE_HEAD);
+            writer.write("<");
+            writer.write(CorpusXmlTagHelper.CORPUS_TAG_NAME);
+            writer.write(" ");
+            writer.write(CorpusXmlTagHelper.NAMESPACE_DECLARATION);
+            writer.write(">\n");
+            for (Document d : corpus) {
+                writeDocument(writer, d);
+            }
+            writer.write("</");
+            writer.write(CorpusXmlTagHelper.CORPUS_TAG_NAME);
+            writer.write(">");
+        } finally {
+            IOUtils.closeQuietly(writer);
         }
-        writer.write("</");
-        writer.write(CorpusXmlTagHelper.CORPUS_TAG_NAME);
-        writer.write(">");
-
     }
 }

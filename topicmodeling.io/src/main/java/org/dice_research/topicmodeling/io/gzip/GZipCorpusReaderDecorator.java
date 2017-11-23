@@ -17,18 +17,20 @@
 package org.dice_research.topicmodeling.io.gzip;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.zip.GZIPOutputStream;
+import java.io.InputStream;
+import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.dice_research.topicmodeling.io.CorpusReader;
 import org.dice_research.topicmodeling.io.CorpusReaderDecorator;
-import org.dice_research.topicmodeling.io.CorpusWriter;
-import org.dice_research.topicmodeling.io.CorpusWriterDecorator;
 import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
 import org.dice_research.topicmodeling.utils.corpus.Corpus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GZipCorpusReaderDecorator implements CorpusReaderDecorator {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GZipCorpusReaderDecorator.class);
 
     protected CorpusReader reader;
 
@@ -60,12 +62,25 @@ public class GZipCorpusReaderDecorator implements CorpusReaderDecorator {
 
     @Override
     public void deleteCorpus() {
-        reader.readCorpus();
+        reader.deleteCorpus();
     }
 
     @Override
     public CorpusReader getDecorated() {
         return reader;
+    }
+
+    @Override
+    public void readCorpus(InputStream in) {
+        GZIPInputStream gin = null;
+        try {
+            gin = new GZIPInputStream(in);
+            reader.readCorpus(gin);
+        } catch (IOException e) {
+            LOGGER.error("Couldn't create GZIPInputStream. Corpus won't be read.", e);
+        } finally {
+            IOUtils.closeQuietly(gin);
+        }
     }
 
 }

@@ -92,6 +92,18 @@
 	            <artifactId>topicmodeling.io</artifactId>
                 <version>${project.parent.version}</version>
             </dependency>
+            <!-- Topicmodeling IO JSON-->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.io.json</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <!-- Topicmodeling IO Test -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.io.test</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
 	        <!-- Topicmodeling lang -->
 	        <dependency>
 	            <groupId>org.dice-research</groupId>

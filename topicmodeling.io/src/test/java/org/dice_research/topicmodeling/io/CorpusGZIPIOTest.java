@@ -17,15 +17,36 @@
 package org.dice_research.topicmodeling.io;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import org.dice_research.topicmodeling.io.gzip.GZipCorpusObjectReader;
-import org.dice_research.topicmodeling.io.gzip.GZipCorpusObjectWriter;
+import org.dice_research.topicmodeling.io.gzip.GZipCorpusReaderDecorator;
+import org.dice_research.topicmodeling.io.gzip.GZipCorpusWriterDecorator;
+import org.dice_research.topicmodeling.io.java.CorpusObjectReader;
+import org.dice_research.topicmodeling.io.java.CorpusObjectWriter;
+import org.dice_research.topicmodeling.io.test.AbstractCorpusIOTest;
+import org.dice_research.topicmodeling.io.xml.CorpusXmlReader;
+import org.dice_research.topicmodeling.io.xml.CorpusXmlWriter;
+import org.dice_research.topicmodeling.utils.corpus.Corpus;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
+@RunWith(Parameterized.class)
 public class CorpusGZIPIOTest extends AbstractCorpusIOTest {
 
-    private static final File CORPUS_FILE = generateTempFile(".object");
+    @Parameters
+    public static Collection<Object[]> data() {
+        List<Object[]> testCases = new ArrayList<>();
+        testCases.add(new Object[] { new CorpusObjectReader(), new CorpusObjectWriter(),
+                CorpusObjectIOTest.createTestCorpus(), generateTempFile(".object") });
+        testCases.add(new Object[] { new CorpusXmlReader(), new CorpusXmlWriter(), CorpusXMLIOTest.createTestCorpus(),
+                generateTempFile(".object") });
+        return testCases;
+    }
 
-    public CorpusGZIPIOTest() {
-        super(new GZipCorpusObjectReader(CORPUS_FILE), new GZipCorpusObjectWriter(CORPUS_FILE), createTestCorpus());
+    public CorpusGZIPIOTest(CorpusReader reader, CorpusWriter writer, Corpus corpus, File testFile) {
+        super(new GZipCorpusReaderDecorator(reader), new GZipCorpusWriterDecorator(writer), corpus, testFile);
     }
 }

@@ -14,26 +14,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with topicmodeling.io.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.dice_research.topicmodeling.io;
+package org.dice_research.topicmodeling.io.test;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.dice_research.topicmodeling.io.CorpusReader;
 import org.dice_research.topicmodeling.io.CorpusWriter;
+import org.dice_research.topicmodeling.lang.Term;
 import org.dice_research.topicmodeling.utils.corpus.Corpus;
-import org.dice_research.topicmodeling.utils.corpus.DocumentListCorpus;
 import org.dice_research.topicmodeling.utils.doc.Document;
 import org.dice_research.topicmodeling.utils.doc.DocumentMultipleCategories;
-import org.dice_research.topicmodeling.utils.doc.DocumentName;
 import org.dice_research.topicmodeling.utils.doc.DocumentProperty;
-import org.dice_research.topicmodeling.utils.doc.DocumentText;
+import org.dice_research.topicmodeling.utils.doc.TermTokenizedText;
 import org.dice_research.topicmodeling.utils.doc.ner.NamedEntitiesInText;
 import org.dice_research.topicmodeling.utils.doc.ner.NamedEntityInText;
-import org.dice_research.topicmodeling.utils.doc.ner.SignedNamedEntityInText;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -42,19 +46,37 @@ public abstract class AbstractCorpusIOTest {
     private CorpusReader reader;
     private CorpusWriter writer;
     private Corpus corpus;
+    private File testFile;
 
     public AbstractCorpusIOTest(CorpusReader reader, CorpusWriter writer, Corpus corpus) {
+        this(reader, writer, corpus, generateTempFile(".corpus"));
+    }
+
+    public AbstractCorpusIOTest(CorpusReader reader, CorpusWriter writer, Corpus corpus, File testFile) {
         this.reader = reader;
         this.writer = writer;
         this.corpus = corpus;
+        this.testFile = testFile;
     }
 
     @Test
     public void test() {
-        writer.writeCorpus(corpus);
-        reader.readCorpus();
-        Corpus readCorpus = reader.getCorpus();
-        compareCorpora(corpus, readCorpus);
+        OutputStream out = null;
+        InputStream in = null;
+        try {
+            out = new BufferedOutputStream(new FileOutputStream(testFile));
+            writer.writeCorpus(corpus, out);
+            IOUtils.closeQuietly(out);
+            in = new BufferedInputStream(new FileInputStream(testFile));
+            reader.readCorpus(in);
+            Corpus readCorpus = reader.getCorpus();
+            compareCorpora(corpus, readCorpus);
+        }catch(Exception e) {
+            e.printStackTrace();
+            Assert.fail("Got an Exception: " + e.getLocalizedMessage());
+        } finally {
+            IOUtils.closeQuietly(out);
+        }
     }
 
     protected void compareCorpora(Corpus corpus, Corpus readCorpus) {
@@ -81,6 +103,13 @@ public abstract class AbstractCorpusIOTest {
                         Assert.assertTrue("The list of named entities does not contain " + ne.toString() + ".", readNes
                                 .getNamedEntities().contains(ne));
                     }
+                } else if (propClass == TermTokenizedText.class) {
+                    List<Term> origTerms = ((TermTokenizedText) origProp).getTermTokenizedText();
+                    List<Term> readTerms = ((TermTokenizedText) readProp).getTermTokenizedText();
+                    for (Term t : origTerms) {
+                        Assert.assertTrue("The list of named entities does not contain " + t.toString() + ".",
+                                readTerms.contains(t));
+                    }
                 } else if (propClass == DocumentMultipleCategories.class) {
                     origCategories = (DocumentMultipleCategories) origProp;
                     readCategories = (DocumentMultipleCategories) readProp;
@@ -98,29 +127,5 @@ public abstract class AbstractCorpusIOTest {
         } catch (IOException e) {
             return new File("tmp_test" + suffix);
         }
-    }
-
-    public static Corpus createTestCorpus() {
-        List<Document> documents = new ArrayList<Document>();
-
-        documents.add(new Document(0, new DocumentProperty[] { new DocumentText("Dieser Text ist ein Testtext."),
-                new DocumentName("Testdokument #1"), new NamedEntitiesInText() }));
-
-        documents.add(new Document(1, new DocumentProperty[] {
-                new DocumentText("Der neue Jaguar ist kein Golf."),
-                new DocumentName("Bericht über den neuen Jaguar"),
-                new NamedEntitiesInText(new NamedEntityInText[] { new NamedEntityInText(25, 4, "http://car/VWGolf"),
-                        new SignedNamedEntityInText(9, 6, "http://animal/Jaguar", "manualAnnotation") }),
-                new DocumentMultipleCategories(new String[] { "category1" }) }));
-
-        documents.add(new Document(2, new DocumentProperty[] {
-                new DocumentText("Am persischen Golf wird wieder Golf gespielt!"),
-                new DocumentName("Sport aktuell"),
-                new NamedEntitiesInText(new NamedEntityInText[] {
-                        new SignedNamedEntityInText(31, 4, "http://sport/Golf", "someSource"),
-                        new NamedEntityInText(3, 15, "http://geo/PersianGulf") }),
-                new DocumentMultipleCategories(new String[] { "category1", "category2" }) }));
-
-        return new DocumentListCorpus<List<Document>>(documents);
     }
 }

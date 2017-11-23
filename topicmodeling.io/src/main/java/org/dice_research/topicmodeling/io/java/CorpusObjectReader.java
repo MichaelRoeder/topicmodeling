@@ -17,8 +17,6 @@
 package org.dice_research.topicmodeling.io.java;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 
@@ -32,27 +30,22 @@ public class CorpusObjectReader extends AbstractCorpusReader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CorpusObjectReader.class);
 
+    public CorpusObjectReader() {
+        super();
+    }
+    
+    @Deprecated
     public CorpusObjectReader(File file) {
         super(file);
     }
 
-    public void readCorpus() {
-        FileInputStream fin = null;
-        try {
-            fin = new FileInputStream(file);
-            readCorpus(fin);
-        } catch (Exception e) {
-            LOGGER.error("Error while trying to read serialized corpus from file", e);
-        } finally {
-            IOUtils.closeQuietly(fin);
-        }
-    }
-
-    protected void readCorpus(InputStream is) throws IOException, ClassNotFoundException {
+    public void readCorpus(InputStream is) {
         ObjectInputStream oin = null;
         try {
             oin = new ObjectInputStream(is);
             corpus = (Corpus) oin.readObject();
+        } catch (Exception e) {
+            LOGGER.error("Error while trying to read serialized corpus from file", e);
         } finally {
             IOUtils.closeQuietly(oin);
         }

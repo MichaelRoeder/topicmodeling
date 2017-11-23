@@ -32,12 +32,18 @@ public class CorpusObjectWriter implements CorpusWriter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CorpusObjectWriter.class);
 
+    @Deprecated
     protected File file;
 
+    public CorpusObjectWriter() {
+    }
+
+    @Deprecated
     public CorpusObjectWriter(File file) {
         this.file = file;
     }
 
+    @Deprecated
     public void writeCorpus(Corpus corpus) {
         FileOutputStream fOut = null;
         try {

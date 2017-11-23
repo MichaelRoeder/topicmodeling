@@ -18,10 +18,12 @@ package org.dice_research.topicmodeling.io.xml;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.Charsets;
+import org.apache.commons.io.IOUtils;
 import org.dice_research.topicmodeling.io.CorpusReader;
 import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
 import org.dice_research.topicmodeling.utils.corpus.Corpus;
@@ -30,7 +32,6 @@ import org.dice_research.topicmodeling.utils.doc.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class CorpusXmlReader extends AbstractDocumentXmlReader implements CorpusReader {// AbstractCorpusReader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CorpusXmlReader.class);
@@ -38,42 +39,54 @@ public class CorpusXmlReader extends AbstractDocumentXmlReader implements Corpus
     // private MultiPatternAutomaton automaton;
     private BricsBasedXmlParser parser;
 
+    @Deprecated
     protected File file;
     protected Corpus corpus;
 
     // private Document currentDocument;
     // private int lastPos;
     // private NamedEntityInText currentNamedEntity;
-    // private List<NamedEntityInText> namedEntities = new ArrayList<NamedEntityInText>();
+    // private List<NamedEntityInText> namedEntities = new
+    // ArrayList<NamedEntityInText>();
     // private List<String> categories = new ArrayList<String>();
 
+    @Deprecated
     public CorpusXmlReader(File file) {
         this.file = file;
-        // this.automaton = new BricsAutomatonManager(this, new String[] { "\\<[^\\<\\>]*\\>",
+        // this.automaton = new BricsAutomatonManager(this, new String[] {
+        // "\\<[^\\<\\>]*\\>",
         // "\\&[#A-Za-z][A-Za-z0-9]{1,6};" });
         parser = new BricsBasedXmlParser(this);
     }
 
+    public CorpusXmlReader() {
+        // this.automaton = new BricsAutomatonManager(this, new String[] {
+        // "\\<[^\\<\\>]*\\>",
+        // "\\&[#A-Za-z][A-Za-z0-9]{1,6};" });
+        parser = new BricsBasedXmlParser(this);
+    }
+
+    @Deprecated
     @Override
     public void readCorpus() {
+        readCorpus(file);
+    }
+
+    public void readCorpus(InputStream in) {
         this.corpus = new DocumentListCorpus<List<Document>>(new ArrayList<Document>());
         String text;
         try {
-            text = FileUtils.readFileToString(file);
+            text = IOUtils.toString(in, Charsets.UTF_8);
         } catch (IOException e) {
-            LOGGER.error("Couldn't read file.", e);
+            LOGGER.error("Couldn't read stream.", e);
             return;
         }
-        // lastPos = 0;
-        // currentDocument = null;
-        // automaton.parseText(text);
         parser.parse(text);
     }
 
     @Override
     public void addDocuments(DocumentSupplier documentFactory) {
-        LOGGER.info("Got a "
-                + documentFactory.getClass().getCanonicalName()
+        LOGGER.info("Got a " + documentFactory.getClass().getCanonicalName()
                 + " object as DocumentSupplier. But I'm a corpus reader and don't need such a supplier. ");
     }
 
@@ -112,7 +125,8 @@ public class CorpusXmlReader extends AbstractDocumentXmlReader implements Corpus
     // break;
     // }
     // default: {
-    // LOGGER.error("Got an unknown patternId from the automaton (patternId=" + patternId + ").");
+    // LOGGER.error("Got an unknown patternId from the automaton (patternId=" +
+    // patternId + ").");
     // break;
     // }
     // }
@@ -166,7 +180,9 @@ public class CorpusXmlReader extends AbstractDocumentXmlReader implements Corpus
     // if (tagName.equals(CorpusXmlTagHelper.DOCUMENT_TAG_NAME)) {
     // this.corpus.addDocument(currentDocument);
     // currentDocument = null;
-    // } else if (tagName.equals(CorpusXmlTagHelper.TEXT_WITH_NAMED_ENTITIES_TAG_NAME) && (currentDocument != null)) {
+    // } else if
+    // (tagName.equals(CorpusXmlTagHelper.TEXT_WITH_NAMED_ENTITIES_TAG_NAME) &&
+    // (currentDocument != null)) {
     // currentDocument.addProperty(new DocumentText(buffer.toString()));
     // buffer.delete(0, buffer.length());
     // NamedEntitiesInText nes = new NamedEntitiesInText(namedEntities);
@@ -185,7 +201,9 @@ public class CorpusXmlReader extends AbstractDocumentXmlReader implements Corpus
     // currentDocument.addProperty(new DocumentMultipleCategories(
     // categories.toArray(new String[categories.size()])));
     // categories.clear();
-    // } else if (tagName.equals(CorpusXmlTagHelper.DOCUMENT_CATEGORIES_SINGLE_CATEGORY_TAG_NAME)) {
+    // } else if
+    // (tagName.equals(CorpusXmlTagHelper.DOCUMENT_CATEGORIES_SINGLE_CATEGORY_TAG_NAME))
+    // {
     // categories.add(text.substring(lastPos, startPos));
     // } else {
     // if (currentDocument != null) {
@@ -239,12 +257,14 @@ public class CorpusXmlReader extends AbstractDocumentXmlReader implements Corpus
     // end = tag.indexOf('=', start);
     // }
     // if (namedEntitySource != null) {
-    // return new SignedNamedEntityInText(startPos, length, namedEntityUri, namedEntitySource);
+    // return new SignedNamedEntityInText(startPos, length, namedEntityUri,
+    // namedEntitySource);
     // } else {
     // return new NamedEntityInText(startPos, length, namedEntityUri);
     // }
     // } catch (Exception e) {
-    // LOGGER.error("Couldn't parse NamedEntityInText tag (" + tag + "). Returning null.", e);
+    // LOGGER.error("Couldn't parse NamedEntityInText tag (" + tag + "). Returning
+    // null.", e);
     // }
     // return null;
     // }
@@ -252,10 +272,12 @@ public class CorpusXmlReader extends AbstractDocumentXmlReader implements Corpus
     // private void parseEscapedCharachter(int startPos, int length) {
     // buffer.append(text.substring(lastPos, startPos));
     // lastPos = startPos + length;
-    // buffer.append(StringEscapeUtils.unescapeXml(text.substring(startPos, lastPos)));
+    // buffer.append(StringEscapeUtils.unescapeXml(text.substring(startPos,
+    // lastPos)));
     // }
 
-    // public static void registerParseableDocumentProperty(Class<? extends ParseableDocumentProperty> clazz) {
+    // public static void registerParseableDocumentProperty(Class<? extends
+    // ParseableDocumentProperty> clazz) {
     // CorpusXmlTagHelper.registerParseableDocumentProperty(clazz);
     // }
 }

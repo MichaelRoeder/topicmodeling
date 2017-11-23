@@ -28,9 +28,14 @@ public abstract class AbstractCorpusReader implements CorpusReader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractCorpusReader.class);
 
+    @Deprecated
     protected File file;
     protected Corpus corpus;
 
+    public AbstractCorpusReader() {
+    }
+
+    @Deprecated
     public AbstractCorpusReader(File file) {
         this.file = file;
     }
@@ -39,6 +44,11 @@ public abstract class AbstractCorpusReader implements CorpusReader {
     public void addDocuments(DocumentSupplier documentFactory) {
         LOGGER.info("Got a " + documentFactory.getClass().getCanonicalName()
                 + " object as DocumentSupplier. But I'm a corpus reader and don't need such a supplier. ");
+    }
+
+    @Deprecated
+    public void readCorpus() {
+        readCorpus(file);
     }
 
     @Override

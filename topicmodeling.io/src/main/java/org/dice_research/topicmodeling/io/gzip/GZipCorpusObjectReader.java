@@ -17,13 +17,19 @@
 package org.dice_research.topicmodeling.io.gzip;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.dice_research.topicmodeling.io.java.CorpusObjectReader;
 
+/**
+ * 
+ * @author Michael R&ouml;der (michael.roeder@uni-paderborn.de)
+ *
+ * @deprecated Use the {@link GZipCorpusReaderDecorator} instead.
+ */
+@Deprecated
 public class GZipCorpusObjectReader extends CorpusObjectReader {
 
     public GZipCorpusObjectReader(File file) {
@@ -31,11 +37,13 @@ public class GZipCorpusObjectReader extends CorpusObjectReader {
     }
 
     @Override
-    protected void readCorpus(InputStream is) throws IOException, ClassNotFoundException {
+    public void readCorpus(InputStream is) {
         GZIPInputStream gin = null;
         try {
             gin = new GZIPInputStream(is);
             super.readCorpus(gin);
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             IOUtils.closeQuietly(gin);
         }

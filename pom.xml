@@ -56,6 +56,7 @@
 		<module>topicmodeling.datatypes</module>
 		<module>topicmodeling.concurrent</module>
 		<module>topicmodeling.lang</module>
+        <module>topicmodeling.io.test</module>
 		<module>topicmodeling.io</module>
         <module>topicmodeling.io.json</module>
 		<module>topicmodeling.preprocessing</module>

@@ -1,8 +1,5 @@
 package org.dice_research.topicmodeling.io.json;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -51,18 +48,7 @@ public class CorpusJsonReader extends AbstractDocumentJsonReader implements Corp
                 + " object as DocumentSupplier. But I'm a corpus reader and don't need such a supplier. ");
     }
 
-    public void readCorpus(File file) {
-        InputStream in = null;
-        try {
-            in = new BufferedInputStream(new FileInputStream(file));
-            readCorpus(in);
-        } catch (Exception e) {
-            LOGGER.error("Error while trying to read serialized corpus from file", e);
-        } finally {
-            IOUtils.closeQuietly(in);
-        }
-    }
-
+    @Override
     public void readCorpus(InputStream in) {
         this.corpus = new DocumentListCorpus<List<Document>>(new ArrayList<Document>());
         JsonReader reader = null;

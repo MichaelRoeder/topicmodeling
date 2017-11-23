@@ -16,9 +16,36 @@
  */
 package org.dice_research.topicmodeling.io;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 import org.dice_research.topicmodeling.preprocessing.Preprocessor;
+import org.slf4j.LoggerFactory;
 
 public interface CorpusReader extends Preprocessor {
 
+    @Deprecated
     public void readCorpus();
+
+    public default void readCorpus(File file) {
+        InputStream in = null;
+        try {
+            in = new BufferedInputStream(new FileInputStream(file));
+            readCorpus(in);
+        } catch (Exception e) {
+            LoggerFactory.getLogger(CorpusReader.class).error("Error while trying to read serialized corpus from file",
+                    e);
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (Exception e) {
+                }
+            }
+        }
+    }
+
+    public void readCorpus(InputStream in);
 }

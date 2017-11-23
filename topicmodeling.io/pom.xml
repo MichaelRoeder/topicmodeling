@@ -70,5 +70,12 @@
 			<artifactId>opencsv</artifactId>
 			<version>2.3</version>
 		</dependency>
+        
+        <!-- Topicmodeling IO Test-->
+        <dependency>
+            <groupId>org.dice-research</groupId>
+            <artifactId>topicmodeling.io.test</artifactId>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 </project>
