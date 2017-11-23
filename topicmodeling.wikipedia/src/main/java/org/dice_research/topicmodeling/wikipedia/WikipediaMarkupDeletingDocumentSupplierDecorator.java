@@ -14,26 +14,25 @@ public class WikipediaMarkupDeletingDocumentSupplierDecorator extends
     private static final Logger LOGGER = LoggerFactory
             .getLogger(WikipediaMarkupDeletingDocumentSupplierDecorator.class);
 
-    // private WikipediaMarkupDeletingMachine deleter;
-    private StackBasedMarkupDeletingMachine deleter;
+    private boolean removeCategoryLinks = StackBasedMarkupDeletingMachine.REMOVE_CATEGORY_LINKS_DEFAULT;
+    private boolean keepTableContents = StackBasedMarkupDeletingMachine.KEEP_TABLE_CONTENTS_DEFAULT;
 
     public WikipediaMarkupDeletingDocumentSupplierDecorator(
             DocumentSupplier documentSource) {
         super(documentSource);
-        deleter = new StackBasedMarkupDeletingMachine();
     }
 
     public WikipediaMarkupDeletingDocumentSupplierDecorator(
             DocumentSupplier documentSource, boolean removeCategoryLinks) {
         this(documentSource);
-        deleter.setRemoveCategoryLinks(removeCategoryLinks);
+        this.removeCategoryLinks = removeCategoryLinks;
     }
 
     public WikipediaMarkupDeletingDocumentSupplierDecorator(
             DocumentSupplier documentSource, boolean removeCategoryLinks, boolean keepTableContents) {
         this(documentSource);
-        deleter.setRemoveCategoryLinks(removeCategoryLinks);
-        deleter.setKeepTableContents(keepTableContents);
+        this.removeCategoryLinks = removeCategoryLinks;
+        this.keepTableContents = keepTableContents;
     }
 
     @Override
@@ -43,15 +42,22 @@ public class WikipediaMarkupDeletingDocumentSupplierDecorator extends
             LOGGER.error("Got a Document without a DocumentText property!");
             return null;
         }
-        text.setText(deleter.getCleanText(text.getText()));
+        text.setText(createDeleter().getCleanText(text.getText()));
         return document;
+    }
+    
+    public StackBasedMarkupDeletingMachine createDeleter() {
+        StackBasedMarkupDeletingMachine deleter = new StackBasedMarkupDeletingMachine();
+        deleter.setRemoveCategoryLinks(removeCategoryLinks);
+        deleter.setKeepTableContents(keepTableContents);
+        return deleter;
     }
 
     public void setRemoveCategoryLinks(boolean removeCategoryLinks) {
-        deleter.setRemoveCategoryLinks(removeCategoryLinks);
+        this.removeCategoryLinks = removeCategoryLinks;
     }
 
     public void setKeepTableContents(boolean keepTableContents) {
-        deleter.setKeepTableContents(keepTableContents);
+        this.keepTableContents = keepTableContents;
     }
 }
