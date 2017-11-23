@@ -13,10 +13,8 @@ import org.slf4j.LoggerFactory;
 
 import com.carrotsearch.hppc.BitSet;
 
-public class StackBasedMarkupDeletingMachine implements
-        MarkupDetectingAutomatonObserver {
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(StackBasedMarkupDeletingMachine.class);
+public class StackBasedMarkupDeletingMachine implements MarkupDetectingAutomatonObserver {
+    private static final Logger LOGGER = LoggerFactory.getLogger(StackBasedMarkupDeletingMachine.class);
 
     public static final boolean REMOVE_CATEGORY_LINKS_DEFAULT = false;
     public static final boolean KEEP_TABLE_CONTENTS_DEFAULT = true;
@@ -105,8 +103,7 @@ public class StackBasedMarkupDeletingMachine implements
      */
     @Override
     public void foundPattern(int patternId, int startPos, int endPos,
-            MarkupDetectingAutomatonObserverState observerState,
-            MarkupDetectingAutomatonState automatonState) {
+            MarkupDetectingAutomatonObserverState observerState, MarkupDetectingAutomatonState automatonState) {
         StackBasedMarkupDeletingMachineState state = (StackBasedMarkupDeletingMachineState) observerState;
 
         // If the stack is empty we can add the text between the last and the
@@ -121,15 +118,13 @@ public class StackBasedMarkupDeletingMachine implements
         case 0: { // " "
             // do not search for " " anymore, cause only the first one is interesting
             automatonState.getPatternBitSet().clear(0);
-            state.stack.add(new WikipediaOpeningMarkup(
-                    WikipediaOpeningMarkupType.SPACE, startPos,
+            state.stack.add(new WikipediaOpeningMarkup(WikipediaOpeningMarkupType.SPACE, startPos,
                     automatonState.getPatternBitSet().bits[0]));
             break;
         }
         case 1: { // "{{"
             // search for the "}}"
-            state.stack.add(new WikipediaOpeningMarkup(
-                    WikipediaOpeningMarkupType.MAKRO_OPENING, startPos,
+            state.stack.add(new WikipediaOpeningMarkup(WikipediaOpeningMarkupType.MAKRO_OPENING, startPos,
                     AFTER_MAKRO_MARKUP_PATTERN));
             automatonState.getPatternBitSet().bits[0] = AFTER_MAKRO_MARKUP_PATTERN;
             break;
@@ -149,8 +144,7 @@ public class StackBasedMarkupDeletingMachine implements
             automatonState.getPatternBitSet().clear(6);
             // do not search for " "
             automatonState.getPatternBitSet().clear(0);
-            state.stack.add(new WikipediaOpeningMarkup(
-                    WikipediaOpeningMarkupType.INTERNAL_LINK_OPENING, startPos,
+            state.stack.add(new WikipediaOpeningMarkup(WikipediaOpeningMarkupType.INTERNAL_LINK_OPENING, startPos,
                     automatonState.getPatternBitSet().bits[0]));
             break;
         }
@@ -167,8 +161,7 @@ public class StackBasedMarkupDeletingMachine implements
             automatonState.getPatternBitSet().clear(5);
             // do not search for "|"
             automatonState.getPatternBitSet().clear(8);
-            state.stack.add(new WikipediaOpeningMarkup(
-                    WikipediaOpeningMarkupType.EXTERNAL_LINK_OPENING, startPos,
+            state.stack.add(new WikipediaOpeningMarkup(WikipediaOpeningMarkupType.EXTERNAL_LINK_OPENING, startPos,
                     automatonState.getPatternBitSet().bits[0]));
             break;
         }
@@ -186,14 +179,12 @@ public class StackBasedMarkupDeletingMachine implements
             break;
         }
         case 8: { // "|"
-            state.stack.add(new WikipediaOpeningMarkup(
-                    WikipediaOpeningMarkupType.SEPARATION_BAR, startPos,
+            state.stack.add(new WikipediaOpeningMarkup(WikipediaOpeningMarkupType.SEPARATION_BAR, startPos,
                     automatonState.getPatternBitSet().bits[0]));
             break;
         }
         case 9: { // "<!--"
-            state.stack.add(new WikipediaOpeningMarkup(
-                    WikipediaOpeningMarkupType.XML_COMMENT_START, startPos,
+            state.stack.add(new WikipediaOpeningMarkup(WikipediaOpeningMarkupType.XML_COMMENT_START, startPos,
                     INSIDE_XML_COMMENT_PATTERN));
             automatonState.getPatternBitSet().bits[0] = INSIDE_XML_COMMENT_PATTERN;
             break;
@@ -244,19 +235,16 @@ public class StackBasedMarkupDeletingMachine implements
             // // search for "|}"
             // automatonState.getPatternBitSet().set(20);
             // // automatonState.getPatternBitSet().set(16, 21);
-            state.stack.add(new WikipediaOpeningMarkup(
-                    WikipediaOpeningMarkupType.TABLE, startPos,
-                    INSIDE_WIKI_TABLE_PATTERN));
-            state.stack.add(new WikipediaOpeningMarkup(
-                    WikipediaOpeningMarkupType.TABLE_OPENING, startPos,
+            state.stack.add(
+                    new WikipediaOpeningMarkup(WikipediaOpeningMarkupType.TABLE, startPos, INSIDE_WIKI_TABLE_PATTERN));
+            state.stack.add(new WikipediaOpeningMarkup(WikipediaOpeningMarkupType.TABLE_OPENING, startPos,
                     INSIDE_WIKI_TABLE_PATTERN));
             automatonState.getPatternBitSet().bits[0] = INSIDE_WIKI_TABLE_PATTERN;
             break;
         }
         case 16: { // "\n[\\|\\!]"
             handleClosingMarkup(WikipediaOpeningMarkupType.TABLE_CELL_START, state, automatonState);
-            state.stack.add(new WikipediaOpeningMarkup(
-                    WikipediaOpeningMarkupType.TABLE_CELL_START, startPos,
+            state.stack.add(new WikipediaOpeningMarkup(WikipediaOpeningMarkupType.TABLE_CELL_START, startPos,
                     automatonState.getPatternBitSet().bits[0]));
             break;
         }
@@ -266,8 +254,7 @@ public class StackBasedMarkupDeletingMachine implements
             // automatonState.getPatternBitSet().set(7);
             // // do not search for "|"
             // automatonState.getPatternBitSet().clear(8);
-            state.stack.add(new WikipediaOpeningMarkup(
-                    WikipediaOpeningMarkupType.TABLE_ROW, startPos,
+            state.stack.add(new WikipediaOpeningMarkup(WikipediaOpeningMarkupType.TABLE_ROW, startPos,
                     AFTER_TABLE_ROW_PATTERN));
             automatonState.getPatternBitSet().bits[0] = AFTER_TABLE_ROW_PATTERN;
             // this is a new line in a table
@@ -275,8 +262,7 @@ public class StackBasedMarkupDeletingMachine implements
         }
         case 18: { // "||"
             handleClosingMarkup(WikipediaOpeningMarkupType.TABLE_CELL_START, state, automatonState);
-            state.stack.add(new WikipediaOpeningMarkup(
-                    WikipediaOpeningMarkupType.TABLE_CELL_START, startPos,
+            state.stack.add(new WikipediaOpeningMarkup(WikipediaOpeningMarkupType.TABLE_CELL_START, startPos,
                     automatonState.getPatternBitSet().bits[0]));
             break;
         }
@@ -286,16 +272,24 @@ public class StackBasedMarkupDeletingMachine implements
         }
         case 21: { // "&[^;]*;"
             // unescape this char
-            appendText(StringEscapeUtils.unescapeHtml4(state.originalText
-                    .substring(startPos, endPos + 1)), state);
+            try {
+                appendText(StringEscapeUtils.unescapeHtml4(state.originalText.substring(startPos, endPos + 1)), state);
+            } catch (RuntimeException e) {
+                try {
+                    LOGGER.error("Got an exception when trying to process \""
+                            + state.originalText.substring(startPos, endPos + 1) + "\". Ignoring it.", e);
+                } catch (Exception e2) {
+                    LOGGER.error("Got an exception when trying to process an undefined substring. It will be ignored.",
+                            e);
+                }
+            }
             break;
         }
         } // switch(patternId)
         state.pos = endPos + 1;
     }
 
-    private boolean isOpeningMarkupOnStack(SimpleStack<WikipediaOpeningMarkup> stack,
-            WikipediaOpeningMarkupType type) {
+    private boolean isOpeningMarkupOnStack(SimpleStack<WikipediaOpeningMarkup> stack, WikipediaOpeningMarkupType type) {
         for (int i = 0; i < stack.size(); ++i) {
             if (stack.get(i).type == type) {
                 return true;
@@ -360,7 +354,8 @@ public class StackBasedMarkupDeletingMachine implements
             } else {
                 // check whether there is an internal or an external Link on the stack
                 while ((nextClosableMarkup != null)
-                        && ((nextClosableMarkup.type == WikipediaOpeningMarkupType.INTERNAL_LINK_OPENING) || (nextClosableMarkup.type == WikipediaOpeningMarkupType.EXTERNAL_LINK_OPENING))) {
+                        && ((nextClosableMarkup.type == WikipediaOpeningMarkupType.INTERNAL_LINK_OPENING)
+                                || (nextClosableMarkup.type == WikipediaOpeningMarkupType.EXTERNAL_LINK_OPENING))) {
                     // Go through the stack until the known next closable markup is found
                     while (removedMarkup != nextClosableMarkup) {
                         // remove the next markup
@@ -369,7 +364,8 @@ public class StackBasedMarkupDeletingMachine implements
                         appendText(removedMarkup.type.MARKUP, state);
                         appendText(removedMarkup.cleanedTextInsideMarkup, state);
                     }
-                    // get the next closable markup and make sure that it can't be closed by this linebreak
+                    // get the next closable markup and make sure that it can't be closed by this
+                    // linebreak
                     nextClosableMarkup = getNextClosableMarkup(state.stack);
                 }
                 if (removedMarkup != null) {
@@ -377,8 +373,9 @@ public class StackBasedMarkupDeletingMachine implements
                     state.stack.add(removedMarkup);
                     type = removedMarkup.type;
                 } else {
-                    LOGGER.error("Found a LINEBREAK while there is no markup on the stack which could be closed by it.(nextClosableMarkup="
-                            + nextClosableMarkup + ")");
+                    LOGGER.error(
+                            "Found a LINEBREAK while there is no markup on the stack which could be closed by it.(nextClosableMarkup="
+                                    + nextClosableMarkup + ")");
                 }
             }
             break;
@@ -398,8 +395,7 @@ public class StackBasedMarkupDeletingMachine implements
                     if (isTableRelated) {
                         handleClosingMarkup(WikipediaOpeningMarkupType.TABLE_CELL_START, state);
                     }
-                } while ((nextClosableMarkup != null)
-                        && isTableRelated);
+                } while ((nextClosableMarkup != null) && isTableRelated);
                 // close the table by saving its content
                 if ((state.stack.size() > 0) && (keepTableContents)) {
                     cleanedTextInsideMarkup = state.stack.get().cleanedTextInsideMarkup;
@@ -423,7 +419,8 @@ public class StackBasedMarkupDeletingMachine implements
         case TABLE_CELL_START: {
             WikipediaOpeningMarkup nextClosableMarkup = null;
             boolean notTableCellRelated = true;
-            // make sure that there is a closable markup which can be closed by this table cell end
+            // make sure that there is a closable markup which can be closed by this table
+            // cell end
             do {
                 nextClosableMarkup = getNextClosableMarkup(state.stack);
                 notTableCellRelated = (nextClosableMarkup.type != WikipediaOpeningMarkupType.TABLE_OPENING)
@@ -431,12 +428,12 @@ public class StackBasedMarkupDeletingMachine implements
                         && (nextClosableMarkup.type != WikipediaOpeningMarkupType.TABLE_CELL_START)
                         && (nextClosableMarkup.type != WikipediaOpeningMarkupType.TABLE);
                 if (notTableCellRelated) {
-                    // there is an unclosed markup which started inside the cell. Close this markup before closing the
+                    // there is an unclosed markup which started inside the cell. Close this markup
+                    // before closing the
                     // cell.
                     handleClosingMarkup(nextClosableMarkup.type, state);
                 }
-            } while ((nextClosableMarkup != null)
-                    && notTableCellRelated);
+            } while ((nextClosableMarkup != null) && notTableCellRelated);
             if (nextClosableMarkup != null) {
                 cleanedTextInsideMarkup = state.stack.get().cleanedTextInsideMarkup;
                 removeIntermediateMarkupsFromStack(WikipediaOpeningMarkupType.SEPARATION_BAR, state, false);
@@ -519,17 +516,12 @@ public class StackBasedMarkupDeletingMachine implements
         return null;
     }
 
-    private void removeFromStack(WikipediaOpeningMarkupType type,
-            SimpleStack<WikipediaOpeningMarkup> stack) {
+    private void removeFromStack(WikipediaOpeningMarkupType type, SimpleStack<WikipediaOpeningMarkup> stack) {
         if (stack.size() > 0) {
-            WikipediaOpeningMarkup openingMarkup = stack
-                    .getAndRemove();
+            WikipediaOpeningMarkup openingMarkup = stack.getAndRemove();
             if (openingMarkup.type != type) {
-                LOGGER.error("Could not remove state from stack! On the stack was a "
-                        + openingMarkup.type.toString()
-                        + " instead of the expected "
-                        + type.toString()
-                        + "!");
+                LOGGER.error("Could not remove state from stack! On the stack was a " + openingMarkup.type.toString()
+                        + " instead of the expected " + type.toString() + "!");
             }
         } else {
             LOGGER.error("Could not remove state from stack! The stack is empty while it should contain the expected "
@@ -541,8 +533,7 @@ public class StackBasedMarkupDeletingMachine implements
             StackBasedMarkupDeletingMachineState state, boolean appendTheirText) {
         if (state.stack.size() > 0) {
             WikipediaOpeningMarkup currentMarkup = state.stack.get();
-            while ((currentMarkup != null)
-                    && (currentMarkup.type == intermediateType)) {
+            while ((currentMarkup != null) && (currentMarkup.type == intermediateType)) {
                 state.stack.remove();
                 if (appendTheirText) {
                     appendText(currentMarkup.cleanedTextInsideMarkup, state);
@@ -552,12 +543,11 @@ public class StackBasedMarkupDeletingMachine implements
         }
     }
 
-    private void removeIntermediateMarkupsFromStack(StackBasedMarkupDeletingMachineState state,
-            boolean appendTheirText, List<WikipediaOpeningMarkupType> intermediateType) {
+    private void removeIntermediateMarkupsFromStack(StackBasedMarkupDeletingMachineState state, boolean appendTheirText,
+            List<WikipediaOpeningMarkupType> intermediateType) {
         if (state.stack.size() > 0) {
             WikipediaOpeningMarkup currentMarkup = state.stack.get();
-            while ((currentMarkup != null)
-                    && (intermediateType.contains(currentMarkup.type))) {
+            while ((currentMarkup != null) && (intermediateType.contains(currentMarkup.type))) {
                 state.stack.remove();
                 if (appendTheirText) {
                     appendText(currentMarkup.cleanedTextInsideMarkup, state);
@@ -567,22 +557,20 @@ public class StackBasedMarkupDeletingMachine implements
         }
     }
 
-    private void setPatternBitSet(BitSet patternBitSet,
-            SimpleStack<WikipediaOpeningMarkup> stack) {
+    private void setPatternBitSet(BitSet patternBitSet, SimpleStack<WikipediaOpeningMarkup> stack) {
         if (stack.size() > 0) {
             patternBitSet.bits[0] = stack.get().pattern;
-        }
-        else {
+        } else {
             patternBitSet.bits[0] = NORMAL_TEXT_PATTERN;
         }
     }
 
     public String getCleanText(String text) {
-        // we put a "\n" at the beginning of the text because some of the patterns which should also be able to match
+        // we put a "\n" at the beginning of the text because some of the patterns which
+        // should also be able to match
         // the start of the text are starting with a "\n".
         if (text.startsWith("#")) {
-            String temp = text.substring(0,
-                    text.length() < 14 ? text.length() : 14);
+            String temp = text.substring(0, text.length() < 14 ? text.length() : 14);
             temp = temp.toLowerCase();
             if (temp.startsWith("#redirect")) {
                 return getCleanString("\n" + text.substring(9));
@@ -637,8 +625,8 @@ public class StackBasedMarkupDeletingMachine implements
         }
     }
 
-    private void handleTag(StackBasedMarkupDeletingMachineState state,
-            MarkupDetectingAutomatonState automatonState, int startPos, int endPos) {
+    private void handleTag(StackBasedMarkupDeletingMachineState state, MarkupDetectingAutomatonState automatonState,
+            int startPos, int endPos) {
         // get the tag name
         String tagString = state.originalText.substring(startPos + 1, endPos).toLowerCase();
         if (tagString.endsWith("/")) {
@@ -697,8 +685,7 @@ public class StackBasedMarkupDeletingMachine implements
         }
 
         if (tagTypeToAdd != null) {
-            state.stack.add(new WikipediaOpeningMarkup(tagTypeToAdd, startPos,
-                    AFTER_NOWIKI_TAG_PATTERN));
+            state.stack.add(new WikipediaOpeningMarkup(tagTypeToAdd, startPos, AFTER_NOWIKI_TAG_PATTERN));
             automatonState.getPatternBitSet().bits[0] = AFTER_NOWIKI_TAG_PATTERN;
         }
     }
@@ -728,8 +715,7 @@ public class StackBasedMarkupDeletingMachine implements
         // 20 "|}"
         // 21 "&[^;]*;"
 
-        System.out
-                .println("This method prints out the long values for the pattern bit set");
+        System.out.println("This method prints out the long values for the pattern bit set");
         BitSet patternBitSet = new BitSet(22);
         patternBitSet.set(1);
         patternBitSet.set(3);
@@ -741,8 +727,7 @@ public class StackBasedMarkupDeletingMachine implements
         patternBitSet.set(14);
         patternBitSet.set(15);
         patternBitSet.set(21);
-        System.out.println("pattern for normal text: "
-                + Long.toBinaryString(patternBitSet.bits[0]) + " = "
+        System.out.println("pattern for normal text: " + Long.toBinaryString(patternBitSet.bits[0]) + " = "
                 + patternBitSet.bits[0]);
 
         long normalTextPattern = patternBitSet.bits[0];
@@ -759,35 +744,30 @@ public class StackBasedMarkupDeletingMachine implements
         patternBitSet.set(18);
         // search for "|}"
         patternBitSet.set(20);
-        System.out.println("pattern for wikitables and table cells text: "
-                + Long.toBinaryString(patternBitSet.bits[0]) + " = "
-                + patternBitSet.bits[0]);
+        System.out.println("pattern for wikitables and table cells text: " + Long.toBinaryString(patternBitSet.bits[0])
+                + " = " + patternBitSet.bits[0]);
 
         // search for "\n"
         patternBitSet.set(7);
         // do not search for "|"
         patternBitSet.clear(8);
-        System.out.println("pattern for table rows text: "
-                + Long.toBinaryString(patternBitSet.bits[0]) + " = "
+        System.out.println("pattern for table rows text: " + Long.toBinaryString(patternBitSet.bits[0]) + " = "
                 + patternBitSet.bits[0]);
 
         patternBitSet.clear();
         patternBitSet.set(1);
         patternBitSet.set(2);
         patternBitSet.set(9);
-        System.out.println("pattern after makro start markup: "
-                + Long.toBinaryString(patternBitSet.bits[0]) + " = "
+        System.out.println("pattern after makro start markup: " + Long.toBinaryString(patternBitSet.bits[0]) + " = "
                 + patternBitSet.bits[0]);
         patternBitSet.clear();
         patternBitSet.set(11);
         patternBitSet.set(9);
-        System.out.println("pattern after nowiki tag: "
-                + Long.toBinaryString(patternBitSet.bits[0]) + " = "
+        System.out.println("pattern after nowiki tag: " + Long.toBinaryString(patternBitSet.bits[0]) + " = "
                 + patternBitSet.bits[0]);
         patternBitSet.clear();
         patternBitSet.set(10);
-        System.out.println("pattern inside XML comment: "
-                + Long.toBinaryString(patternBitSet.bits[0]) + " = "
+        System.out.println("pattern inside XML comment: " + Long.toBinaryString(patternBitSet.bits[0]) + " = "
                 + patternBitSet.bits[0]);
     }
 
