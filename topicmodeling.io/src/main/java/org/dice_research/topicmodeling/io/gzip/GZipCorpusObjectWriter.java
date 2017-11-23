@@ -22,9 +22,16 @@ import java.io.OutputStream;
 import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.io.IOUtils;
-import org.dice_research.topicmodeling.io.CorpusObjectWriter;
+import org.dice_research.topicmodeling.io.java.CorpusObjectWriter;
 import org.dice_research.topicmodeling.utils.corpus.Corpus;
 
+/**
+ * 
+ * @author Michael R&ouml;der (michael.roeder@uni-paderborn.de)
+ *
+ * @deprecated use {@link GZipCorpusWriterDecorator} instead
+ */
+@Deprecated
 public class GZipCorpusObjectWriter extends CorpusObjectWriter {
 
     public GZipCorpusObjectWriter(File file) {
@@ -32,7 +39,7 @@ public class GZipCorpusObjectWriter extends CorpusObjectWriter {
     }
 
     @Override
-    protected void writeCorpus(Corpus corpus, OutputStream out) throws IOException {
+    public void writeCorpus(Corpus corpus, OutputStream out) throws IOException {
         GZIPOutputStream gout = null;
         try {
             gout = new GZIPOutputStream(out);

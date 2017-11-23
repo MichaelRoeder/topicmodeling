@@ -146,13 +146,13 @@ public class TreeTaggerWrapper extends AbstractPosTagger implements TokenHandler
 
     private void setTermPropertiesFromPosTag(Term term, String pos) {
         if (pos.startsWith("N")) {
-            term.properties.setNoun(true);
+            term.prop.setNoun(true);
         } else if (pos.startsWith("V")) {
-            term.properties.setVerb(true);
+            term.prop.setVerb(true);
         } else if (pos.equals("CARD")) {
-            term.properties.setNumber(true);
+            term.prop.setNumber(true);
         } else if (pos.equals("ADJA") || pos.equals("ADJD")) {
-            term.properties.setAdjective(true);
+            term.prop.setAdjective(true);
         }
     }
 

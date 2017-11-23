@@ -24,8 +24,9 @@ import org.dice_research.topicmodeling.utils.doc.Document;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonWriter;
 
-abstract class AbstractDocumentJsonWriter {
+public abstract class AbstractDocumentJsonWriter {
 
     protected GsonBuilder builder;
     protected Gson gson;
@@ -36,11 +37,17 @@ abstract class AbstractDocumentJsonWriter {
 
     public AbstractDocumentJsonWriter(GsonBuilder builder) {
         this.builder = builder;
-        this.builder.registerTypeAdapter(Document.class, new DocumentAdapter());
+        DocumentAdapter adapter = new DocumentAdapter();
+        this.builder.registerTypeAdapter(Document.class, adapter);
         gson = this.builder.create();
+        adapter.setGson(gson);
     }
 
     protected void writeDocument(Writer writer, Document document) throws IOException {
         gson.toJson(document, writer);
+    }
+
+    protected void writeDocument(JsonWriter writer, Document document) throws IOException {
+        gson.toJson(document, document.getClass(), writer);
     }
 }

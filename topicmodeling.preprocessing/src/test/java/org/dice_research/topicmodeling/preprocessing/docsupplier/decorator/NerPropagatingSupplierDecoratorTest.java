@@ -79,7 +79,7 @@ public class NerPropagatingSupplierDecoratorTest extends AbstractDocumentSupplie
 
         @Override
         public boolean isTermGood(Term term) {
-            return term.properties.isNoun() && (term.getWordForm().length() >= 2)
+            return term.prop.isNoun() && (term.getWordForm().length() >= 2)
                     && (!numberChecker.run(term.getLemma()));
             // && StringUtils.isAlpha(term.getLabel());
         }

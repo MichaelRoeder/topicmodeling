@@ -23,6 +23,7 @@ import org.dice_research.topicmodeling.utils.doc.Document;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 
 public abstract class AbstractDocumentJsonReader {
 
@@ -35,11 +36,21 @@ public abstract class AbstractDocumentJsonReader {
 
     public AbstractDocumentJsonReader(GsonBuilder builder) {
         this.builder = builder;
-        this.builder.registerTypeAdapter(Document.class, new DocumentAdapter());
+        DocumentAdapter adapter = new DocumentAdapter(); 
+        this.builder.registerTypeAdapter(Document.class, adapter);
         gson = this.builder.create();
+        adapter.setGson(gson);
     }
 
     public Document readDocument(Reader reader) {
+        try {
+            return gson.fromJson(reader, Document.class);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public Document readDocument(JsonReader reader) {
         try {
             return gson.fromJson(reader, Document.class);
         } catch (Exception e) {

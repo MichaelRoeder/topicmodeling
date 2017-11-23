@@ -22,58 +22,71 @@ public class Term implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public String wordForm;
-    public String lemma;
-    public String posTag;
-    public TermProperties properties = new TermProperties();
+    // The attribute names are kept short for better serialization
+    /**
+     * The original word the term is representing.
+     */
+    public String w;
+    /**
+     * The lemma of the word.
+     */
+    public String l;
+    /**
+     * The POS tag of the word.
+     */
+    public String p;
+    /**
+     * The properties of the word.
+     */
+    public TermProperties prop = new TermProperties();
 
     public Term(String wordForm) {
-        this.wordForm = wordForm;
-        this.lemma = wordForm.toLowerCase();
+        this.w = wordForm;
+        this.l = wordForm.toLowerCase();
     }
 
     public Term(String wordForm, String lemma) {
-        this.wordForm = wordForm;
-        this.lemma = lemma;
+        this.w = wordForm;
+        this.l = lemma;
     }
 
     public Term(String wordForm, String lemma, String posTag) {
-        this.wordForm = wordForm;
-        this.lemma = lemma;
-        this.posTag = posTag;
+        this.w = wordForm;
+        this.l = lemma;
+        this.p = posTag;
     }
 
     public String getWordForm() {
-        return wordForm;
+        return w;
     }
 
     public void setWordForm(String term) {
-        this.wordForm = term;
+        this.w = term;
     }
 
     public String getLemma() {
-        return lemma;
+        return l;
     }
 
     public void setLemma(String lemma) {
-        this.lemma = lemma;
+        this.l = lemma;
     }
 
     public String getPosTag() {
-        return posTag;
+        return p;
     }
 
     public void setPosTag(String posTag) {
-        this.posTag = posTag;
+        this.p = posTag;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((lemma == null) ? 0 : lemma.hashCode());
-        result = prime * result + ((posTag == null) ? 0 : posTag.hashCode());
-        result = prime * result + ((wordForm == null) ? 0 : wordForm.hashCode());
+        result = prime * result + ((l == null) ? 0 : l.hashCode());
+        result = prime * result + ((p == null) ? 0 : p.hashCode());
+        result = prime * result + ((w == null) ? 0 : w.hashCode());
         return result;
     }
 
@@ -86,20 +99,20 @@ public class Term implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Term other = (Term) obj;
-        if (lemma == null) {
-            if (other.lemma != null)
+        if (l == null) {
+            if (other.l != null)
                 return false;
-        } else if (!lemma.equals(other.lemma))
+        } else if (!l.equals(other.l))
             return false;
-        if (posTag == null) {
-            if (other.posTag != null)
+        if (p == null) {
+            if (other.p != null)
                 return false;
-        } else if (!posTag.equals(other.posTag))
+        } else if (!p.equals(other.p))
             return false;
-        if (wordForm == null) {
-            if (other.wordForm != null)
+        if (w == null) {
+            if (other.w != null)
                 return false;
-        } else if (!wordForm.equals(other.wordForm))
+        } else if (!w.equals(other.w))
             return false;
         return true;
     }
@@ -108,11 +121,11 @@ public class Term implements Serializable {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Term (term=");
-        builder.append(wordForm);
+        builder.append(w);
         builder.append(", lemma=");
-        builder.append(lemma);
+        builder.append(l);
         builder.append(", posTag=");
-        builder.append(posTag);
+        builder.append(p);
         builder.append(")");
         return builder.toString();
     }

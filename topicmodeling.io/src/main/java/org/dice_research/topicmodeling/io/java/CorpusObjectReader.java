@@ -14,49 +14,47 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with topicmodeling.io.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.dice_research.topicmodeling.io;
+package org.dice_research.topicmodeling.io.java;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 
 import org.apache.commons.io.IOUtils;
-import org.dice_research.topicmodeling.io.CorpusWriter;
+import org.dice_research.topicmodeling.io.AbstractCorpusReader;
 import org.dice_research.topicmodeling.utils.corpus.Corpus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CorpusObjectWriter implements CorpusWriter {
+public class CorpusObjectReader extends AbstractCorpusReader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CorpusObjectWriter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CorpusObjectReader.class);
 
-    protected File file;
-
-    public CorpusObjectWriter(File file) {
-        this.file = file;
+    public CorpusObjectReader(File file) {
+        super(file);
     }
 
-    public void writeCorpus(Corpus corpus) {
-        FileOutputStream fOut = null;
+    public void readCorpus() {
+        FileInputStream fin = null;
         try {
-            fOut = new FileOutputStream(file);
-            writeCorpus(corpus, fOut);
+            fin = new FileInputStream(file);
+            readCorpus(fin);
         } catch (Exception e) {
-            LOGGER.error("Error while trying to write serialized corpus to file", e);
+            LOGGER.error("Error while trying to read serialized corpus from file", e);
         } finally {
-            IOUtils.closeQuietly(fOut);
+            IOUtils.closeQuietly(fin);
         }
     }
 
-    public void writeCorpus(Corpus corpus, OutputStream out) throws IOException {
-        ObjectOutputStream oOut = null;
+    protected void readCorpus(InputStream is) throws IOException, ClassNotFoundException {
+        ObjectInputStream oin = null;
         try {
-            oOut = new ObjectOutputStream(out);
-            oOut.writeObject(corpus);
+            oin = new ObjectInputStream(is);
+            corpus = (Corpus) oin.readObject();
         } finally {
-            IOUtils.closeQuietly(oOut);
+            IOUtils.closeQuietly(oin);
         }
     }
 }

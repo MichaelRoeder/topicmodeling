@@ -14,31 +14,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with topicmodeling.io.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.dice_research.topicmodeling.io.gzip;
+package org.dice_research.topicmodeling.io.json;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.zip.GZIPInputStream;
+import org.dice_research.topicmodeling.io.AbstractCorpusIOTest;
 
-import org.apache.commons.io.IOUtils;
-import org.dice_research.topicmodeling.io.java.CorpusObjectReader;
+public class CorpusJsonIOTest extends AbstractCorpusIOTest {
 
-public class GZipCorpusObjectReader extends CorpusObjectReader {
-
-    public GZipCorpusObjectReader(File file) {
-        super(file);
+    public CorpusJsonIOTest() {
+        super(new CorpusJsonReader(), new CorpusJsonWriter(), createTestCorpus());
     }
-
-    @Override
-    protected void readCorpus(InputStream is) throws IOException, ClassNotFoundException {
-        GZIPInputStream gin = null;
-        try {
-            gin = new GZIPInputStream(is);
-            super.readCorpus(gin);
-        } finally {
-            IOUtils.closeQuietly(gin);
-        }
-    }
-
 }

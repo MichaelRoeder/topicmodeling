@@ -89,7 +89,7 @@ public class DocumentTextWithTermInfoCreatingSupplierDecorator extends
                 textWithInfo.append(SEPARATION_CHAR);
                 textWithInfo.append(escapeString(term.getPosTag()));
                 textWithInfo.append(SEPARATION_CHAR);
-                textWithInfo.append(Long.toString(term.properties.getAsLong()));
+                textWithInfo.append(Long.toString(term.prop.getAsLong()));
                 textWithInfo.append(TERM_END_CHAR);
 
                 posInText = foundPos + term.getWordForm().length();

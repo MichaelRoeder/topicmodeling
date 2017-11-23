@@ -42,7 +42,7 @@ public class EntityBasedTokenizer extends AbstractNerPropagationPreprocessor imp
     protected Term[] getTokensAfterPosTagging(NamedEntityInText entity, String surfaceForm) {
         // Create the single token that should be used after pos-tagging (it is allowed to contain spaces)
         Term term = new Term(surfaceForm);
-        term.properties.setNoun(true);
+        term.prop.setNoun(true);
         return new Term[] { term };
     }
 

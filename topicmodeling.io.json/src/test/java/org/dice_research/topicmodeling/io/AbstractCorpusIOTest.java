@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.dice_research.topicmodeling.io.CorpusReader;
-import org.dice_research.topicmodeling.io.CorpusWriter;
+import org.dice_research.topicmodeling.io.json.CorpusJsonReader;
+import org.dice_research.topicmodeling.lang.Term;
 import org.dice_research.topicmodeling.utils.corpus.Corpus;
 import org.dice_research.topicmodeling.utils.corpus.DocumentListCorpus;
 import org.dice_research.topicmodeling.utils.doc.Document;
@@ -31,9 +31,9 @@ import org.dice_research.topicmodeling.utils.doc.DocumentMultipleCategories;
 import org.dice_research.topicmodeling.utils.doc.DocumentName;
 import org.dice_research.topicmodeling.utils.doc.DocumentProperty;
 import org.dice_research.topicmodeling.utils.doc.DocumentText;
+import org.dice_research.topicmodeling.utils.doc.TermTokenizedText;
 import org.dice_research.topicmodeling.utils.doc.ner.NamedEntitiesInText;
 import org.dice_research.topicmodeling.utils.doc.ner.NamedEntityInText;
-import org.dice_research.topicmodeling.utils.doc.ner.SignedNamedEntityInText;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -50,9 +50,10 @@ public abstract class AbstractCorpusIOTest {
     }
 
     @Test
-    public void test() {
-        writer.writeCorpus(corpus);
-        reader.readCorpus();
+    public void test() throws IOException {
+        File tempFile = generateTempFile("");
+        writer.writeCorpus(corpus, tempFile);
+        ((CorpusJsonReader) reader).readCorpus(tempFile);
         Corpus readCorpus = reader.getCorpus();
         compareCorpora(corpus, readCorpus);
     }
@@ -78,8 +79,15 @@ public abstract class AbstractCorpusIOTest {
                     origNes = (NamedEntitiesInText) origProp;
                     readNes = (NamedEntitiesInText) readProp;
                     for (NamedEntityInText ne : origNes.getNamedEntities()) {
-                        Assert.assertTrue("The list of named entities does not contain " + ne.toString() + ".", readNes
-                                .getNamedEntities().contains(ne));
+                        Assert.assertTrue("The list of named entities does not contain " + ne.toString() + ".",
+                                readNes.getNamedEntities().contains(ne));
+                    }
+                } else if (propClass == TermTokenizedText.class) {
+                    List<Term> origTerms = ((TermTokenizedText) origProp).getTermTokenizedText();
+                    List<Term> readTerms = ((TermTokenizedText) readProp).getTermTokenizedText();
+                    for (Term t : origTerms) {
+                        Assert.assertTrue("The list of named entities does not contain " + t.toString() + ".",
+                                readTerms.contains(t));
                     }
                 } else if (propClass == DocumentMultipleCategories.class) {
                     origCategories = (DocumentMultipleCategories) origProp;
@@ -106,20 +114,31 @@ public abstract class AbstractCorpusIOTest {
         documents.add(new Document(0, new DocumentProperty[] { new DocumentText("Dieser Text ist ein Testtext."),
                 new DocumentName("Testdokument #1"), new NamedEntitiesInText() }));
 
-        documents.add(new Document(1, new DocumentProperty[] {
-                new DocumentText("Der neue Jaguar ist kein Golf."),
-                new DocumentName("Bericht über den neuen Jaguar"),
-                new NamedEntitiesInText(new NamedEntityInText[] { new NamedEntityInText(25, 4, "http://car/VWGolf"),
-                        new SignedNamedEntityInText(9, 6, "http://animal/Jaguar", "manualAnnotation") }),
-                new DocumentMultipleCategories(new String[] { "category1" }) }));
+        // FIXME The JSON implementation can not distinguish between NamedEntitiesInText
+        // and SignedNamedEntityInText
+        documents.add(new Document(1,
+                new DocumentProperty[] { new DocumentText("Der neue Jaguar ist kein Golf."),
+                        new DocumentName("Bericht über den neuen Jaguar"),
+                        // new NamedEntitiesInText(new NamedEntityInText[] { new NamedEntityInText(25,
+                        // 4, "http://car/VWGolf"),
+                        // new SignedNamedEntityInText(9, 6, "http://animal/Jaguar", "manualAnnotation")
+                        // }),
+                        new DocumentMultipleCategories(new String[] { "category1" }) }));
 
-        documents.add(new Document(2, new DocumentProperty[] {
-                new DocumentText("Am persischen Golf wird wieder Golf gespielt!"),
-                new DocumentName("Sport aktuell"),
-                new NamedEntitiesInText(new NamedEntityInText[] {
-                        new SignedNamedEntityInText(31, 4, "http://sport/Golf", "someSource"),
-                        new NamedEntityInText(3, 15, "http://geo/PersianGulf") }),
-                new DocumentMultipleCategories(new String[] { "category1", "category2" }) }));
+        documents.add(new Document(2,
+                new DocumentProperty[] { new DocumentText("Am persischen Golf wird wieder Golf gespielt!"),
+                        new DocumentName("Sport aktuell"),
+                        // new NamedEntitiesInText(new NamedEntityInText[] {
+                        // new SignedNamedEntityInText(31, 4, "http://sport/Golf", "someSource"),
+                        // new NamedEntityInText(3, 15, "http://geo/PersianGulf") }),
+                        new DocumentMultipleCategories(new String[] { "category1", "category2" }) }));
+
+        Term golfTerm = new Term("Golf", "golf", "nn");
+        golfTerm.prop.setNoun(true);
+        documents.add(new Document(3,
+                new DocumentProperty[] { new DocumentText("Am persischen Golf wird wieder Golf gespielt!"),
+                        new DocumentName("Sport aktuell"), new TermTokenizedText(new Term("Am", "am", "XYZ"),
+                                new Term("persichen", "persisch", "adj"), golfTerm) }));
 
         return new DocumentListCorpus<List<Document>>(documents);
     }

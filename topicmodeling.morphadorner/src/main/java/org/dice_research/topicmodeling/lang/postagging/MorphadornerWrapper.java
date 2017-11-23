@@ -238,7 +238,7 @@ public class MorphadornerWrapper extends AbstractPosTagger {
         Term term = new Term(word.getSpelling(), word.getLemmata());
         String posTag = word.getPartsOfSpeech();
         term.setPosTag(posTag);
-        setTermProperties(posTag, term.properties);
+        setTermProperties(posTag, term.prop);
         return term;
     }
 

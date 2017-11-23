@@ -23,6 +23,7 @@ import java.io.ObjectInputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.dice_research.topicmodeling.algorithms.Model;
+import org.dice_research.topicmodeling.io.java.CorpusObjectReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

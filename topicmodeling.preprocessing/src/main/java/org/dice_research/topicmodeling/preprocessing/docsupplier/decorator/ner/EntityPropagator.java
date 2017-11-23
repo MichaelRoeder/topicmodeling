@@ -26,7 +26,7 @@ public class EntityPropagator extends EntityBasedTokenizer {
     protected Term[] getTokensAfterPosTagging(NamedEntityInText entity, String surfaceForm) {
         // Create the single token that should be used after pos-tagging (it is allowed to contain spaces)
         Term term = new Term(entity.getNamedEntityUri());
-        term.properties.setNoun(true);
+        term.prop.setNoun(true);
         return new Term[] { term };
     }
 

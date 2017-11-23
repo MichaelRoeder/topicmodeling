@@ -18,8 +18,8 @@ package org.dice_research.topicmodeling.io;
 
 import java.io.File;
 
-import org.dice_research.topicmodeling.io.CorpusObjectReader;
-import org.dice_research.topicmodeling.io.CorpusObjectWriter;
+import org.dice_research.topicmodeling.io.java.CorpusObjectReader;
+import org.dice_research.topicmodeling.io.java.CorpusObjectWriter;
 
 public class CorpusObjectIOTest extends AbstractCorpusIOTest {
 

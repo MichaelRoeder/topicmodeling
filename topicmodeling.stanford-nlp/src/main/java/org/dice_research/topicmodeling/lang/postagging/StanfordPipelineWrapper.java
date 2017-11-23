@@ -99,13 +99,13 @@ public class StanfordPipelineWrapper extends AbstractPosTagger {
         term.setPosTag(token.get(PartOfSpeechAnnotation.class));
 
         if (term.getPosTag().contains("NN")) {
-            term.properties.setNoun(true);
+            term.prop.setNoun(true);
         } else if (term.getPosTag().contains("VB")) {
-            term.properties.setVerb(true);
+            term.prop.setVerb(true);
         } else if (term.getPosTag().contains("CD")) {
-            term.properties.setNumber(true);
+            term.prop.setNumber(true);
         } else if (term.getPosTag().contains("JJ")) {
-            term.properties.setAdjective(true);
+            term.prop.setAdjective(true);
         }
 
         return term;

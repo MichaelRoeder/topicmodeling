@@ -25,6 +25,8 @@ public class DocumentAdapter extends TypeAdapter<Document> {
     private static final String PROPERTY_VALUE_KEY = "value";
 
     protected Gson gson;
+    
+    
 
     @Override
     public void write(JsonWriter out, Document document) throws IOException {
@@ -116,6 +118,10 @@ public class DocumentAdapter extends TypeAdapter<Document> {
             properties.add(value);
         }
         in.endObject();
+    }
+
+    public void setGson(Gson gson) {
+        this.gson = gson;
     }
 
 

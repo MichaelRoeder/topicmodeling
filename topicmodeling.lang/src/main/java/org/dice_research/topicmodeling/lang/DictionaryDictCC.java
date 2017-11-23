@@ -24,12 +24,12 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.log4j.Logger;
 import org.dice_research.topicmodeling.io.CorpusBasedFileProcessor;
-import org.dice_research.topicmodeling.lang.Language;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
 import org.htmlcleaner.XPatherException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.carrotsearch.hppc.ObjectObjectOpenHashMap;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -38,7 +38,7 @@ import com.fasterxml.jackson.datatype.hppc.HppcModule;
 
 public class DictionaryDictCC implements Dictionary, CorpusBasedFileProcessor {
 
-    private static final Logger logger = Logger.getLogger(DictionaryDictCC.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DictionaryDictCC.class);
 
     private static final boolean REQUEST_UNKNOWN_WORDS = false;
 
@@ -85,7 +85,7 @@ public class DictionaryDictCC implements Dictionary, CorpusBasedFileProcessor {
     // }
     // reader.readNext();
     // } catch (IOException e) {
-    // logger.error("Error reading file.", e);
+    // LOGGER.error("Error reading file.", e);
     // } finally {
     // try {
     // reader.close();
@@ -111,7 +111,7 @@ public class DictionaryDictCC implements Dictionary, CorpusBasedFileProcessor {
                 mapper.writeValue(fout, dictionary);
                 localDictionaryChanged = false;
             } catch (IOException e) {
-                logger.error("Error while writing the serialized dictionary to file.", e);
+                LOGGER.error("Error while writing the serialized dictionary to file.", e);
             } finally {
                 try {
                     fout.close();
@@ -138,7 +138,7 @@ public class DictionaryDictCC implements Dictionary, CorpusBasedFileProcessor {
             dict.dictionary = mapper.readValue(fin, dict.dictionary.getClass());
             fin.close();
         } catch (IOException e) {
-            logger.error("Error while trying to read serialized dictionary from file", e);
+            LOGGER.error("Error while trying to read serialized dictionary from file", e);
         } finally {
             try {
                 fin.close();
@@ -153,7 +153,7 @@ public class DictionaryDictCC implements Dictionary, CorpusBasedFileProcessor {
         if (dictionary.containsKey(word)) {
             return dictionary.get(word);
         } else {
-            logger.trace("Couldn't find a local translation for \"" + word + "\"");
+            LOGGER.trace("Couldn't find a local translation for \"" + word + "\"");
             if (REQUEST_UNKNOWN_WORDS) {
                 String uppercasedWord = Character.toUpperCase(word.charAt(0)) + word.substring(1);
                 String translation = translater.getTranslation(uppercasedWord);
@@ -169,7 +169,8 @@ public class DictionaryDictCC implements Dictionary, CorpusBasedFileProcessor {
     }
 
     private static class DictCcTranslater {
-        private static final Logger logger = Logger.getLogger(DictionaryDictCC.class);
+
+        private static final Logger LOGGER = LoggerFactory.getLogger(DictCcTranslater.class);
 
         private static final String URL = "http://de-en.dict.cc/";
 
@@ -212,7 +213,7 @@ public class DictionaryDictCC implements Dictionary, CorpusBasedFileProcessor {
             try {
                 returnCode = client.executeMethod(get);
             } catch (IOException e) {
-                logger.error("Error while requesting translation of \"" + word + '"', e);
+                LOGGER.error("Error while requesting translation of \"" + word + '"', e);
                 get.releaseConnection();
                 return null;
             }
@@ -220,7 +221,7 @@ public class DictionaryDictCC implements Dictionary, CorpusBasedFileProcessor {
 
             String result = null;
             if (returnCode != HttpStatus.SC_OK) {
-                logger.error("Got an unexpected HTTP status code (" + returnCode + ") for the word \"" + word + '"');
+                LOGGER.error("Got an unexpected HTTP status code (" + returnCode + ") for the word \"" + word + '"');
             } else {
                 result = analysePage(get, word);
             }
@@ -237,7 +238,7 @@ public class DictionaryDictCC implements Dictionary, CorpusBasedFileProcessor {
                 if (trNodes == null) {
                     trNodes = findTrNodesById(page);
                     if (trNodes == null) {
-                        logger.error("Couldn't find a translation for \"" + word + '"');
+                        LOGGER.error("Couldn't find a translation for \"" + word + '"');
                         return null;
                     }
                 }
@@ -249,11 +250,11 @@ public class DictionaryDictCC implements Dictionary, CorpusBasedFileProcessor {
                         return wordPair[1];
                     }
                 }
-                logger.warn("Got no translation for the word \"" + word + "\".");
+                LOGGER.warn("Got no translation for the word \"" + word + "\".");
             } catch (IOException e) {
-                logger.error("Error while parsing response from dict.cc.", e);
+                LOGGER.error("Error while parsing response from dict.cc.", e);
             } catch (XPatherException e) {
-                logger.error(
+                LOGGER.error(
                         "Error while evaluating the following XPath: \"/body/div[@id='maincontent']/table/tbody/tr[@id='tr1']\"",
                         e);
             }
@@ -264,7 +265,7 @@ public class DictionaryDictCC implements Dictionary, CorpusBasedFileProcessor {
             // Try to find the first result line
             Object nodes[] = page.evaluateXPath("/body/div[@id='maincontent']/table/tbody/tr[@id]");
             if (nodes.length == 0) {
-                logger.warn("couldn't find tr tags containing results");
+                LOGGER.warn("couldn't find tr tags containing results");
                 return null;
             }
             return nodes;

@@ -16,29 +16,43 @@
  */
 package org.dice_research.topicmodeling.io.gzip;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.zip.GZIPInputStream;
+import java.io.OutputStream;
+import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.io.IOUtils;
-import org.dice_research.topicmodeling.io.java.CorpusObjectReader;
+import org.dice_research.topicmodeling.io.CorpusWriter;
+import org.dice_research.topicmodeling.io.CorpusWriterDecorator;
+import org.dice_research.topicmodeling.utils.corpus.Corpus;
 
-public class GZipCorpusObjectReader extends CorpusObjectReader {
+public class GZipCorpusWriterDecorator implements CorpusWriterDecorator {
 
-    public GZipCorpusObjectReader(File file) {
-        super(file);
+    protected CorpusWriter writer;
+
+    public GZipCorpusWriterDecorator(CorpusWriter writer) {
+        this.writer = writer;
     }
 
     @Override
-    protected void readCorpus(InputStream is) throws IOException, ClassNotFoundException {
-        GZIPInputStream gin = null;
+    public void writeCorpus(Corpus corpus, OutputStream out) throws IOException {
+        GZIPOutputStream gout = null;
         try {
-            gin = new GZIPInputStream(is);
-            super.readCorpus(gin);
+            gout = new GZIPOutputStream(out);
+            writer.writeCorpus(corpus, gout);
         } finally {
-            IOUtils.closeQuietly(gin);
+            IOUtils.closeQuietly(gout);
         }
+    }
+
+    @Override
+    @Deprecated
+    public void writeCorpus(Corpus corpus) {
+        writer.writeCorpus(corpus);
+    }
+
+    @Override
+    public CorpusWriter getDecorated() {
+        return writer;
     }
 
 }

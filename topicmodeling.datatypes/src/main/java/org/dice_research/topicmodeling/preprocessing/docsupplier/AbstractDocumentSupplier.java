@@ -33,7 +33,7 @@ public abstract class AbstractDocumentSupplier implements DocumentSupplier {
         nextDocumentId = documentStartId;
     }
 
-    protected int getNextDocumentId() {
+    protected synchronized int getNextDocumentId() {
         int tempId = nextDocumentId;
         ++nextDocumentId;
         return tempId;

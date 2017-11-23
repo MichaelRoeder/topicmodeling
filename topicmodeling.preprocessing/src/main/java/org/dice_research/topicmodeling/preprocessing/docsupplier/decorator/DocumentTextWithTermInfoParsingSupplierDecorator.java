@@ -123,7 +123,7 @@ public class DocumentTextWithTermInfoParsingSupplierDecorator extends AbstractDo
                             term = new Term(termParts.get(0), termParts.get(1));
                             term.setPosTag(termParts.get(2));
                             try {
-                                term.properties.set(Long.parseLong(currentStringBuilder.toString()));
+                                term.prop.set(Long.parseLong(currentStringBuilder.toString()));
                                 currentTerms.add(term);
                                 documentText.append(term.getWordForm());
                             } catch (Exception e) {
