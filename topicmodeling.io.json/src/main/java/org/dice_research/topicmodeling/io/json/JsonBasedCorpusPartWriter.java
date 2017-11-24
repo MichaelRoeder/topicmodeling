@@ -37,12 +37,17 @@ public class JsonBasedCorpusPartWriter implements DocumentConsumer, Closeable {
     private final File outputFolder;
     private final int documentPerPart;
     private int currentPartDocCount;
-    private int currentPartId = 0;
+    private int currentPartId;
     private JsonWritingDocumentConsumer currentWriter;
 
     public JsonBasedCorpusPartWriter(File outputFolder, int documentPerPart) {
+        this(outputFolder, documentPerPart, 0);
+    }
+
+    public JsonBasedCorpusPartWriter(File outputFolder, int documentPerPart, int firstPartId) {
         this.outputFolder = outputFolder;
         this.documentPerPart = documentPerPart;
+        this.currentPartId = firstPartId;
     }
 
     @Override

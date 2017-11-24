@@ -35,7 +35,11 @@ public class JsonPartsBasedDocumentSupplier extends AbstractDocumentSupplier imp
     private String fileSuffix;
     private boolean useDocumentIdsFromFile;
     private final File inputFolder;
-    private int currentPartId = -1;
+    private int currentPartId;
+    /**
+     * Part Id until which it will be read (excluding).
+     */
+    private int endPartId;
     private StreamBasedJsonDocumentSupplier currentReader;
 
     public JsonPartsBasedDocumentSupplier(File inputFolder) {
@@ -49,10 +53,23 @@ public class JsonPartsBasedDocumentSupplier extends AbstractDocumentSupplier imp
 
     public JsonPartsBasedDocumentSupplier(File inputFolder, String filePrefix, String fileSuffix,
             boolean useDocumentIdsFromFile) {
+        this(inputFolder, filePrefix, fileSuffix, useDocumentIdsFromFile, 0, Integer.MAX_VALUE);
+    }
+
+
+    public JsonPartsBasedDocumentSupplier(File inputFolder, int firstPartId, int endPartId) {
+        this(inputFolder, JsonBasedCorpusPartWriter.PART_FILE_PREFIX, JsonBasedCorpusPartWriter.PART_FILE_SUFFIX,
+                USE_DOCUMENT_IDS_FROM_FILE_DEFAULT, firstPartId, endPartId);
+    }
+
+    public JsonPartsBasedDocumentSupplier(File inputFolder, String filePrefix, String fileSuffix,
+            boolean useDocumentIdsFromFile, int firstPartId, int endPartId) {
         this.inputFolder = inputFolder;
         this.filePrefix = filePrefix;
         this.fileSuffix = fileSuffix;
         this.useDocumentIdsFromFile = useDocumentIdsFromFile;
+        this.currentPartId = firstPartId - 1;
+        this.endPartId = endPartId;
     }
 
     @Override
@@ -82,13 +99,15 @@ public class JsonPartsBasedDocumentSupplier extends AbstractDocumentSupplier imp
 
     private StreamBasedJsonDocumentSupplier getNextReader() {
         ++currentPartId;
-        File nextFile = new File(
-                inputFolder.getAbsolutePath() + File.separator + filePrefix + currentPartId + fileSuffix);
         StreamBasedJsonDocumentSupplier reader = null;
-        if (nextFile.exists()) {
-            reader = StreamBasedJsonDocumentSupplier.createReader(nextFile, useDocumentIdsFromFile);
-            if (reader != null) {
-                LOGGER.info("Started reading part " + currentPartId + ".");
+        if (currentPartId < endPartId) {
+            File nextFile = new File(
+                    inputFolder.getAbsolutePath() + File.separator + filePrefix + currentPartId + fileSuffix);
+            if (nextFile.exists()) {
+                reader = StreamBasedJsonDocumentSupplier.createReader(nextFile, useDocumentIdsFromFile);
+                if (reader != null) {
+                    LOGGER.info("Started reading part " + currentPartId + ".");
+                }
             }
         }
         return reader;
