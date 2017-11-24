@@ -18,6 +18,7 @@ package org.dice_research.topicmodeling.io.test;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -26,12 +27,20 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.apache.commons.io.IOUtils;
 import org.dice_research.topicmodeling.io.CorpusReader;
 import org.dice_research.topicmodeling.io.CorpusWriter;
 import org.dice_research.topicmodeling.lang.Term;
+import org.dice_research.topicmodeling.preprocessing.docconsumer.DocumentConsumer;
+import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
+import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplierAsIterator;
 import org.dice_research.topicmodeling.utils.corpus.Corpus;
+import org.dice_research.topicmodeling.utils.corpus.DocumentListCorpus;
 import org.dice_research.topicmodeling.utils.doc.Document;
 import org.dice_research.topicmodeling.utils.doc.DocumentMultipleCategories;
 import org.dice_research.topicmodeling.utils.doc.DocumentProperty;
@@ -45,6 +54,8 @@ public abstract class AbstractCorpusIOTest {
 
     private CorpusReader reader;
     private CorpusWriter writer;
+    private DocumentSupplier supplier;
+    private DocumentConsumer consumer;
     private Corpus corpus;
     private File testFile;
 
@@ -59,24 +70,66 @@ public abstract class AbstractCorpusIOTest {
         this.testFile = testFile;
     }
 
+    public AbstractCorpusIOTest(DocumentSupplier supplier, DocumentConsumer consumer, Corpus corpus, File testFile) {
+        this.supplier = supplier;
+        this.consumer = consumer;
+        this.corpus = corpus;
+        this.testFile = testFile;
+    }
+
     @Test
     public void test() {
+        writeCorpus();
+        Corpus readCorpus = readCorpus();
+        compareCorpora(corpus, readCorpus);
+    }
+
+    public void writeCorpus() {
         OutputStream out = null;
-        InputStream in = null;
         try {
-            out = new BufferedOutputStream(new FileOutputStream(testFile));
-            writer.writeCorpus(corpus, out);
-            IOUtils.closeQuietly(out);
-            in = new BufferedInputStream(new FileInputStream(testFile));
-            reader.readCorpus(in);
-            Corpus readCorpus = reader.getCorpus();
-            compareCorpora(corpus, readCorpus);
-        }catch(Exception e) {
+            if (writer != null) {
+                out = new BufferedOutputStream(new FileOutputStream(testFile));
+                writer.writeCorpus(corpus, out);
+            } else if (consumer != null) {
+                StreamSupport.stream(Spliterators.spliterator(corpus.iterator(), corpus.getNumberOfDocuments(),
+                        Spliterator.DISTINCT & Spliterator.NONNULL), false).forEach(consumer);
+            } else {
+                Assert.fail("Test is misconfigured since writer==null and consumer==null.");
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             Assert.fail("Got an Exception: " + e.getLocalizedMessage());
         } finally {
             IOUtils.closeQuietly(out);
+            if ((consumer != null) && (consumer instanceof Closeable)) {
+                IOUtils.closeQuietly((Closeable) consumer);
+            }
         }
+    }
+
+    public Corpus readCorpus() {
+        InputStream in = null;
+        try {
+            if (reader != null) {
+                in = new BufferedInputStream(new FileInputStream(testFile));
+                reader.readCorpus(in);
+                return reader.getCorpus();
+            } else if (supplier != null) {
+                return new DocumentListCorpus<List<Document>>(
+                        StreamSupport
+                                .stream(Spliterators.spliteratorUnknownSize(new DocumentSupplierAsIterator(supplier),
+                                        Spliterator.DISTINCT & Spliterator.NONNULL), false)
+                                .collect(Collectors.toList()));
+            } else {
+                Assert.fail("Test is misconfigured since reader==null and supplier==null.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail("Got an Exception: " + e.getLocalizedMessage());
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
+        return null;
     }
 
     protected void compareCorpora(Corpus corpus, Corpus readCorpus) {
@@ -100,8 +153,8 @@ public abstract class AbstractCorpusIOTest {
                     origNes = (NamedEntitiesInText) origProp;
                     readNes = (NamedEntitiesInText) readProp;
                     for (NamedEntityInText ne : origNes.getNamedEntities()) {
-                        Assert.assertTrue("The list of named entities does not contain " + ne.toString() + ".", readNes
-                                .getNamedEntities().contains(ne));
+                        Assert.assertTrue("The list of named entities does not contain " + ne.toString() + ".",
+                                readNes.getNamedEntities().contains(ne));
                     }
                 } else if (propClass == TermTokenizedText.class) {
                     List<Term> origTerms = ((TermTokenizedText) origProp).getTermTokenizedText();

@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 
 public class StreamBasedJsonDocumentSupplier extends AbstractDocumentJsonReader implements DocumentSupplier, Closeable {
 
@@ -98,7 +99,7 @@ public class StreamBasedJsonDocumentSupplier extends AbstractDocumentJsonReader 
     private boolean useDocumentIdsFromFile;
     private JsonReader reader;
     private Document document;
-    private int documentCount;
+    private int documentCount = 0;
     private int nextDocumentId;
 
     private StreamBasedJsonDocumentSupplier(JsonReader reader, boolean useDocumentIdsFromFile) {
@@ -116,6 +117,20 @@ public class StreamBasedJsonDocumentSupplier extends AbstractDocumentJsonReader 
     @Override
     public Document getNextDocument() {
         if (reader != null) {
+            // If this is the first document
+            if (documentCount == 0) {
+                try {
+                    // It is possible that we have to read the beginning of the document array,
+                    // first.
+                    if (reader.hasNext() && JsonToken.BEGIN_ARRAY.equals(reader.peek())) {
+                        reader.beginArray();
+                    }
+                } catch (IOException e) {
+                    LOGGER.warn(
+                            "Got an IOException when trying to remove the beginning of a document array. Moving on.",
+                            e);
+                }
+            }
             document = readDocument(reader);
             if (document != null) {
                 Document nextDocument = document;
@@ -125,16 +140,12 @@ public class StreamBasedJsonDocumentSupplier extends AbstractDocumentJsonReader 
                 }
                 ++documentCount;
                 if (LOGGER.isInfoEnabled() && ((documentCount % 1000) == 0)) {
-                    LOGGER.info("Read the " + documentCount + "th document from XML file.");
+                    LOGGER.info("Read the " + documentCount + "th document from JSON file.");
                 }
                 return nextDocument;
             } else {
                 // The parser has reached the end of the file
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    LOGGER.error("Error while closing the file reader used for reading the XML file.", e);
-                }
+                IOUtils.closeQuietly(reader);
                 reader = null;
             }
         }

@@ -16,16 +16,22 @@
  */
 package org.dice_research.topicmodeling.io.json;
 
+import java.io.IOException;
 import java.io.Reader;
 
 import org.dice_research.topicmodeling.io.json.adapters.DocumentAdapter;
 import org.dice_research.topicmodeling.utils.doc.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 
 public abstract class AbstractDocumentJsonReader {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractDocumentJsonReader.class);
 
     protected GsonBuilder builder;
     protected Gson gson;
@@ -36,7 +42,7 @@ public abstract class AbstractDocumentJsonReader {
 
     public AbstractDocumentJsonReader(GsonBuilder builder) {
         this.builder = builder;
-        DocumentAdapter adapter = new DocumentAdapter(); 
+        DocumentAdapter adapter = new DocumentAdapter();
         this.builder.registerTypeAdapter(Document.class, adapter);
         gson = this.builder.create();
         adapter.setGson(gson);
@@ -52,8 +58,17 @@ public abstract class AbstractDocumentJsonReader {
 
     public Document readDocument(JsonReader reader) {
         try {
+            // Check that an object begins
+            if ((!reader.hasNext()) && (!JsonToken.BEGIN_OBJECT.equals(reader.peek()))) {
+                return null;
+            }
+        } catch (IOException e) {
+            LOGGER.warn("Got an IOException when trying to check whether a JSON object begins. Moving on.", e);
+        }
+        try {
             return gson.fromJson(reader, Document.class);
         } catch (Exception e) {
+            LOGGER.error("Couldn't read document from JSON. Returning null.", e);
             return null;
         }
     }
