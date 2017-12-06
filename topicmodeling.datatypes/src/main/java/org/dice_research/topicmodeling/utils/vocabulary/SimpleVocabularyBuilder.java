@@ -1,10 +1,16 @@
 package org.dice_research.topicmodeling.utils.vocabulary;
 
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.carrotsearch.hppc.BitSet;
-
+/**
+ * A builder class for a {@link SimpleVocabulary} offering more methods to
+ * manipulate the vocabulary.
+ * 
+ * @author Michael R&ouml;der (roeder@informatik.uni-leipzig.de)
+ *
+ */
 public class SimpleVocabularyBuilder implements VocabularyFactory {
 
     protected int nextId = 0;
@@ -16,7 +22,9 @@ public class SimpleVocabularyBuilder implements VocabularyFactory {
     }
 
     public SimpleVocabularyBuilder(Vocabulary source) {
-        // TODO
+        for (String word : source) {
+            setWord(word, source.getId(word));
+        }
     }
 
     private void set_unsecured(String word, int id) {
@@ -25,28 +33,50 @@ public class SimpleVocabularyBuilder implements VocabularyFactory {
         usedIds.set(id);
     }
 
+    public synchronized int remove(String word) {
+        Integer id = wordIndexMap.remove(word);
+        if (id != null) {
+            indexWordMap.remove(id);
+            usedIds.clear(id);
+            updateNextId();
+            return id;
+        } else {
+            return -1;
+        }
+    }
+
+    public synchronized String remove(int id) {
+        String word = indexWordMap.remove(id);
+        if (word != null) {
+            wordIndexMap.remove(word);
+            usedIds.clear(id);
+            updateNextId();
+        }
+        return word;
+    }
+
     public synchronized int addWord(String word) {
         // If the map already contains the word
         if (wordIndexMap.containsKey(word)) {
             // Return the index that it already has
             return wordIndexMap.get(word);
         } else {
-            if (usedIds.cardinality() == nextId) {
-                set_unsecured(word, nextId);
-                return nextId++;
-            } else {
-                // this is not very performant :(
-                BitSet freeIds = (BitSet) usedIds.clone();
-                int id = freeIds.nextSetBit(0);
-                if (id == -1) {
-                    throw new IllegalStateException(
-                            "There should be a free id but I couldn't find it. It seems to be a programming error.");
-                } else {
-                    set_unsecured(word, id);
-                    return id;
-                }
-            }
+            int id = usedIds.nextClearBit(0);
+            set_unsecured(word, id);
+            updateNextId();
+            return id;
         }
+    }
+
+    public synchronized void setWord(String word, int id) {
+        // make sure that the word and id are free;
+        remove(word);
+        remove(id);
+        set_unsecured(word, id);
+    }
+
+    private void updateNextId() {
+        nextId = usedIds.previousSetBit(nextId) + 1;
     }
 
     @Override
