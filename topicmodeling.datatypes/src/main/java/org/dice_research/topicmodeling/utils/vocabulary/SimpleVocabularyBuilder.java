@@ -23,7 +23,7 @@ public class SimpleVocabularyBuilder implements VocabularyFactory {
 
     public SimpleVocabularyBuilder(Vocabulary source) {
         for (String word : source) {
-            setWord(word, source.getId(word));
+            set_unsecured(word, source.getId(word));
         }
     }
 
@@ -79,6 +79,31 @@ public class SimpleVocabularyBuilder implements VocabularyFactory {
         nextId = usedIds.previousSetBit(nextId) + 1;
     }
 
+    public Integer getId(String word) {
+        if (wordIndexMap.containsKey(word)) {
+            Integer wordId = wordIndexMap.get(word);
+            if (wordId == null) {
+                return -1;
+            } else {
+                return wordId;
+            }
+        } else {
+            return -1;
+        }
+    }
+
+    public String getWord(int wordId) {
+        if (indexWordMap.containsKey(wordId)) {
+            return indexWordMap.get(wordId);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @throws IllegalStateException
+     *             if the vocabulary has not been build correctly.
+     */
     @Override
     public Vocabulary getVocabulary() {
         if (usedIds.cardinality() == nextId) {

@@ -6,6 +6,7 @@ import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplie
 import org.dice_research.topicmodeling.utils.doc.Document;
 import org.dice_research.topicmodeling.utils.doc.DocumentTextWordIds;
 import org.dice_research.topicmodeling.utils.doc.DocumentWordCounts;
+import org.dice_research.topicmodeling.utils.vocabulary.SimpleVocabularyBuilder;
 import org.dice_research.topicmodeling.utils.vocabulary.Vocabulary;
 
 import com.carrotsearch.hppc.BitSet;
@@ -42,31 +43,16 @@ public class VocabularyReductionMappingApplyingSupplierDecorator extends Abstrac
         return mapping;
     }
 
-    public static int[] updateVocabulary(Vocabulary vocabulary, int[] mapping) {
-        vocabulary.setWord(word, newWord);
-        int[] mapping = new int[vocabulary.size()];
-        Arrays.fill(mapping, REMOVED_WORD);
-        // Get the last word that we would like to keep
-        int lastPos = lastSetBit(keptWords, mapping.length);
+    public static Vocabulary updateVocabulary(Vocabulary vocabulary, int[] mapping) {
+        SimpleVocabularyBuilder builder = new SimpleVocabularyBuilder(vocabulary);
         for (int i = 0; i < mapping.length; ++i) {
-            if (keptWords.get(i)) {
-                // make sure that this word has not been moved to a different position
-                if (mapping[i] == REMOVED_WORD) {
-                    // Set it to its own id since we would like to keep it there
-                    mapping[i] = i;
-                }
-            } else {
-                // This position is free! Let's check whether we can move another word to this
-                // position
-                if (lastPos > i) {
-                    // Let the last position point to this position
-                    mapping[lastPos] = i;
-                    // Search for the new last position
-                    lastPos = lastSetBit(keptWords, lastPos);
-                }
+            if (mapping[i] == REMOVED_WORD) {
+                builder.remove(i);
+            } else if (mapping[i] != i) {
+                builder.setWord(builder.getWord(i), mapping[i]);
             }
         }
-        return mapping;
+        return builder.getVocabulary();
     }
 
     /**
