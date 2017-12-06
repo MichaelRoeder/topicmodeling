@@ -56,7 +56,9 @@ public class Document implements Comparable<Document>, Serializable, Iterable<Do
      * @param property
      */
     public <T extends DocumentProperty> void addProperty(T property) {
-        properties.put(property.getClass(), property);
+        if(property != null) {
+            properties.put(property.getClass(), property);
+        }
     }
 
     /**

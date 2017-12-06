@@ -18,12 +18,21 @@ package org.dice_research.topicmodeling.utils.vocabulary;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class SimpleVocabulary implements Vocabulary {
 
     private static final long serialVersionUID = 1647610274276283464L;
 
-    protected HashMap<String, Integer> wordIndexMap = new HashMap<String, Integer>();
+    protected Map<String, Integer> wordIndexMap;
+    
+    public SimpleVocabulary() {
+        this(new HashMap<String, Integer>());
+    }
+    
+    public SimpleVocabulary(Map<String, Integer> wordIndexMap) {
+        this.wordIndexMap = wordIndexMap;
+    }
 
     public int size() {
         return wordIndexMap.size();
