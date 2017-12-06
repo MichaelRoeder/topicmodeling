@@ -100,4 +100,11 @@ public class VocabularyReductionMappingApplyingSupplierDecoratorTest {
         }
         Assert.assertEquals(expectedWordCounts.length, result.getNumberOfWords());
     }
+
+    @Test
+    public void testVocabularyMapping() {
+        Vocabulary newVocab = VocabularyReductionMappingApplyingSupplierDecorator.updateVocabulary(vocabulary, expectedMapping);
+        Assert.assertNotNull(newVocab);
+        Assert.assertEquals(expectedWordCounts.length, newVocab.size());
+    }
 }

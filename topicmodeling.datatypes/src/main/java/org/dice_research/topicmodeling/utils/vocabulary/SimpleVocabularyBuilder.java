@@ -25,6 +25,7 @@ public class SimpleVocabularyBuilder implements VocabularyFactory {
         for (String word : source) {
             set_unsecured(word, source.getId(word));
         }
+        updateNextId();
     }
 
     private void set_unsecured(String word, int id) {
@@ -49,9 +50,9 @@ public class SimpleVocabularyBuilder implements VocabularyFactory {
         String word = indexWordMap.remove(id);
         if (word != null) {
             wordIndexMap.remove(word);
-            usedIds.clear(id);
-            updateNextId();
         }
+        usedIds.clear(id);
+        updateNextId();
         return word;
     }
 
@@ -76,7 +77,7 @@ public class SimpleVocabularyBuilder implements VocabularyFactory {
     }
 
     private void updateNextId() {
-        nextId = usedIds.previousSetBit(nextId) + 1;
+        nextId = usedIds.previousSetBit(usedIds.length()) + 1;
     }
 
     public Integer getId(String word) {
