@@ -62,6 +62,7 @@
 		<module>topicmodeling.preprocessing</module>
 		<module>topicmodeling.mallet</module>
         <module>topicmodeling.wikipedia</module>
+        <!-- <module>topicmodeling.wordnet</module> -->
         <!-- <module>topicmodeling.morphadorner</module> -->
         <module>topicmodeling.stanford-nlp</module>
 	</modules>
