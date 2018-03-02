@@ -1,6 +1,7 @@
 package org.dice_research.topicmodeling.wordnet.ws4jwithjwi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,13 +46,13 @@ public class PathFinder {
 		List<ISynsetID> hypernymIds = synset
 				.getRelatedSynsets(Pointer.HYPERNYM);
 		// get the hypernyms (if this is an instance)
-		List<ISynsetID> instanceHypernymIds = useInstanceHypernyms ? synset
-				.getRelatedSynsets(Pointer.HYPERNYM_INSTANCE) : null;
+		@SuppressWarnings("unchecked")
+        List<ISynsetID> instanceHypernymIds = useInstanceHypernyms ? synset
+				.getRelatedSynsets(Pointer.HYPERNYM_INSTANCE) : Collections.EMPTY_LIST;
 		List<List<ISynset>> result = new ArrayList<List<ISynset>>();
 
 		// If this is the highest node and has no other hypernyms
-		if ((hypernymIds.size() == 0)
-				&& (useInstanceHypernyms || (instanceHypernymIds.size() == 0))) {
+		if ((hypernymIds.size() == 0) && (instanceHypernymIds.size() == 0)) {
 			// return the tree containing only the current node
 			List<ISynset> tree = new ArrayList<ISynset>();
 			tree.add(synset);
