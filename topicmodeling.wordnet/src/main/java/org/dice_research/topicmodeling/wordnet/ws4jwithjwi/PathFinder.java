@@ -38,7 +38,6 @@ public class PathFinder {
 	 * 
 	 * portation of the method of the ws4j library
 	 */
-	@SuppressWarnings("unused")
 	public List<List<ISynset>> getHypernymTrees(ISynset synset,
 			Set<ISynsetID> history) {
 
