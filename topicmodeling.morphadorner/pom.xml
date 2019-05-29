@@ -33,7 +33,7 @@
 					<groupId>junit</groupId>
 				</exclusion>
 			</exclusions>
-			<optional>true</optional>
+			<!-- <optional>true</optional> -->
 		</dependency>
 	</dependencies>
 

@@ -32,7 +32,8 @@ public class ReutersSgmlReader extends AbstractDocumentSupplier {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReutersSgmlReader.class);
 
-    private static final String REUTERS_PATH = "/data/m.roeder/daten/Corpora/Reuters-21578/reut2-0";
+    //private static final String REUTERS_PATH = "/data/m.roeder/daten/Corpora/Reuters-21578/reut2-0";
+    private static final String REUTERS_PATH = "/data/Reuters/reut2-0";
     private static final String REUTERS_FILE_ENDING = ".sgm";
     private static final int MAX_SEGMENT_ID = 21;
 

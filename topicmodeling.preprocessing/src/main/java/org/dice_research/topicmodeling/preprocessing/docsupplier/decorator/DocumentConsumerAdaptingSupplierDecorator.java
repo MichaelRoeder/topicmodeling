@@ -20,20 +20,32 @@ import org.dice_research.topicmodeling.preprocessing.docconsumer.DocumentConsume
 import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
 import org.dice_research.topicmodeling.utils.doc.Document;
 
-
 public class DocumentConsumerAdaptingSupplierDecorator extends AbstractDocumentSupplierDecorator {
 
     private DocumentConsumer consumer;
+    private boolean isSynchronized;
 
     public DocumentConsumerAdaptingSupplierDecorator(DocumentSupplier documentSource, DocumentConsumer consumer) {
+        this(documentSource, consumer, false);
+    }
+
+    public DocumentConsumerAdaptingSupplierDecorator(DocumentSupplier documentSource, DocumentConsumer consumer,
+            boolean isSynchronized) {
         super(documentSource);
         this.consumer = consumer;
+        this.isSynchronized = isSynchronized;
     }
 
     @Override
     protected Document prepareDocument(Document document) {
         if (document != null) {
-            consumer.consumeDocument(document);
+            if (isSynchronized) {
+                synchronized (consumer) {
+                    consumer.consumeDocument(document);
+                }
+            } else {
+                consumer.consumeDocument(document);
+            }
         }
         return document;
     }

@@ -15,11 +15,22 @@
  * along with topicmodeling.datatypes.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.dice_research.topicmodeling.preprocessing.docsupplier;
+
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 import org.dice_research.topicmodeling.utils.doc.Document;
 
 public interface DocumentSupplier {
 
-	public Document getNextDocument();
-	
-	public void setDocumentStartId(int documentStartId);
+    public Document getNextDocument();
+
+    public void setDocumentStartId(int documentStartId);
+
+    public static Stream<Document> convertToStream(DocumentSupplier supplier) {
+        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(new DocumentSupplierAsIterator(supplier),
+                Spliterator.DISTINCT | Spliterator.ORDERED), false);
+    }
 }

@@ -25,13 +25,15 @@ public class SimpleVocabulary implements Vocabulary {
     private static final long serialVersionUID = 1647610274276283464L;
 
     protected Map<String, Integer> wordIndexMap;
-    
+
     public SimpleVocabulary() {
         this(new HashMap<String, Integer>());
     }
-    
+
     public SimpleVocabulary(Map<String, Integer> wordIndexMap) {
-        this.wordIndexMap = wordIndexMap;
+        synchronized (wordIndexMap) {
+            this.wordIndexMap = wordIndexMap;
+        }
     }
 
     public int size() {
@@ -39,7 +41,9 @@ public class SimpleVocabulary implements Vocabulary {
     }
 
     public void add(String word) {
-        wordIndexMap.put(word, wordIndexMap.size());
+        synchronized (wordIndexMap) {
+            wordIndexMap.put(word, wordIndexMap.size());
+        }
     }
 
     public Integer getId(String word) {
@@ -68,7 +72,9 @@ public class SimpleVocabulary implements Vocabulary {
 
     @Override
     public void setWord(String word, String newWord) {
-        wordIndexMap.put(newWord, wordIndexMap.get(word));
-        wordIndexMap.remove(word);
+        synchronized (wordIndexMap) {
+            wordIndexMap.put(newWord, wordIndexMap.get(word));
+            wordIndexMap.remove(word);
+        }
     }
 }
