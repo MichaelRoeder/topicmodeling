@@ -22,6 +22,7 @@ import java.util.Iterator;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
+import org.dice_research.topicmodeling.io.factories.FileBasedDocumentFactory;
 import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
 import org.dice_research.topicmodeling.utils.doc.Document;
 import org.dice_research.topicmodeling.utils.doc.DocumentCategory;
@@ -38,9 +39,18 @@ public class FolderReader implements DocumentSupplier {
         simpleFactory = new SimpleDocSupplierFromFile();
     }
 
+    public FolderReader(FileBasedDocumentFactory documentFactory) {
+        simpleFactory = new SimpleDocSupplierFromFile(documentFactory);
+    }
+
     public FolderReader(File documentFolder) {
         setDocumentFolder(documentFolder);
         simpleFactory = new SimpleDocSupplierFromFile();
+    }
+
+    public FolderReader(FileBasedDocumentFactory documentFactory, File documentFolder) {
+        setDocumentFolder(documentFolder);
+        simpleFactory = new SimpleDocSupplierFromFile(documentFactory);
     }
 
     public FolderReader(File documentFolder, IOFileFilter filter) {
@@ -48,11 +58,15 @@ public class FolderReader implements DocumentSupplier {
         simpleFactory = new SimpleDocSupplierFromFile();
     }
 
+    public FolderReader(FileBasedDocumentFactory documentFactory, File documentFolder, IOFileFilter filter) {
+        setDocumentFolder(documentFolder, filter);
+        simpleFactory = new SimpleDocSupplierFromFile(documentFactory);
+    }
+
     /**
      * Set the value of documentFolder
      * 
-     * @param documentFolder
-     *            the new value of documentFolder
+     * @param documentFolder the new value of documentFolder
      */
     public void setDocumentFolder(File documentFolder) {
         setDocumentFolder(documentFolder, TrueFileFilter.INSTANCE);
@@ -88,8 +102,7 @@ public class FolderReader implements DocumentSupplier {
             return null;
         }
         docFile = iterator.next();
-        // simpleFactory.createDocumentAdHoc(docFile);
-        simpleFactory.createRawDocumentAdHoc(docFile);
+        simpleFactory.createAdHoc(docFile);
         document = simpleFactory.getNextDocument();
         document.addProperty(new DocumentName(docFile.getName()));
 

@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import org.apache.commons.io.FileUtils;
+import org.dice_research.topicmodeling.io.factories.ByteArrayReadingFileBasedDocumentFactory;
+import org.dice_research.topicmodeling.io.factories.FileBasedDocumentFactory;
 import org.dice_research.topicmodeling.preprocessing.docsupplier.AbstractDocumentSupplier;
 import org.dice_research.topicmodeling.utils.doc.Document;
 import org.dice_research.topicmodeling.utils.doc.DocumentCharset;
@@ -30,23 +32,49 @@ import org.dice_research.topicmodeling.utils.doc.DocumentText;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * 
+ * @author Michael R&ouml;der (michael.roeder@uni-paderborn.de)
+ *
+ */
 public class SimpleDocSupplierFromFile extends AbstractDocumentSupplier {
 
     private static final Logger logger = LoggerFactory.getLogger(SimpleDocSupplierFromFile.class);
 
     private static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
+    protected FileBasedDocumentFactory documentFactory;
+
     protected Document nextDocument = null;
 
     public SimpleDocSupplierFromFile() {
+        this(new ByteArrayReadingFileBasedDocumentFactory());
+    }
+
+    public SimpleDocSupplierFromFile(FileBasedDocumentFactory documentFactory) {
         super();
+        this.documentFactory = documentFactory;
     }
 
     public SimpleDocSupplierFromFile(int documentStartId) {
-        super(documentStartId);
+        this(new ByteArrayReadingFileBasedDocumentFactory(), documentStartId);
     }
 
+    public SimpleDocSupplierFromFile(FileBasedDocumentFactory documentFactory, int documentStartId) {
+        super(documentStartId);
+        this.documentFactory = documentFactory;
+    }
+
+    public void createAdHoc(File file) {
+        nextDocument = documentFactory.createDocument(file, this.getNextDocumentId());
+    }
+
+    /**
+     * 
+     * @param file
+     * 
+     * @deprecated use {@link #createAdHoc(File)} instead with the necessary factory
+     */
     @Deprecated
     public void createDocumentAdHoc(File file) {
         String content;
@@ -63,6 +91,12 @@ public class SimpleDocSupplierFromFile extends AbstractDocumentSupplier {
         nextDocument.addProperty(new DocumentCharset(DEFAULT_CHARSET));
     }
 
+    /**
+     * 
+     * @param file
+     * 
+     * @deprecated use {@link #createAdHoc(File)} instead with the necessary factory
+     */
     public void createRawDocumentAdHoc(File file) {
         byte content[];
         try {
