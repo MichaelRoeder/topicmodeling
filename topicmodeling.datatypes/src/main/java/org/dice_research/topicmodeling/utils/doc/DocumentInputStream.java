@@ -15,7 +15,7 @@ public class DocumentInputStream extends AbstractSimpleDocumentProperty<InputStr
     }
 
     public boolean isClosed() {
-        return closed || (this.get() != null);
+        return closed || (this.get() == null);
     }
 
     @Override
