@@ -35,4 +35,24 @@ public abstract class AbstractArrayContainingDocumentProperty implements ArrayCo
         builder.append("\"");
         return builder.toString();
     }
+
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(getValueAsArray());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        AbstractArrayContainingDocumentProperty other = (AbstractArrayContainingDocumentProperty) obj;
+        if (!Arrays.deepEquals(getValueAsArray(), other.getValueAsArray()))
+            return false;
+        return true;
+    }
+    
 }
