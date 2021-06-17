@@ -203,6 +203,7 @@
 					<show>private</show>
 					<nohelp>true</nohelp>
 					<quiet>true</quiet>
+					<failOnError>false</failOnError>
 					<!-- added for generating javadoc with java 1.8 -->
 					<additionalparam>-Xdoclint:none</additionalparam>
 				</configuration>
