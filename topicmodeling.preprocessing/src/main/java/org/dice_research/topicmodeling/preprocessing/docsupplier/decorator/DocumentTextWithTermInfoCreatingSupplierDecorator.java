@@ -103,6 +103,9 @@ public class DocumentTextWithTermInfoCreatingSupplierDecorator extends
     }
 
     public static String escapeString(String value) {
+        if(value == null) {
+            return "";
+        }
         char chars[] = value.toCharArray();
         int start = 0, pos;
         StringBuilder escapedString = new StringBuilder();

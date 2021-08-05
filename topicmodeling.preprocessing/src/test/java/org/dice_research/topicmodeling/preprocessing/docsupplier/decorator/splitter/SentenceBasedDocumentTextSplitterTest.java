@@ -57,7 +57,7 @@ public class SentenceBasedDocumentTextSplitterTest extends AbstractDocumentSuppl
                                 + " on gays in the military.", "I just burst out laughing when I heard this;\n"
                                 + " what planet do these CNN people live on anyway?", "Jason C. Austin" },
                         new String[][] {
-                        { "According", "CNN", "Poll", "key", "reason", "for", "Clinton's", "low", "approval",
+                        { "According", "CNN", "Poll", "key", "reason", "for", "Clinton", "low", "approval",
                                 "rating", "people", "are", "angry", "about", "him", "not", "moving", "fast",
                                 "enough", "gays", "the", "military" },
                         { "just", "burst", "out", "laughing", "when", "heard", "this", "what", "planet",
