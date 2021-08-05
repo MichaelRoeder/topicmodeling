@@ -28,7 +28,6 @@ jobs:
     - name: Compile project
       run: mvn clean compile -DskipTests=true -Dmaven.javadoc.skip=true -B -V
     - name: Run tests
-      run: mvn test -Dmaven.javadoc.skip=true -B
       run: mvn jacoco:prepare-agent test -Dmaven.javadoc.skip=true -B jacoco:report verify
     - name: Upload test results to Codacy
       run: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r topicmodeling.test-report/target/site/jacoco-aggregate/jacoco.xml
