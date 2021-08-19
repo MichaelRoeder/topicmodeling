@@ -30,7 +30,13 @@ import org.dice_research.topicmodeling.utils.doc.ner.NamedEntitiesInText;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * FIXME The test for this class (NerPropagatingSupplierDecoratorTest) does not
+ * work as expected. The functionality of this class can not be guaranteed.
+ * 
+ * @author Michael R&ouml;der (michael.roeder@uni-paderborn.de)
+ *
+ */
 public class NerPropagatingSupplierDecorator extends PosTaggingSupplierDecorator implements PosTaggingTermFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NerPropagatingSupplierDecorator.class);
@@ -61,7 +67,8 @@ public class NerPropagatingSupplierDecorator extends PosTaggingSupplierDecorator
     @Override
     public boolean isTermGood(Term term) {
         if (tokens != null) {
-            return tokens.contains(term.getWordForm()) || (additionalFilter == null) || additionalFilter.isTermGood(term);
+            return tokens.contains(term.getWordForm()) || (additionalFilter == null)
+                    || additionalFilter.isTermGood(term);
         } else {
             return (additionalFilter == null) || additionalFilter.isTermGood(term);
         }

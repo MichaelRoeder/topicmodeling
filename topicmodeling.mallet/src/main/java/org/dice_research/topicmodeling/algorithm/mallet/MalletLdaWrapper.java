@@ -334,11 +334,14 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
 
         protected static final Logger logger = LoggerFactory.getLogger(MalletLDATopicModeler.class);
 
+        public static int DEFAULT_INFERENCE_ITERATIONS = 50;
+
         protected transient WorkerRunnable[] runnables = new WorkerRunnable[1];
         protected int iteration;
         protected transient int inferencerVersion = 0;
         protected transient MalletLdaInferenceWrapper inferencer;
         protected Vocabulary vocabulary = null;
+        protected int inferenceIterations = DEFAULT_INFERENCE_ITERATIONS;
 
         protected double wordTopicWeights[][];
         protected double topicWeights[];
@@ -490,7 +493,8 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
             // FeatureSequence fs = new FeatureSequence(this.alphabet,
             // tokens.toArray());
             Instance instance = new Instance(fs, null, null, null);
-            inferencedTopicProbabilities = inferencer.getSampledDistribution(instance, 1, 50, 50);
+            inferencedTopicProbabilities = inferencer.getSampledDistribution(instance, inferenceIterations,
+                    inferenceIterations + 1, inferenceIterations + 1);
 
             return inferencedTopicProbabilities;
         }
@@ -583,6 +587,10 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
             } else {
                 return Arrays.copyOf(alpha, alpha.length);
             }
+        }
+        
+        public void setInferenceIterations(int inferenceIterations) {
+            this.inferenceIterations = inferenceIterations;
         }
     }
 }

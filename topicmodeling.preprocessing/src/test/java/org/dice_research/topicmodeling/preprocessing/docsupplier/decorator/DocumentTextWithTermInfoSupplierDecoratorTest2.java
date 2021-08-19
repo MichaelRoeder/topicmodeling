@@ -41,14 +41,14 @@ public class DocumentTextWithTermInfoSupplierDecoratorTest2 extends AbstractDocu
     @Parameters
     public static Collection<Object[]> data() {
         Object[][] data = new Object[][] {
-                { "This|is|a|stupid|text.", new Term[] { new Term("This|is|a|stupid|text", "this|is|a|stupid|text") } },
-                { "This|is|a|stupid|text.", new Term[] { new Term("This", "this"), new Term("is", "is"),
-                        new Term("a", "a"), new Term("stupid", "stupid"), new Term("text", "text") } },
+                { "This|is|a|stupid|text.", new Term[] { new Term("This|is|a|stupid|text", "this|is|a|stupid|text", "pos") } },
+                { "This|is|a|stupid|text.", new Term[] { new Term("This", "this", "pos"), new Term("is", "is", "pos"),
+                        new Term("a", "a", "pos"), new Term("stupid", "stupid", "pos"), new Term("text", "text", "pos") } },
                 {
                         "This\\ \\is\\ [a] stu[p]id t\\]e\\[xt\\\\.",
-                        new Term[] { new Term("This\\", "this\\"), new Term("\\is\\", "\\is\\"),
-                                new Term("[a]", "[a]"),
-                                new Term("stu[p]id", "stu[p]id"), new Term("t\\]e\\[xt\\\\", "t\\]e\\[xt\\\\") } }
+                        new Term[] { new Term("This\\", "this\\", "pos"), new Term("\\is\\", "\\is\\", "pos"),
+                                new Term("[a]", "[a]", "pos"),
+                                new Term("stu[p]id", "stu[p]id", "pos"), new Term("t\\]e\\[xt\\\\", "t\\]e\\[xt\\\\", "pos") } }
         };
         return Arrays.asList(data);
     }
