@@ -11,22 +11,21 @@
 	<artifactId>topicmodeling.test-report</artifactId>
 
 	<dependencies>
+        <dependency>
+            <groupId>org.dice-research</groupId>
+            <artifactId>topicmodeling.automaton</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.dice-research</groupId>
 			<artifactId>topicmodeling.commons</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.dice-research</groupId>
-			<artifactId>topicmodeling.automaton</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.dice-research</groupId>
+            <artifactId>topicmodeling.concurrent</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.dice-research</groupId>
 			<artifactId>topicmodeling.datatypes</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.dice-research</groupId>
-			<artifactId>topicmodeling.concurrent</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.dice-research</groupId>
@@ -51,12 +50,14 @@
 		<dependency>
 			<groupId>org.dice-research</groupId>
 			<artifactId>topicmodeling.mallet</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
+        <dependency>
+            <groupId>org.dice-research</groupId>
+            <artifactId>topicmodeling.evaluate</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.dice-research</groupId>
 			<artifactId>topicmodeling.wikipedia</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.dice-research</groupId>

@@ -274,6 +274,10 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
         return ((FeatureSequence) this.topicModel.data.get(documentId).instance.getData()).toFeatureIndexSequence();
     }
 
+    public FeatureSequence getDocumentAsFeatureSequence(int documentId) {
+        return ((FeatureSequence) this.topicModel.data.get(documentId).instance.getData());
+    }
+
     @Override
     public int getNumberOfTopics() {
         return topicModel.numTopics;

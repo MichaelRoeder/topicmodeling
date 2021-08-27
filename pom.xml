@@ -51,21 +51,22 @@
 	<!-- MODULES -->
 	<modules>
 		<module>topicmodeling.parent</module>
+        <module>topicmodeling.automaton</module>
 		<module>topicmodeling.commons</module>
-		<module>topicmodeling.automaton</module>
+        <module>topicmodeling.concurrent</module>
 		<module>topicmodeling.datatypes</module>
-		<module>topicmodeling.concurrent</module>
-		<module>topicmodeling.lang</module>
+        <module>topicmodeling.evaluate</module>
         <module>topicmodeling.io.test</module>
 		<module>topicmodeling.io</module>
         <module>topicmodeling.io.json</module>
+        <module>topicmodeling.lang</module>
+        <module>topicmodeling.mallet</module>
 		<module>topicmodeling.preprocessing</module>
-		<module>topicmodeling.mallet</module>
-        <module>topicmodeling.wikipedia</module>
         <!-- <module>topicmodeling.wordnet</module> -->
         <!-- <module>topicmodeling.morphadorner</module> -->
         <module>topicmodeling.stanford-nlp</module>
         <module>topicmodeling.test-report</module>
+        <module>topicmodeling.wikipedia</module>
 	</modules>
 	
 	<build>
