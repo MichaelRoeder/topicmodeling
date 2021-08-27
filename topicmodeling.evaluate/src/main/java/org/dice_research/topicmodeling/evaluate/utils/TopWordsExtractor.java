@@ -1,4 +1,4 @@
-package org.aksw.simba.topicmodeling.evaluate.utils;
+package org.dice_research.topicmodeling.evaluate.utils;
 
 import java.util.Arrays;
 

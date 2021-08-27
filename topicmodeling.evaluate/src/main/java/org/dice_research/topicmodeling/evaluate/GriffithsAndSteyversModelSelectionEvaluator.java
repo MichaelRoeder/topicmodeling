@@ -1,4 +1,4 @@
-package org.aksw.simba.topicmodeling.evaluate;
+package org.dice_research.topicmodeling.evaluate;
 
 import org.dice_research.topicmodeling.algorithm.mallet.MalletLdaWrapper;
 import org.dice_research.topicmodeling.algorithms.LDAModel;

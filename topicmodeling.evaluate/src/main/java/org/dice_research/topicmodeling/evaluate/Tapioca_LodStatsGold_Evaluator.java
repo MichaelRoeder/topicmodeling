@@ -1,4 +1,4 @@
-package org.aksw.simba.topicmodeling.evaluate;
+package org.dice_research.topicmodeling.evaluate;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,9 +25,9 @@ import org.slf4j.LoggerFactory;
  * @author m.roeder
  * 
  */
-public class Tapioca_SimilarityEvaluator extends AbstractEvaluatorWithClassifiedTestCorpus {
+public class Tapioca_LodStatsGold_Evaluator extends AbstractEvaluatorWithClassifiedTestCorpus {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(Tapioca_SimilarityEvaluator.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Tapioca_LodStatsGold_Evaluator.class);
 
 	public static final String SIMILARITY_OUTPUT_FILE_NAME = "dataset_similarities.csv";
 
@@ -37,7 +37,7 @@ public class Tapioca_SimilarityEvaluator extends AbstractEvaluatorWithClassified
 	protected Corpus trainCorpus;
 	protected String outputFileName = SIMILARITY_OUTPUT_FILE_NAME;
 
-	public Tapioca_SimilarityEvaluator(Corpus trainCorpus, Corpus testCorpus,
+	public Tapioca_LodStatsGold_Evaluator(Corpus trainCorpus, Corpus testCorpus,
 			ProbTopicModelingAlgorithmStateSupplier probAlgState, String outputFolder) {
 		super(testCorpus);
 		this.probAlgState = probAlgState;
@@ -45,7 +45,7 @@ public class Tapioca_SimilarityEvaluator extends AbstractEvaluatorWithClassified
 		this.trainCorpus = trainCorpus;
 	}
 
-	public Tapioca_SimilarityEvaluator(Corpus trainCorpus, Corpus testCorpus,
+	public Tapioca_LodStatsGold_Evaluator(Corpus trainCorpus, Corpus testCorpus,
 			ProbTopicModelingAlgorithmStateSupplier probAlgState) {
 		super(testCorpus);
 		this.probAlgState = probAlgState;

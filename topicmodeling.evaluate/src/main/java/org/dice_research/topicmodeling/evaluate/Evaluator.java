@@ -1,4 +1,4 @@
-package org.aksw.simba.topicmodeling.evaluate;
+package org.dice_research.topicmodeling.evaluate;
 
 import org.dice_research.topicmodeling.algorithms.Model;
 import org.dice_research.topicmodeling.evaluate.result.EvaluationResult;
