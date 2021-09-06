@@ -27,11 +27,12 @@ import org.dice_research.topicmodeling.utils.vocabulary.Vocabulary;
 
 import com.carrotsearch.hppc.IntIntOpenHashMap;
 import com.carrotsearch.hppc.cursors.IntIntCursor;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hppc.HppcModule;
 
-public class DocumentWordCounts extends AbstractDocumentProperty implements DocumentProperty, Externalizable {
+public class DocumentWordCounts extends AbstractDocumentProperty implements StringContainingDocumentProperty, ParseableDocumentProperty, Externalizable {
 
 	private static final long serialVersionUID = -1765808256696402667L;
 
@@ -53,6 +54,29 @@ public class DocumentWordCounts extends AbstractDocumentProperty implements Docu
 	@Override
 	public Object getValue() {
 		return wordCounts;
+	}
+
+	@Override
+	public String getStringValue() {
+	    ObjectMapper mapper = new ObjectMapper();
+	    mapper.registerModule(new HppcModule());
+	    try {
+		return mapper.writeValueAsString(wordCounts);
+	    } catch (JsonProcessingException e) {
+		return null;
+	    }
+	}
+
+	@Override
+	public void parseValue(String value) {
+	    ObjectMapper mapper = new ObjectMapper();
+	    mapper.registerModule(new HppcModule());
+	    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	    try {
+		wordCounts = mapper.readValue(value, IntIntOpenHashMap.class);
+	    } catch (IOException e) {
+		wordCounts = null;
+	    }
 	}
 
 	public void setWordCount(int wordId, int count) {
