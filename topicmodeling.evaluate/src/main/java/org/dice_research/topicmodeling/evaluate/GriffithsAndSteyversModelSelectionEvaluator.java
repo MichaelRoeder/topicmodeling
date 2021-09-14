@@ -1,5 +1,7 @@
 package org.dice_research.topicmodeling.evaluate;
 
+import java.util.stream.IntStream;
+
 import org.dice_research.topicmodeling.algorithm.mallet.MalletLdaWrapper;
 import org.dice_research.topicmodeling.algorithms.LDAModel;
 import org.dice_research.topicmodeling.algorithms.Model;
@@ -17,7 +19,12 @@ import cc.mallet.types.Dirichlet;
 
 /**
  * Implements the evaluation of the model described in Griffiths & Steyvers:
- * "Finding scientific topics".
+ * "Finding scientific topics". It calculates P(w|T) where w is the set of all
+ * given words (i.e., all documents) and T are the topics of the model that
+ * should be evaluated. This probability is intractable since all combinations
+ * of topic assignments would have to be calculated. Hence, Griffiths & Steyvers
+ * propose to sample the topic assignments N times to get P(Z|w,T). Based on the
+ * assignments, the
  * 
  * @author Michael R&ouml;der (roeder@informatik.uni-leipzig.de)
  *
@@ -29,21 +36,45 @@ public class GriffithsAndSteyversModelSelectionEvaluator extends AbstractEvaluat
 
     private static final int NUMBER_OF_REPEATITIONS = 5;
 
+    private static final int NUMBER_OF_INFERENCE_ITERATIONS = 700;
+
     private MalletLdaWrapper ldaAlgorithm;
     private Corpus trainCorpus;
     private int numberOfRepeatitions = NUMBER_OF_REPEATITIONS;
 
+    /**
+     * Constructor. Called without an additional training corpus, the documents of
+     * the model's state will be used.
+     * 
+     * @param ldaAlgorithm the LDA algorithm that comprises the model and that
+     *                     should be evaluated
+     */
+    public GriffithsAndSteyversModelSelectionEvaluator(MalletLdaWrapper ldaAlgorithm) {
+        this.ldaAlgorithm = ldaAlgorithm;
+        this.trainCorpus = null;
+    }
+
+    /**
+     * Constructor.
+     * 
+     * @param ldaAlgorithm the LDA algorithm that comprises the model and that
+     *                     should be evaluated
+     * @param trainCorpus  the train corpus for which the probabilities should be
+     *                     calculated
+     */
     public GriffithsAndSteyversModelSelectionEvaluator(MalletLdaWrapper ldaAlgorithm, Corpus trainCorpus) {
         this.ldaAlgorithm = ldaAlgorithm;
         this.trainCorpus = trainCorpus;
     }
 
     protected int[][] classifyDocuments(LDAModel model, int[][] tokens) {
-        int topicAssignments[][] = new int[tokens.length][];
-        for (int documentId = 0; documentId < tokens.length; ++documentId) {
-            topicAssignments[documentId] = model.inferTopicAssignmentsForDocument(tokens[documentId]);
-        }
-        return topicAssignments;
+//        int topicAssignments[][] = new int[tokens.length][];
+//        for (int documentId = 0; documentId < tokens.length; ++documentId) {
+//            topicAssignments[documentId] = model.inferTopicAssignmentsForDocument(tokens[documentId]);
+//        }
+//        return topicAssignments;
+        return IntStream.range(0, tokens.length).parallel()
+                .mapToObj(d -> model.inferTopicAssignmentsForDocument(tokens[d])).toArray(int[][]::new);
     }
 
     @Override
@@ -54,7 +85,14 @@ public class GriffithsAndSteyversModelSelectionEvaluator extends AbstractEvaluat
                     "Expected the alread known instance of a LDA model. But got a different object of the class "
                             + model.getClass().getCanonicalName());
         }
-        int tokens[][] = extractTokens(trainCorpus);
+        ldaModel.setInferenceIterations(NUMBER_OF_INFERENCE_ITERATIONS);
+        // Get tokens (i.e., words per document)
+        int tokens[][] = null;
+        if (trainCorpus != null) {
+            tokens = extractTokens(trainCorpus);
+        } else {
+            tokens = extractTokens(ldaAlgorithm);
+        }
 
         double logProbabilities[] = new double[numberOfRepeatitions];
         int numberOfTopics = ldaModel.getNumberOfTopics();
@@ -123,6 +161,14 @@ public class GriffithsAndSteyversModelSelectionEvaluator extends AbstractEvaluat
                 tokens[docId] = ids.getWordIds();
             }
             ++docId;
+        }
+        return tokens;
+    }
+
+    protected int[][] extractTokens(MalletLdaWrapper ldaAlgorithm) {
+        int tokens[][] = new int[ldaAlgorithm.getNumberOfDocuments()][];
+        for (int d = 0; d < tokens.length; ++d) {
+            tokens[d] = ldaAlgorithm.getWordsOfDocument(d);
         }
         return tokens;
     }
