@@ -1,269 +1,274 @@
 <!-- This file is part of topicmodeling.parent. topicmodeling.parent is free 
-	software: you can redistribute it and/or modify it under the terms of the 
-	GNU Lesser General Public License as published by the Free Software Foundation, 
-	either version 3 of the License, or (at your option) any later version. topicmodeling.parent 
-	is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
-	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
-	PURPOSE. See the GNU Lesser General Public License for more details. You 
-	should have received a copy of the GNU Lesser General Public License along 
-	with topicmodeling.parent. If not, see <http://www.gnu.org/licenses/>. -->
+    software: you can redistribute it and/or modify it under the terms of the 
+    GNU Lesser General Public License as published by the Free Software Foundation, 
+    either version 3 of the License, or (at your option) any later version. topicmodeling.parent 
+    is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+    PURPOSE. See the GNU Lesser General Public License for more details. You 
+    should have received a copy of the GNU Lesser General Public License along 
+    with topicmodeling.parent. If not, see <http://www.gnu.org/licenses/>. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.dice-research</groupId>
-		<artifactId>topicmodeling</artifactId>
-		<version>0.0.3-SNAPSHOT</version>
-		<relativePath>..</relativePath>
-	</parent>
-	<artifactId>topicmodeling.parent</artifactId>
-	<packaging>pom</packaging>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.dice-research</groupId>
+        <artifactId>topicmodeling</artifactId>
+        <version>0.0.3-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
+    <artifactId>topicmodeling.parent</artifactId>
+    <packaging>pom</packaging>
 
-	<!-- PROPERTIES -->
-	<properties>
-		<java.version>1.8</java.version>
-		<slf4j.version>1.7.32</slf4j.version>
-		<lucene.version>4.4.0</lucene.version>
-		<junit.version>4.13.2</junit.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+    <!-- PROPERTIES -->
+    <properties>
+        <java.version>1.8</java.version>
+        <slf4j.version>1.7.32</slf4j.version>
+        <lucene.version>4.4.0</lucene.version>
+        <junit.version>4.13.2</junit.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-	<!-- DEPENDENCIES -->
-	<dependencies>
-		<!-- ~~~~~~~~~~~~~~~~~~~ Logging ~~~~~~~~~~~~~~~~~~~~~~ -->
-		<!-- slf4j: Logging API -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		<!-- Logging - SLF4J-Log4j Binding (only for testing) -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- ~~~~~~~~~~~~~~~~~~~ End Logging ~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- DEPENDENCIES -->
+    <dependencies>
+        <!-- ~~~~~~~~~~~~~~~~~~~ Logging ~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- slf4j: Logging API -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <!-- Logging - SLF4J-Log4j Binding (only for testing) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- ~~~~~~~~~~~~~~~~~~~ End Logging ~~~~~~~~~~~~~~~~~~~~~~ -->
 
-		<!-- ~~~~~~~~~~~~~~~~~~~ Testing ~~~~~~~~~~~~~~~~~~~~~~ -->
-		<!-- JUnit -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- ~~~~~~~~~~~~~~~~~~~ End Testing ~~~~~~~~~~~~~~~~~~~~~~ -->
-	</dependencies>
-	<dependencyManagement>
-		<dependencies>
-			<!-- ~~~~~~~~~~~~~~~~~~~ Topicmodeling modules ~~~~~~~~~~~~~~~~~~~~~~ -->
-			<!-- Automatons -->
-			<dependency>
-				<groupId>org.dice-research</groupId>
-				<artifactId>topicmodeling.automaton</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<!-- Commons -->
-			<dependency>
-				<groupId>org.dice-research</groupId>
-				<artifactId>topicmodeling.commons</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<!-- Concurrent -->
-			<dependency>
-				<groupId>org.dice-research</groupId>
-				<artifactId>topicmodeling.concurrent</artifactId>
+        <!-- ~~~~~~~~~~~~~~~~~~~ Testing ~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- ~~~~~~~~~~~~~~~~~~~ End Testing ~~~~~~~~~~~~~~~~~~~~~~ -->
+    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <!-- ~~~~~~~~~~~~~~~~~~~ Topicmodeling modules ~~~~~~~~~~~~~~~~~~~~~~ -->
+            <!-- Automatons -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.automaton</artifactId>
                 <version>${project.parent.version}</version>
-			</dependency>
-			<!-- Datatypes -->
-			<dependency>
-				<groupId>org.dice-research</groupId>
-				<artifactId>topicmodeling.datatypes</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<!-- Evaluate -->
-			<dependency>
-				<groupId>org.dice-research</groupId>
-				<artifactId>topicmodeling.evaluate</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<!-- IO -->
-			<dependency>
-				<groupId>org.dice-research</groupId>
-				<artifactId>topicmodeling.io</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<!-- IO JSON -->
-			<dependency>
-				<groupId>org.dice-research</groupId>
-				<artifactId>topicmodeling.io.json</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<!-- IO Test -->
-			<dependency>
-				<groupId>org.dice-research</groupId>
-				<artifactId>topicmodeling.io.test</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<!-- Lang library -->
-			<dependency>
-				<groupId>org.dice-research</groupId>
-				<artifactId>topicmodeling.lang</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<!-- Mallet adapter -->
-			<dependency>
-				<groupId>org.dice-research</groupId>
-				<artifactId>topicmodeling.mallet</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<!-- Preprocessing -->
-			<dependency>
-				<groupId>org.dice-research</groupId>
-				<artifactId>topicmodeling.preprocessing</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<!-- Stanford adapter -->
-			<dependency>
-				<groupId>org.dice-research</groupId>
-				<artifactId>topicmodeling.stanford-nlp</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<!-- Wikipedia adapter -->
-			<dependency>
-				<groupId>org.dice-research</groupId>
-				<artifactId>topicmodeling.wikipedia</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<!-- ~~~~~~~~~~~~~~~~~~~ End Topicmodeling modules ~~~~~~~~~~~~~~~~~~~~~~ -->
-			<!-- Apache Commons IO -->
-			<dependency>
-				<groupId>commons-io</groupId>
-				<artifactId>commons-io</artifactId>
-				<version>2.11.0</version>
-			</dependency>
-			<!-- Apache Commons Collections -->
-			<dependency>
-				<groupId>commons-collections</groupId>
-				<artifactId>commons-collections</artifactId>
-				<version>3.2.2</version>
-			</dependency>
-			<!-- Apache Commons Lang 3 -->
-			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-lang3</artifactId>
-				<version>3.12.0</version>
-			</dependency>
-			<!-- High Performance Primitive Collections -->
-			<dependency>
-				<groupId>com.carrotsearch</groupId>
-				<artifactId>hppc</artifactId>
-				<version>0.6.1</version>
-			</dependency>
-			<!-- Jackson datatype serialization (for HPPC datatypes) -->
-			<dependency>
-				<groupId>com.fasterxml.jackson.datatype</groupId>
-				<artifactId>jackson-datatype-hppc</artifactId>
-				<version>2.5.1</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+            </dependency>
+            <!-- Commons -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.commons</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <!-- Concurrent -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.concurrent</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <!-- Datatypes -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.datatypes</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <!-- Evaluate -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.evaluate</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <!-- IO -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.io</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <!-- IO JSON -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.io.json</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <!-- IO Test -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.io.test</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <!-- Lang library -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.lang</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <!-- Mallet adapter -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.mallet</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <!-- Preprocessing -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.preprocessing</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <!-- Stanford adapter -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.stanford-nlp</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.tools</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <!-- Wikipedia adapter -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.wikipedia</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <!-- ~~~~~~~~~~~~~~~~~~~ End Topicmodeling modules ~~~~~~~~~~~~~~~~~~~~~~ -->
+            <!-- Apache Commons IO -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.11.0</version>
+            </dependency>
+            <!-- Apache Commons Collections -->
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2.2</version>
+            </dependency>
+            <!-- Apache Commons Lang 3 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.12.0</version>
+            </dependency>
+            <!-- High Performance Primitive Collections -->
+            <dependency>
+                <groupId>com.carrotsearch</groupId>
+                <artifactId>hppc</artifactId>
+                <version>0.6.1</version>
+            </dependency>
+            <!-- Jackson datatype serialization (for HPPC datatypes) -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-hppc</artifactId>
+                <version>2.5.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-	<!-- BUILD -->
-	<build>
-		<plugins>
-			<!-- Compiler plugin -->
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.2</version>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
-			<!-- Assembly plugin (just for setting the version) -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-			</plugin>
-			<!-- Source plugin for creating source file jar -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.4</version>
-				<executions>
-					<execution>
-						<id>attach-sources-package</id>
-						<phase>package</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>attach-sources-deploy</id>
-						<phase>deploy</phase>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- Javadoc plugin for generating documentation -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.1</version>
-				<configuration>
-					<show>private</show>
-					<nohelp>true</nohelp>
-					<quiet>true</quiet>
-					<failOnError>false</failOnError>
-					<!-- added for generating javadoc with java 1.8 -->
-					<additionalparam>-Xdoclint:none</additionalparam>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>attach-javadocs</id>
-						<phase>deploy</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- Resources management plugin -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<!-- explicitly define maven-deploy-plugin after other to force exec 
-					order -->
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.8.2</version>
-				<executions>
-					<execution>
-						<id>deploy</id>
-						<phase>deploy</phase>
-						<goals>
-							<goal>deploy</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+    <!-- BUILD -->
+    <build>
+        <plugins>
+            <!-- Compiler plugin -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <!-- Assembly plugin (just for setting the version) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+            </plugin>
+            <!-- Source plugin for creating source file jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources-package</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>attach-sources-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Javadoc plugin for generating documentation -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.1</version>
+                <configuration>
+                    <show>private</show>
+                    <nohelp>true</nohelp>
+                    <quiet>true</quiet>
+                    <failOnError>false</failOnError>
+                    <!-- added for generating javadoc with java 1.8 -->
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Resources management plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <!-- explicitly define maven-deploy-plugin after other to 
+                    force exec order -->
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+                <executions>
+                    <execution>
+                        <id>deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

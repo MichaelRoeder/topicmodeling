@@ -66,6 +66,7 @@
         <!-- <module>topicmodeling.morphadorner</module> -->
         <module>topicmodeling.stanford-nlp</module>
         <module>topicmodeling.test-report</module>
+        <module>topicmodeling.tools</module>
         <module>topicmodeling.wikipedia</module>
 	</modules>
 	
