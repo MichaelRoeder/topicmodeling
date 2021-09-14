@@ -266,12 +266,12 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
 
     @Override
     public int[] getWordTopicAssignmentForDocument(int documentId) {
-        return this.topicModel.data.get(documentId).topicSequence.toFeatureIndexSequence();
+        return this.topicModel.data.get(documentId).topicSequence.getFeatures();
     }
 
     @Override
     public int[] getWordsOfDocument(int documentId) {
-        return ((FeatureSequence) this.topicModel.data.get(documentId).instance.getData()).toFeatureIndexSequence();
+        return getDocumentAsFeatureSequence(documentId).getFeatures();
     }
 
     public FeatureSequence getDocumentAsFeatureSequence(int documentId) {
@@ -575,7 +575,7 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
             }
             FeatureSequence fs = new FeatureSequence(this.alphabet, tokens);
             Instance instance = new Instance(fs, null, null, null);
-            int inferencedTopicAssignments[] = inferencer.getSampledTopicAssignments(instance, 50);
+            int inferencedTopicAssignments[] = inferencer.getSampledTopicAssignments(instance, inferenceIterations);
             return inferencedTopicAssignments;
         }
 
