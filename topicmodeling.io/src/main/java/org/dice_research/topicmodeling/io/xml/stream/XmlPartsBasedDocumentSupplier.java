@@ -25,34 +25,92 @@ import org.dice_research.topicmodeling.utils.doc.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * An instance of a DocumentSupplier which can be used to read several XML-based
+ * part files of a corpus consecutively as a single corpus. The reader will read
+ * all consecutive part files starting from the given start ID until the given
+ * end ID (exclusive). If an intermediate file is missing, the reader stops.
+ * 
+ * @author Michael R&ouml;der (michael.roeder@uni-paderborn.de)
+ *
+ */
 public class XmlPartsBasedDocumentSupplier extends AbstractDocumentSupplier implements DocumentSupplier {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(XmlPartsBasedDocumentSupplier.class);
 
     private static final boolean USE_DOCUMENT_IDS_FROM_FILE_DEFAULT = true;
+    private static final int DEFAULT_START_ID = 0;
+    private static final int DEFAULT_END_ID = Integer.MAX_VALUE;
 
+    /**
+     * File prefix of the single part files. Default value is
+     * {@link XmlBasedCorpusPartWriter#PART_FILE_PREFIX}.
+     */
     private String filePrefix;
+    /**
+     * File suffix of the single part files. Default value is
+     * {@link XmlBasedCorpusPartWriter#PART_FILE_PREFIX}.
+     */
     private String fileSuffix;
+    /**
+     * Flag indicating whether the document IDs of the original file should be used
+     * or whether the documents should receive new IDs. The default value is
+     * {@value #USE_DOCUMENT_IDS_FROM_FILE_DEFAULT}.
+     */
     private boolean useDocumentIdsFromFile;
+    /**
+     * The input directory from which the part files are loaded.
+     */
     private final File inputFolder;
-    private int currentPartId = -1;
+    /**
+     * The ID of the current part file.
+     */
+    private int currentPartId;
+    /**
+     * The ID until that part files should be read. The part with this ID is not
+     * included into the reading process.
+     */
+    private int endPartId;
+    /**
+     * The current reader instance used to read from the current part file.
+     */
     private StreamBasedXmlDocumentSupplier currentReader;
 
     public XmlPartsBasedDocumentSupplier(File inputFolder) {
         this(inputFolder, XmlBasedCorpusPartWriter.PART_FILE_PREFIX, XmlBasedCorpusPartWriter.PART_FILE_SUFFIX,
-                USE_DOCUMENT_IDS_FROM_FILE_DEFAULT);
+                DEFAULT_START_ID, DEFAULT_END_ID, USE_DOCUMENT_IDS_FROM_FILE_DEFAULT);
+    }
+
+    public XmlPartsBasedDocumentSupplier(File inputFolder, int startId) {
+        this(inputFolder, XmlBasedCorpusPartWriter.PART_FILE_PREFIX, XmlBasedCorpusPartWriter.PART_FILE_SUFFIX, startId,
+                DEFAULT_END_ID, USE_DOCUMENT_IDS_FROM_FILE_DEFAULT);
+    }
+
+    public XmlPartsBasedDocumentSupplier(File inputFolder, int startId, int endId) {
+        this(inputFolder, XmlBasedCorpusPartWriter.PART_FILE_PREFIX, XmlBasedCorpusPartWriter.PART_FILE_SUFFIX, startId,
+                endId, USE_DOCUMENT_IDS_FROM_FILE_DEFAULT);
     }
 
     public XmlPartsBasedDocumentSupplier(File inputFolder, String filePrefix, String fileSuffix) {
-        this(inputFolder, filePrefix, fileSuffix, USE_DOCUMENT_IDS_FROM_FILE_DEFAULT);
+        this(inputFolder, filePrefix, fileSuffix, DEFAULT_START_ID, DEFAULT_END_ID, USE_DOCUMENT_IDS_FROM_FILE_DEFAULT);
     }
 
-    public XmlPartsBasedDocumentSupplier(File inputFolder, String filePrefix, String fileSuffix,
+    public XmlPartsBasedDocumentSupplier(File inputFolder, String filePrefix, String fileSuffix, int startId) {
+        this(inputFolder, filePrefix, fileSuffix, startId, DEFAULT_END_ID, USE_DOCUMENT_IDS_FROM_FILE_DEFAULT);
+    }
+
+    public XmlPartsBasedDocumentSupplier(File inputFolder, String filePrefix, String fileSuffix, int startId,
+            int endId) {
+        this(inputFolder, filePrefix, fileSuffix, startId, endId, USE_DOCUMENT_IDS_FROM_FILE_DEFAULT);
+    }
+
+    public XmlPartsBasedDocumentSupplier(File inputFolder, String filePrefix, String fileSuffix, int startId, int endId,
             boolean useDocumentIdsFromFile) {
         this.inputFolder = inputFolder;
         this.filePrefix = filePrefix;
         this.fileSuffix = fileSuffix;
+        this.currentPartId = startId - 1;
+        this.endPartId = endId;
         this.useDocumentIdsFromFile = useDocumentIdsFromFile;
     }
 
@@ -83,13 +141,15 @@ public class XmlPartsBasedDocumentSupplier extends AbstractDocumentSupplier impl
 
     private StreamBasedXmlDocumentSupplier getNextReader() {
         ++currentPartId;
-        File nextFile = new File(inputFolder.getAbsolutePath() + File.separator + filePrefix + currentPartId
-                + fileSuffix);
         StreamBasedXmlDocumentSupplier reader = null;
-        if (nextFile.exists()) {
-            reader = StreamBasedXmlDocumentSupplier.createReader(nextFile, useDocumentIdsFromFile);
-            if (reader != null) {
-                LOGGER.info("Started reading part " + currentPartId + ".");
+        if (currentPartId < endPartId) {
+            File nextFile = new File(
+                    inputFolder.getAbsolutePath() + File.separator + filePrefix + currentPartId + fileSuffix);
+            if (nextFile.exists()) {
+                reader = StreamBasedXmlDocumentSupplier.createReader(nextFile, useDocumentIdsFromFile);
+                if (reader != null) {
+                    LOGGER.info("Started reading part " + currentPartId + ".");
+                }
             }
         }
         return reader;

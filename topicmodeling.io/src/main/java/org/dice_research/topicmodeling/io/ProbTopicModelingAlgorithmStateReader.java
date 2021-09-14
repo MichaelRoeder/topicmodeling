@@ -23,49 +23,32 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 
-import org.apache.commons.io.IOUtils;
 import org.dice_research.topicmodeling.algorithms.ProbTopicModelingAlgorithmStateSupplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ProbTopicModelingAlgorithmStateReader {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(ProbTopicModelingAlgorithmStateReader.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProbTopicModelingAlgorithmStateReader.class);
 
-    public ProbTopicModelingAlgorithmStateSupplier readProbTopicModelState(
-            File file) {
-        FileInputStream fin = null;
+    public ProbTopicModelingAlgorithmStateSupplier readProbTopicModelState(File file) {
         ProbTopicModelingAlgorithmStateSupplier result = null;
-        try {
-            fin = new FileInputStream(file);
-            result = readProbTopicModelState(fin);
+        try (InputStream in = new FileInputStream(file)) {
+            result = readProbTopicModelState(in);
         } catch (FileNotFoundException e) {
-            logger.error(
-                    "Error while trying to read serialized ProbTopicModelingAlgorithmStateSupplier from file",
-                    e);
+            logger.error("Error while trying to read serialized ProbTopicModelingAlgorithmStateSupplier from file", e);
         } catch (IOException e) {
-            logger.error(
-                    "Error while trying to read serialized ProbTopicModelingAlgorithmStateSupplier from file",
-                    e);
-        } finally {
-            IOUtils.closeQuietly(fin);
+            logger.error("Error while trying to read serialized ProbTopicModelingAlgorithmStateSupplier from file", e);
         }
         return result;
     }
 
     public ProbTopicModelingAlgorithmStateSupplier readProbTopicModelState(InputStream in) throws IOException {
         Object obj = null;
-        ObjectInputStream oin = null;
-        try {
-            oin = new ObjectInputStream(in);
+        try (ObjectInputStream oin = new ObjectInputStream(in)) {
             obj = oin.readObject();
         } catch (ClassNotFoundException e) {
-            logger.error(
-                    "Error while trying to read serialized ProbTopicModelingAlgorithmStateSupplier from file",
-                    e);
-        } finally {
-            IOUtils.closeQuietly(oin);
+            logger.error("Error while trying to read serialized ProbTopicModelingAlgorithmStateSupplier from file", e);
         }
         return (ProbTopicModelingAlgorithmStateSupplier) obj;
     }

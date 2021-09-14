@@ -36,10 +36,10 @@ public interface LDAModel extends ProbabilisticWordTopicModel {
     public double getBeta();
 
     /**
-     * Returns the values of the alpha hyperparameter. If only a single alpha
-     * has been used for all topics the array returned by this method might
-     * contain only one single element. Otherwise the array contains a single
-     * alpha for every single topic of the model.
+     * Returns the values of the alpha hyperparameter. If only a single alpha has
+     * been used for all topics the array returned by this method might contain only
+     * one single element. Otherwise the array contains a single alpha for every
+     * single topic of the model.
      * 
      * @return
      */
@@ -50,4 +50,12 @@ public interface LDAModel extends ProbabilisticWordTopicModel {
     public int[] inferTopicAssignmentsForDocument(DocumentWordCounts wordCounts);
 
     public int[] inferTopicAssignmentsForDocument(int tokens[]);
+
+    /**
+     * Set the number of iterations that are used for inference methods.
+     * 
+     * @param inferenceIterations iterations used to infer the topics of a given
+     *                            document
+     */
+    public void setInferenceIterations(int inferenceIterations);
 }

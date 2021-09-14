@@ -23,29 +23,33 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.dice_research.topicmodeling.preprocessing.docconsumer.DocumentConsumer;
 import org.dice_research.topicmodeling.utils.doc.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class XmlWritingDocumentConsumer extends AbstractDocumentXmlWriter implements DocumentConsumer, Closeable {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(XmlWritingDocumentConsumer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XmlWritingDocumentConsumer.class);
 
     protected Writer fout;
 
     public static XmlWritingDocumentConsumer createXmlWritingDocumentConsumer(File file) {
         Writer writer = null;
-        if(!file.getParentFile().exists()) {
+        // We need an absolute path, otherwise we might not be able to ask for the
+        // parent file
+        if (!file.isAbsolute()) {
+            file = file.getAbsoluteFile();
+        }
+        if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
         try {
-            writer = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(file)), Charsets.UTF_8);
+            writer = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(file)),
+                    StandardCharsets.UTF_8);
             XmlWritingDocumentConsumer consumer = new XmlWritingDocumentConsumer(writer);
             consumer.writeHead();
             return consumer;
