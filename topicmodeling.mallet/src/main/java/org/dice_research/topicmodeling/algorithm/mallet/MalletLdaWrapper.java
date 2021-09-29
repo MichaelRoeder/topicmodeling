@@ -16,6 +16,8 @@
  */
 package org.dice_research.topicmodeling.algorithm.mallet;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -76,7 +78,7 @@ import cc.mallet.types.LabelAlphabet;
 import cc.mallet.types.MalletAlphabetWrapper;
 import cc.mallet.util.Randoms;
 
-public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlgorithmStateSupplier {
+public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlgorithmStateSupplier, Closeable {
 
     private static final long serialVersionUID = 979333314591827173L;
 
@@ -351,8 +353,13 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
     public void setOptimizeInterval(int interval) {
         topicModel.setOptimizeInterval(interval);
     }
+    
+    @Override
+    public void close() throws IOException {
+        topicModel.close();
+    }
 
-    protected static class MalletLDATopicModeler extends ParallelTopicModel implements LDAModel {
+    protected static class MalletLDATopicModeler extends ParallelTopicModel implements LDAModel, Closeable {
         private static final long serialVersionUID = 6008315609404219023L;
 
         protected static final Logger logger = LoggerFactory.getLogger(MalletLDATopicModeler.class);
@@ -724,6 +731,13 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
 
         public void setInferenceIterations(int inferenceIterations) {
             this.inferenceIterations = inferenceIterations;
+        }
+        
+        @Override
+        public void close() throws IOException {
+            if(executor != null) {
+                executor.shutdown();
+            }
         }
     }
 }
