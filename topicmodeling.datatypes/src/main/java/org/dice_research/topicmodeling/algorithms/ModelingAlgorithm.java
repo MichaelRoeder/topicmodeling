@@ -19,18 +19,29 @@ package org.dice_research.topicmodeling.algorithms;
 import org.dice_research.topicmodeling.preprocessing.PreprocessorFactory;
 import org.dice_research.topicmodeling.utils.corpus.Corpus;
 
-
 public interface ModelingAlgorithm extends PreprocessorFactory {
-	
-	public void initialize(Corpus corpus);
 
-	/**
-	 */
-	public void performNextStep();
+    public void initialize(Corpus corpus);
 
-	/**
-	 * @return 
-	 */
-	public Model getModel();
+    /**
+     */
+    public void performNextStep();
+
+    /**
+     * Performs the next {@code n} steps. The default implementation simply calls
+     * the {@link #performNextStep()} method {@code n} times.
+     * 
+     * @param n the number of steps that should be performed
+     */
+    public default void performNextSteps(int n) {
+        for (int i = 0; i < n; ++i) {
+            performNextStep();
+        }
+    }
+
+    /**
+     * @return
+     */
+    public Model getModel();
 
 }

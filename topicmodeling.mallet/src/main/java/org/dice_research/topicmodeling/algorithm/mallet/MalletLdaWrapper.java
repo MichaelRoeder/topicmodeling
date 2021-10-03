@@ -103,7 +103,6 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
     public MalletLdaWrapper(int numberOfTopics, long seed) {
         this.seed = seed;
         topicModel = new MalletLDATopicModeler(numberOfTopics, seed);
-        wordCounter = new WordCounterImpl(this);
     }
 
     public MalletLdaWrapper(int numberOfTopics, int numberOfThreads) {
@@ -113,7 +112,6 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
     public MalletLdaWrapper(int numberOfTopics, int numberOfThreads, long seed) {
         this.seed = seed;
         topicModel = new MalletLDATopicModeler(numberOfTopics, numberOfThreads, seed);
-        wordCounter = new WordCounterImpl(this);
     }
 
     public MalletLdaWrapper(int numberOfTopics, double alphaSum, double beta) {
@@ -123,7 +121,6 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
     public MalletLdaWrapper(int numberOfTopics, double alphaSum, double beta, long seed) {
         this.seed = seed;
         topicModel = new MalletLDATopicModeler(numberOfTopics, alphaSum, beta, seed);
-        wordCounter = new WordCounterImpl(this);
     }
 
     public MalletLdaWrapper(int numberOfTopics, double alphaSum, double beta, int numberOfThreads) {
@@ -133,7 +130,6 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
     public MalletLdaWrapper(int numberOfTopics, double alphaSum, double beta, int numberOfThreads, long seed) {
         this.seed = seed;
         topicModel = new MalletLDATopicModeler(numberOfTopics, alphaSum, beta, numberOfThreads, seed);
-        wordCounter = new WordCounterImpl(this);
     }
 
     public MalletLdaWrapper(LabelAlphabet topicAlphabet, double alphaSum, double beta) {
@@ -143,7 +139,6 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
     public MalletLdaWrapper(LabelAlphabet topicAlphabet, double alphaSum, double beta, long seed) {
         this.seed = seed;
         topicModel = new MalletLDATopicModeler(topicAlphabet, alphaSum, beta, seed);
-        wordCounter = new WordCounterImpl(this);
     }
 
     @Override
@@ -278,8 +273,17 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
 
     @Override
     public void performNextStep() {
-        topicModel.estimate();
-        wordCounter.clear();
+        performNextSteps(1);
+    }
+
+    @Override
+    public void performNextSteps(int n) {
+        for (int i = 0; i < n; ++i) {
+            topicModel.estimate();
+        }
+        if (wordCounter != null) {
+            wordCounter.clear();
+        }
     }
 
     @Override
@@ -336,7 +340,7 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
 
     @Override
     public WordCounter getWordCounts() {
-        // The wordCounter is null if this object has been deserialized
+        // The wordCounter is null by default or if this object has been deserialized
         if (wordCounter == null) {
             wordCounter = new WordCounterImpl(this);
         }
