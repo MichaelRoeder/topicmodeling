@@ -30,6 +30,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.regex.Pattern;
 
+import org.dice_research.topicmodeling.algorithm.mallet.parallel.ExtendedWorkerRunnable;
+import org.dice_research.topicmodeling.algorithm.mallet.parallel.SynchronizedCounts;
 import org.dice_research.topicmodeling.algorithms.LDAModel;
 import org.dice_research.topicmodeling.algorithms.Model;
 import org.dice_research.topicmodeling.algorithms.ModelingAlgorithm;
@@ -71,6 +73,7 @@ import cc.mallet.topics.ParallelTopicModel;
 import cc.mallet.topics.TopicInferencer;
 import cc.mallet.topics.WorkerRunnable;
 import cc.mallet.types.Alphabet;
+import cc.mallet.types.Dirichlet;
 import cc.mallet.types.FeatureSequence;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
@@ -102,7 +105,6 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
         topicModel = new MalletLDATopicModeler(numberOfTopics, seed);
         wordCounter = new WordCounterImpl(this);
     }
-
 
     public MalletLdaWrapper(int numberOfTopics, int numberOfThreads) {
         this(numberOfTopics, numberOfThreads, System.currentTimeMillis());
@@ -353,7 +355,7 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
     public void setOptimizeInterval(int interval) {
         topicModel.setOptimizeInterval(interval);
     }
-    
+
     @Override
     public void close() throws IOException {
         topicModel.close();
@@ -368,6 +370,7 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
 
         protected transient WorkerRunnable[] runnables = new WorkerRunnable[1];
         protected transient ExecutorService executor = null;
+        protected transient SynchronizedCounts synchronizedCounts = null; // used only for multi threading
         protected int iteration;
         protected transient int inferencerVersion = 0;
         protected transient MalletLdaInferenceWrapper inferencer;
@@ -412,10 +415,12 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
         }
 
         public void initialize(InstanceList instances) {
+            // Add instances and init counts
             addInstances(instances);
             showTopicsInterval = 0; // turn of the logging for the topics
             saveModelInterval = 0; // turn of saving the model after an
                                    // iteration
+            initializeDocLengthHistogram();
 
             // If there is only one thread, copy the typeTopicCounts
             // arrays directly, rather than allocating new memory.
@@ -424,15 +429,16 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
                 int docsPerThread = data.size() / runnables.length;
                 int offset = 0;
 
+                synchronizedCounts = new SynchronizedCounts(runnables.length, tokensPerTopic, typeTopicCounts,
+                        topicDocCounts);
+
+                // Init local thread counts
                 for (int thread = 0; thread < runnables.length; thread++) {
                     int[] runnableTotals = new int[numTopics];
-                    System.arraycopy(tokensPerTopic, 0, runnableTotals, 0, numTopics);
 
                     int[][] runnableCounts = new int[numTypes][];
                     for (int type = 0; type < numTypes; type++) {
-                        int[] counts = new int[typeTopicCounts[type].length];
-                        System.arraycopy(typeTopicCounts[type], 0, counts, 0, counts.length);
-                        runnableCounts[type] = counts;
+                        runnableCounts[type] = new int[typeTopicCounts[type].length];
                     }
 
                     // some docs may be missing at the end due to integer division
@@ -448,13 +454,12 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
                         random = new Randoms(randomSeed + thread);
                     }
 
-                    runnables[thread] = new WorkerRunnable(numTopics, alpha, alphaSum, beta, random, data,
-                            runnableCounts, runnableTotals, offset, docsPerThread);
+                    runnables[thread] = new ExtendedWorkerRunnable(numTopics, alpha, alphaSum, beta, random, data,
+                            runnableCounts, runnableTotals, offset, docsPerThread, synchronizedCounts);
 
                     runnables[thread].initializeAlphaStatistics(docLengthCounts.length);
 
                     offset += docsPerThread;
-
                 }
 
                 executor = Executors.newFixedThreadPool(runnables.length);
@@ -480,17 +485,28 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
             inferencerVersion = 0;
         }
 
+        private void initializeDocLengthHistogram() {
+            for (int doc = 0; doc < data.size(); doc++) {
+                FeatureSequence fs = (FeatureSequence) data.get(doc).instance.getData();
+                ++docLengthCounts[fs.getLength()];
+            }
+        }
+
         @Override
         public void estimate() {
             wordTopicWeights = null;
             topicWeights = null;
             ++iteration;
+            boolean optimizeHyperParameters = false;
             if (iteration > burninPeriod && optimizeInterval != 0 && iteration % saveSampleInterval == 0) {
+                optimizeHyperParameters = true;
                 for (int i = 0; i < runnables.length; ++i) {
                     runnables[i].collectAlphaStatistics();
                 }
             }
             if (runnables.length > 1) {
+                synchronizedCounts.enableNextStep();
+
                 Future<?>[] futures = new Future[runnables.length];
                 for (int i = 0; i < runnables.length; ++i) {
                     futures[i] = executor.submit(runnables[i]);
@@ -504,41 +520,43 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
                         logger.error("Got an exception from the execution of worker thread #" + i + ".", e);
                     }
                 }
-
-                sumTypeTopicCounts(runnables);
-                
-                for (int thread = 0; thread < runnables.length; thread++) {
-                    int[] runnableTotals = runnables[thread].getTokensPerTopic();
-                    System.arraycopy(tokensPerTopic, 0, runnableTotals, 0, numTopics);
-                    
-                    int[][] runnableCounts = runnables[thread].getTypeTopicCounts();
-                    for (int type = 0; type < numTypes; type++) {
-                        int[] targetCounts = runnableCounts[type];
-                        int[] sourceCounts = typeTopicCounts[type];
-                        
-                        int index = 0;
-                        while (index < sourceCounts.length) {
-                            
-                            if (sourceCounts[index] != 0) {
-                                targetCounts[index] = sourceCounts[index];
-                            }
-                            else if (targetCounts[index] != 0) {
-                                targetCounts[index] = 0;
-                            }
-                            else {
-                                break;
-                            }
-                            
-                            index++;
-                        }
-                    }
+                if (optimizeHyperParameters) {
+                    optimizeAlpha();
+                    optimizeBeta(runnables);
                 }
             } else {
                 runnables[0].run();
+                if (optimizeHyperParameters) {
+                    optimizeAlpha(runnables);
+                    optimizeBeta(runnables);
+                }
             }
-            if (iteration > burninPeriod && optimizeInterval != 0 && iteration % optimizeInterval == 0) {
-                optimizeAlpha(runnables);
-                optimizeBeta(runnables);
+        }
+
+        public void optimizeAlpha() {
+            if (usingSymmetricAlpha) {
+                // FROM PARALLEL TOPIC MODEL (could be further optimized):
+                // For the symmetric version, we only need one
+                // count array, which I'm putting in the same
+                // data structure, but for topic 0. All other
+                // topic histograms will be empty.
+                // I'm duplicating this for loop, which
+                // isn't the best thing, but it means only checking
+                // whether we are symmetric or not numTopics times,
+                // instead of numTopics * longest document length.
+                for (int t = 0; t < topicDocCounts.length; ++t) {
+                    for (int i = 0; i < topicDocCounts[t].length; ++i) {
+                        topicDocCounts[0][i] += topicDocCounts[t][i];
+                        topicDocCounts[t][i] = 0;
+                    }
+                }
+                alphaSum = Dirichlet.learnSymmetricConcentration(topicDocCounts[0], docLengthCounts, numTopics,
+                        alphaSum);
+                for (int topic = 0; topic < numTopics; topic++) {
+                    alpha[topic] = alphaSum / numTopics;
+                }
+            } else {
+                alphaSum = Dirichlet.learnParameters(alpha, topicDocCounts, docLengthCounts, 1.001, 1.0, 1);
             }
         }
 
@@ -732,10 +750,10 @@ public class MalletLdaWrapper implements ModelingAlgorithm, ProbTopicModelingAlg
         public void setInferenceIterations(int inferenceIterations) {
             this.inferenceIterations = inferenceIterations;
         }
-        
+
         @Override
         public void close() throws IOException {
-            if(executor != null) {
+            if (executor != null) {
                 executor.shutdown();
             }
         }
