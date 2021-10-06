@@ -24,11 +24,13 @@ public class SynchronizedCounts {
     protected Semaphore threadsCopiedGlobalCounts = new Semaphore(0);
     protected boolean firstThreadDone = true;
     protected boolean firstThreadTokensPerTopic = true;
-    protected BitSet firstThreadTypeTopicCounts;
+    // A bitset might not be threadsafe in this situation!
+    protected boolean[] firstThreadTypeTopicCounts;
 
     // For alpha statistics
     protected int[][] globalTopicDocCounts;
-    protected BitSet firstThreadTopicDocCounts;
+    // A bitset might not be threadsafe in this situation!
+    protected boolean[] firstThreadTopicDocCounts;
 
     protected int[] typeSums;
     protected boolean isDebug = false;
@@ -44,7 +46,7 @@ public class SynchronizedCounts {
         numTopics = tokensPerTopic.length;
         this.globalTypeTopicCounts = typeTopicCounts;
         numTypes = typeTopicCounts.length;
-        this.firstThreadTypeTopicCounts = new BitSet(numTypes);
+        this.firstThreadTypeTopicCounts = new boolean[numTypes];
         // Copied from ParallelTopicModel class
         if (Integer.bitCount(numTopics) == 1) {
             // exact power of 2
@@ -57,21 +59,14 @@ public class SynchronizedCounts {
         }
         this.numThreads = numThreads;
         this.globalTopicDocCounts = globalTopicDocCounts;
-        this.firstThreadTopicDocCounts = new BitSet(numTopics);
-
-        // Create synchronization thread
-//        syncThread = new SyncRunnable(numThreads);
-//        Thread sThread = new Thread(syncThread);
-//        sThread.setName("syncThread");
-//        sThread.setDaemon(true);
-//        sThread.start();
-//        LOGGER.info("Started synchronization thread.");
+        this.firstThreadTopicDocCounts = new boolean[numTopics];
     }
 
     public void enableNextStep() {
         firstThreadDone = true;
         firstThreadTokensPerTopic = true;
-        firstThreadTypeTopicCounts.set(0, numTypes);
+        Arrays.fill(firstThreadTypeTopicCounts, true);
+        Arrays.fill(firstThreadTopicDocCounts, true);
         // Check the counts
         if (isDebug) {
             int overallSum = 0;
@@ -141,7 +136,7 @@ public class SynchronizedCounts {
     private void updateGlobalTypeTopicCount(int typeId, int[] globalTypeTopicCounts, int[] localTypeTopicCounts) {
         synchronized (globalTypeTopicCounts) {
 
-            if (firstThreadTypeTopicCounts.get(typeId)) {
+            if (firstThreadTypeTopicCounts[typeId]) {
                 // Clear the type/topic counts, only
                 // looking at the entries before the first 0 entry.
                 int position = 0;
@@ -149,7 +144,7 @@ public class SynchronizedCounts {
                     globalTypeTopicCounts[position] = 0;
                     position++;
                 }
-                firstThreadTypeTopicCounts.clear(typeId);
+                firstThreadTypeTopicCounts[typeId] = false;
             }
 
             // Here the source is the individual thread counts,
@@ -227,12 +222,12 @@ public class SynchronizedCounts {
             globalCounts = globalTopicDocCounts[i];
             localCounts = localTopicDocCounts[i];
             synchronized (globalCounts) {
-                if (firstThreadTopicDocCounts.get(i)) {
+                if (firstThreadTopicDocCounts[i]) {
                     // reset the counts
                     Arrays.fill(globalCounts, 0);
-                    firstThreadTopicDocCounts.clear(i);
+                    firstThreadTopicDocCounts[i] = false;
                 }
-                for (int j = 0; j < localTopicDocCounts.length; ++j) {
+                for (int j = 0; j < localCounts.length; ++j) {
                     if (localCounts[j] > 0) {
                         globalCounts[j] += localCounts[j];
                     }
