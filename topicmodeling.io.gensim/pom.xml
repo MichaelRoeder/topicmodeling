@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.dice-research</groupId>
+        <version>0.0.3-SNAPSHOT</version>
+        <artifactId>topicmodeling.parent</artifactId>
+        <relativePath>../topicmodeling.parent</relativePath>
+    </parent>
+    <artifactId>topicmodeling.io.gensim</artifactId>
+    <packaging>jar</packaging>
+
+    <!-- DEPENDENCIES -->
+    <dependencies>
+        <!-- Topicmodeling Datatypes -->
+        <dependency>
+            <groupId>org.dice-research</groupId>
+            <artifactId>topicmodeling.datatypes</artifactId>
+        </dependency>
+        <!-- Topicmodeling IO -->
+        <dependency>
+            <groupId>org.dice-research</groupId>
+            <artifactId>topicmodeling.io</artifactId>
+        </dependency>
+        <!-- Apache Commons IO -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+        
+        <!-- Topicmodeling IO Test-->
+        <dependency>
+            <groupId>org.dice-research</groupId>
+            <artifactId>topicmodeling.io.test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
