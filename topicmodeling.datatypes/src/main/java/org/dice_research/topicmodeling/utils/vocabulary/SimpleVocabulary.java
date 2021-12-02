@@ -77,4 +77,13 @@ public class SimpleVocabulary implements Vocabulary {
             wordIndexMap.remove(word);
         }
     }
+
+    @Override
+    public String toString() {
+        if (wordIndexMap == null) {
+            return "null";
+        } else {
+            return wordIndexMap.toString();
+        }
+    }
 }
