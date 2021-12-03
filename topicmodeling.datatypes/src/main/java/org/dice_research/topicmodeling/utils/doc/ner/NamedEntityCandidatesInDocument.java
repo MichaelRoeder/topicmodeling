@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dice_research.topicmodeling.utils.doc.DocumentProperty;
-import org.dice_research.topicmodeling.utils.doc.ner.NamedEntityCandidate;
 
 
 public class NamedEntityCandidatesInDocument implements DocumentProperty {

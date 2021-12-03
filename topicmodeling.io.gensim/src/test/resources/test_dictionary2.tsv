@@ -1,0 +1,7 @@
+# Some test dictionary file with some more trash around the data that we are looking for
+RandomColumn	wordId	word	comment
+99	4	someWord	This is just some word
+0	0	zero	just a usual 0
+-14	1	minus 14	Yes, a word could contain a whitespace
+1	2	[]{}\\??-strange-content	let's see what happens :D
+2	3	last	ok, one last word...

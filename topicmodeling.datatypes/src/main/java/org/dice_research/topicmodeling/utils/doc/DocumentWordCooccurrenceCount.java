@@ -19,8 +19,6 @@ package org.dice_research.topicmodeling.utils.doc;
 import java.io.Serializable;
 import java.util.Iterator;
 
-import org.dice_research.topicmodeling.utils.doc.AbstractDocumentProperty;
-
 import com.carrotsearch.hppc.ObjectIntOpenHashMap;
 import com.carrotsearch.hppc.cursors.ObjectIntCursor;
 
