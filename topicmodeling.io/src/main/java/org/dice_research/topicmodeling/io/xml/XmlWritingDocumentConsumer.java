@@ -26,8 +26,10 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.dice_research.topicmodeling.preprocessing.docconsumer.DocumentConsumer;
 import org.dice_research.topicmodeling.utils.doc.Document;
+import org.dice_research.topicmodeling.utils.vocabulary.Vocabulary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,9 +37,17 @@ public class XmlWritingDocumentConsumer extends AbstractDocumentXmlWriter implem
 
     private static final Logger LOGGER = LoggerFactory.getLogger(XmlWritingDocumentConsumer.class);
 
+    private static final String VOCABULARY_TAG_NAME = Vocabulary.class.getSimpleName();
+    private static final String WORD_TAG_NAME = "word";
+
     protected Writer fout;
+    protected Vocabulary vocabulary;
 
     public static XmlWritingDocumentConsumer createXmlWritingDocumentConsumer(File file) {
+        return createXmlWritingDocumentConsumer(file, null);
+    }
+
+    public static XmlWritingDocumentConsumer createXmlWritingDocumentConsumer(File file, Vocabulary vocabulary) {
         Writer writer = null;
         // We need an absolute path, otherwise we might not be able to ask for the
         // parent file
@@ -50,7 +60,7 @@ public class XmlWritingDocumentConsumer extends AbstractDocumentXmlWriter implem
         try {
             writer = new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(file)),
                     StandardCharsets.UTF_8);
-            XmlWritingDocumentConsumer consumer = new XmlWritingDocumentConsumer(writer);
+            XmlWritingDocumentConsumer consumer = new XmlWritingDocumentConsumer(writer, vocabulary);
             consumer.writeHead();
             return consumer;
         } catch (Exception e) {
@@ -60,8 +70,9 @@ public class XmlWritingDocumentConsumer extends AbstractDocumentXmlWriter implem
         return null;
     }
 
-    private XmlWritingDocumentConsumer(Writer fout) {
+    private XmlWritingDocumentConsumer(Writer fout, Vocabulary vocabulary) {
         this.fout = fout;
+        this.vocabulary = vocabulary;
     }
 
     protected void writeHead() throws IOException {
@@ -70,6 +81,28 @@ public class XmlWritingDocumentConsumer extends AbstractDocumentXmlWriter implem
         fout.write(CorpusXmlTagHelper.CORPUS_TAG_NAME);
         fout.write(" ");
         fout.write(CorpusXmlTagHelper.NAMESPACE_DECLARATION);
+        fout.write(">\n");
+    }
+
+    protected void writeVocabulary() throws IOException {
+        fout.write("<");
+        fout.write(VOCABULARY_TAG_NAME);
+        fout.write(">\n");
+
+        for (String word : vocabulary) {
+            fout.write("<");
+            fout.write(WORD_TAG_NAME);
+            fout.write(" id=\"");
+            fout.write(vocabulary.getId(word).toString());
+            fout.write("\">");
+            fout.write(StringEscapeUtils.escapeXml11(word));
+            fout.write("</");
+            fout.write(WORD_TAG_NAME);
+            fout.write(">\n");
+        }
+
+        fout.write("</");
+        fout.write(VOCABULARY_TAG_NAME);
         fout.write(">\n");
     }
 
@@ -85,6 +118,10 @@ public class XmlWritingDocumentConsumer extends AbstractDocumentXmlWriter implem
 
     public void close() throws IOException {
         if (fout != null) {
+            if (vocabulary != null) {
+                writeVocabulary();
+            }
+
             fout.write("</");
             fout.write(CorpusXmlTagHelper.CORPUS_TAG_NAME);
             fout.write(">");
