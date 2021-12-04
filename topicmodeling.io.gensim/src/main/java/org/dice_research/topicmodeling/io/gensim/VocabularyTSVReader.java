@@ -7,6 +7,7 @@ import java.io.Reader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.IntUnaryOperator;
 
 import org.dice_research.topicmodeling.utils.vocabulary.SimpleVocabulary;
 import org.dice_research.topicmodeling.utils.vocabulary.Vocabulary;
@@ -47,6 +48,10 @@ public class VocabularyTSVReader {
      * TSV file.
      */
     protected int headerLines = 0;
+    /**
+     * Transformation that is applied to word Ids.
+     */
+    protected IntUnaryOperator wordIdTransformation;
 
     /**
      * Constructor.
@@ -57,8 +62,23 @@ public class VocabularyTSVReader {
      *                       can be found.
      */
     public VocabularyTSVReader(int wordColumnId, int wordIdColumnId) {
+        this(wordColumnId, wordIdColumnId, IntUnaryOperator.identity());
+    }
+
+    /**
+     * Constructor.
+     * 
+     * @param wordColumnId         The ID of the column in the file in which the
+     *                             word can be found.
+     * @param wordIdColumnId       The ID of the column in the file in which the
+     *                             word ID can be found.
+     * @param wordIdTransformation Transformation operator that is applied to word
+     *                             Ids.
+     */
+    public VocabularyTSVReader(int wordColumnId, int wordIdColumnId, IntUnaryOperator wordIdTransformation) {
         this.wordColumnId = wordColumnId;
         this.wordIdColumnId = wordIdColumnId;
+        this.wordIdTransformation = wordIdTransformation;
     }
 
     /**
@@ -101,7 +121,7 @@ public class VocabularyTSVReader {
                 if (line.length > highestId) {
                     try {
                         id = Integer.parseInt(line[wordIdColumnId]);
-                        wordIndexMap.put(line[wordColumnId], id);
+                        wordIndexMap.put(line[wordColumnId], wordIdTransformation.applyAsInt(id));
                     } catch (NumberFormatException e) {
                         LOGGER.error("Couldn't parse the word ID in column " + wordIdColumnId + " in the line "
                                 + Arrays.toString(line) + ". The line will be ignored.", e);

@@ -16,6 +16,22 @@ public class VocabularyTSVReaderTest {
     @Test
     public void testFile1() throws IOException {
         Map<String, Integer> expectedMapping = new HashMap<>();
+        expectedMapping.put("word1", 1);
+        expectedMapping.put("word2", 2);
+        expectedMapping.put("word3", 3);
+        expectedMapping.put("word4", 4);
+
+        try (Reader reader = new InputStreamReader(
+                this.getClass().getClassLoader().getResourceAsStream("test_dictionary.tsv"), StandardCharsets.UTF_8);) {
+            VocabularyTSVReader vReader = new VocabularyTSVReader(0, 1);
+            Vocabulary vocabulary = vReader.readVocabulary(reader);
+            checkVocab(vocabulary, expectedMapping);
+        }
+    }
+
+    @Test
+    public void testFile1_transformation() throws IOException {
+        Map<String, Integer> expectedMapping = new HashMap<>();
         expectedMapping.put("word1", 0);
         expectedMapping.put("word2", 1);
         expectedMapping.put("word3", 2);
@@ -23,7 +39,7 @@ public class VocabularyTSVReaderTest {
 
         try (Reader reader = new InputStreamReader(
                 this.getClass().getClassLoader().getResourceAsStream("test_dictionary.tsv"), StandardCharsets.UTF_8);) {
-            VocabularyTSVReader vReader = new VocabularyTSVReader(0, 1);
+            VocabularyTSVReader vReader = new VocabularyTSVReader(0, 1, (i) -> i - 1);
             Vocabulary vocabulary = vReader.readVocabulary(reader);
             checkVocab(vocabulary, expectedMapping);
         }

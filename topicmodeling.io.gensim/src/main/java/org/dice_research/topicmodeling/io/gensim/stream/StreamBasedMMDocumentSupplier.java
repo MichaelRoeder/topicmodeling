@@ -2,6 +2,7 @@ package org.dice_research.topicmodeling.io.gensim.stream;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.function.IntUnaryOperator;
 
 import org.apache.commons.io.IOUtils;
 import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
@@ -14,6 +15,14 @@ import com.carrotsearch.hppc.IntIntOpenHashMap;
 
 import au.com.bytecode.opencsv.CSVReader;
 
+/**
+ * A class that is able to stream a Gensim corpus. Note that by default, the
+ * class will reduce the word Ids by 1 since the Gensim matrices seem to start
+ * with word Id 1 instead of 0.
+ * 
+ * @author Michael R&ouml;der (michael.roeder@uni-paderborn.de)
+ *
+ */
 public class StreamBasedMMDocumentSupplier implements DocumentSupplier, AutoCloseable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StreamBasedMMDocumentSupplier.class);
@@ -48,6 +57,19 @@ public class StreamBasedMMDocumentSupplier implements DocumentSupplier, AutoClos
      * TSV file.
      */
     protected int headerLines = 0;
+    /**
+     * Transformation that is applied to document Ids.
+     */
+    protected IntUnaryOperator docIdTransformation = IntUnaryOperator.identity();
+    /**
+     * Transformation that is applied to word Ids. By default, the Ids are reduced
+     * by 1 to match a dictionary that starts with 0.
+     */
+    protected IntUnaryOperator wordIdTransformation = (i) -> i - 1;
+    /**
+     * Transformation that is applied to word counts.
+     */
+    protected IntUnaryOperator wordCountTransformation = IntUnaryOperator.identity();
 
     private StreamBasedMMDocumentSupplier(CSVReader reader, int docIdColumnId, int wordIdColumnId,
             int wordCountColumnId, boolean useDocumentIdsFromFile) {
@@ -124,9 +146,10 @@ public class StreamBasedMMDocumentSupplier implements DocumentSupplier, AutoClos
                     result = new int[3];
                 }
                 // Get the Id of this document
-                result[DOC_ID_INDEX] = Integer.parseInt(line[docIdColumnId]);
-                result[WORD_ID_INDEX] = Integer.parseInt(line[wordIdColumnId]);
-                result[WORD_COUNT_INDEX] = Integer.parseInt(line[wordCountColumnId]);
+                result[DOC_ID_INDEX] = docIdTransformation.applyAsInt(Integer.parseInt(line[docIdColumnId]));
+                result[WORD_ID_INDEX] = wordIdTransformation.applyAsInt(Integer.parseInt(line[wordIdColumnId]));
+                result[WORD_COUNT_INDEX] = wordCountTransformation
+                        .applyAsInt(Integer.parseInt(line[wordCountColumnId]));
                 return result;
             } catch (NumberFormatException e) {
                 LOGGER.error("Couldn't parse id in line " + line.toString() + ". It will be ignored.", e);
@@ -208,6 +231,28 @@ public class StreamBasedMMDocumentSupplier implements DocumentSupplier, AutoClos
     @Override
     public void close() throws IOException {
         IOUtils.closeQuietly(reader);
+    }
+
+    /**
+     * @param docIdTransformation the transformation that is applied to document Ids
+     */
+    public void setDocIdTransformation(IntUnaryOperator docIdTransformation) {
+        this.docIdTransformation = docIdTransformation;
+    }
+
+    /**
+     * @param wordIdTransformation the transformation that is applied to word Ids
+     */
+    public void setWordIdTransformation(IntUnaryOperator wordIdTransformation) {
+        this.wordIdTransformation = wordIdTransformation;
+    }
+
+    /**
+     * @param wordCountTransformation the transformation that is applied to word
+     *                                counts
+     */
+    public void setWordCountTransformation(IntUnaryOperator wordCountTransformation) {
+        this.wordCountTransformation = wordCountTransformation;
     }
 
     public static StreamBasedMMDocumentSupplier createReader(Reader reader, int docIdColumnId, int wordIdColumnId,
