@@ -21,23 +21,41 @@ import java.util.function.Function;
 import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
 import org.dice_research.topicmodeling.utils.doc.Document;
 
-
-public abstract class AbstractDocumentSupplierDecorator implements DocumentSupplierDecorator, Function<Document, Document> {
+public abstract class AbstractDocumentSupplierDecorator
+        implements DocumentSupplierDecorator, Function<Document, Document> {
 
     protected DocumentSupplier documentSource;
+    protected boolean requestNextIfFailure = false;
 
     public AbstractDocumentSupplierDecorator(DocumentSupplier documentSource) {
+        this(documentSource, false);
+    }
+
+    public AbstractDocumentSupplierDecorator(DocumentSupplier documentSource, boolean requestNextIfFailure) {
         this.documentSource = documentSource;
+        this.requestNextIfFailure = requestNextIfFailure;
     }
 
     @Override
     public Document getNextDocument() {
         Document document = documentSource.getNextDocument();
-        if (document != null)
-        {
+        while (document != null) {
             document = prepareDocument(document);
+            if (document != null) {
+                // Return the prepared document
+                return document;
+            } else if (requestNextIfFailure) {
+                // Get the next document
+                document = documentSource.getNextDocument();
+            } else {
+                // We should simply return null instead of the document
+                return null;
+            }
+            if ((document == null) && requestNextIfFailure) {
+            }
         }
-        return document;
+        // the document source is empty, so return null
+        return null;
     }
 
     @Override
@@ -49,14 +67,14 @@ public abstract class AbstractDocumentSupplierDecorator implements DocumentSuppl
     public DocumentSupplier getDecoratedDocumentSupplier() {
         return documentSource;
     }
-    
+
     @Override
     public void setDecoratedDocumentSupplier(DocumentSupplier supplier) {
         this.documentSource = supplier;
     }
 
     protected abstract Document prepareDocument(Document document);
-    
+
     @Override
     public Document apply(Document document) {
         return prepareDocument(document);
