@@ -30,6 +30,10 @@ public interface ProbTopicModelingAlgorithmStateSupplier extends VocabularyConta
 
     public int getNumberOfDocuments();
 
+    /**
+     * Number of different word types (i.e., vocabulary size).
+     * @return
+     */
     public int getNumberOfWords();
 
     public long getSeed();

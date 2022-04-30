@@ -23,7 +23,6 @@ import java.util.List;
 
 import org.dice_research.topicmodeling.io.stream.DocumentSupplierDeSerializer;
 import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
-import org.dice_research.topicmodeling.utils.corpus.AbstractCorpus;
 import org.dice_research.topicmodeling.utils.doc.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

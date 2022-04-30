@@ -1,7 +1,6 @@
 package org.dice_research.topicmodeling.algorithm.mallet.parallel;
 
 import java.util.Arrays;
-import java.util.BitSet;
 import java.util.concurrent.Semaphore;
 import java.util.stream.IntStream;
 
@@ -135,7 +134,6 @@ public class SynchronizedCounts {
 
     private void updateGlobalTypeTopicCount(int typeId, int[] globalTypeTopicCounts, int[] localTypeTopicCounts) {
         synchronized (globalTypeTopicCounts) {
-
             if (firstThreadTypeTopicCounts[typeId]) {
                 // Clear the type/topic counts, only
                 // looking at the entries before the first 0 entry.
