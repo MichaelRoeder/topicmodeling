@@ -16,20 +16,16 @@
  */
 package org.dice_research.topicmodeling.io.json;
 
-import java.io.File;
-
 import org.dice_research.topicmodeling.io.json.stream.JsonWritingDocumentConsumer;
 import org.dice_research.topicmodeling.io.json.stream.StreamBasedJsonDocumentSupplier;
 import org.dice_research.topicmodeling.io.test.AbstractCorpusIOTest;
 
 public class StreamedJsonIOTest extends AbstractCorpusIOTest {
 
-    private static final File TEST_FILE = generateTempFile(".json");
-
     public StreamedJsonIOTest() {
-        super(StreamBasedJsonDocumentSupplier.createReader(TEST_FILE),
-                JsonWritingDocumentConsumer.createJsonWritingDocumentConsumer(TEST_FILE),
-                CorpusJsonIOTest.createTestCorpus(), TEST_FILE);
+        super((f) -> StreamBasedJsonDocumentSupplier.createReader(f),
+                (f) -> JsonWritingDocumentConsumer.createJsonWritingDocumentConsumer(f),
+                CorpusJsonIOTest.createTestCorpus(),  generateTempFile(".json"));
     }
 
 }
