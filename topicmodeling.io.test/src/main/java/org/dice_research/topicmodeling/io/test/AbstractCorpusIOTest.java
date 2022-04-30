@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Spliterator;
 import java.util.Spliterators;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -54,8 +55,8 @@ public abstract class AbstractCorpusIOTest {
 
     private CorpusReader reader;
     private CorpusWriter writer;
-    private DocumentSupplier supplier;
-    private DocumentConsumer consumer;
+    private Function<File, DocumentSupplier> supplierFactory;
+    private Function<File, DocumentConsumer> consumerFactory;
     private Corpus corpus;
     private File testFile;
 
@@ -70,9 +71,9 @@ public abstract class AbstractCorpusIOTest {
         this.testFile = testFile;
     }
 
-    public AbstractCorpusIOTest(DocumentSupplier supplier, DocumentConsumer consumer, Corpus corpus, File testFile) {
-        this.supplier = supplier;
-        this.consumer = consumer;
+    public AbstractCorpusIOTest(Function<File, DocumentSupplier> supplierFactory, Function<File, DocumentConsumer> consumerFactory, Corpus corpus, File testFile) {
+        this.supplierFactory = supplierFactory;
+        this.consumerFactory = consumerFactory;
         this.corpus = corpus;
         this.testFile = testFile;
     }
@@ -86,11 +87,13 @@ public abstract class AbstractCorpusIOTest {
 
     public void writeCorpus() {
         OutputStream out = null;
+        DocumentConsumer consumer = null;
         try {
             if (writer != null) {
                 out = new BufferedOutputStream(new FileOutputStream(testFile));
                 writer.writeCorpus(corpus, out);
-            } else if (consumer != null) {
+            } else if (consumerFactory != null) {
+                consumer = consumerFactory.apply(testFile);
                 StreamSupport.stream(Spliterators.spliterator(corpus.iterator(), corpus.getNumberOfDocuments(),
                         Spliterator.DISTINCT & Spliterator.NONNULL), false).forEach(consumer);
             } else {
@@ -109,12 +112,14 @@ public abstract class AbstractCorpusIOTest {
 
     public Corpus readCorpus() {
         InputStream in = null;
+        DocumentSupplier supplier = null;
         try {
             if (reader != null) {
                 in = new BufferedInputStream(new FileInputStream(testFile));
                 reader.readCorpus(in);
                 return reader.getCorpus();
-            } else if (supplier != null) {
+            } else if (supplierFactory != null) {
+                supplier = supplierFactory.apply(testFile);
                 return new DocumentListCorpus<List<Document>>(
                         StreamSupport
                                 .stream(Spliterators.spliteratorUnknownSize(new DocumentSupplierAsIterator(supplier),
