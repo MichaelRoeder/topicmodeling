@@ -52,7 +52,7 @@ public class SimpleReaderBasedXMLParser implements ReaderBasedTextMachineObserve
                 observer.handleClosingTag(patternMatch.substring(2, patternMatch.length() - 1));
             } else {
                 if (patternMatch.endsWith("/>")) {
-
+                    observer.handleEmptyTag(patternMatch.substring(1, patternMatch.length() - 2));
                 } else {
                     observer.handleOpeningTag(patternMatch.substring(1, patternMatch.length() - 1));
                 }
