@@ -26,6 +26,7 @@ import org.dice_research.topicmodeling.algorithms.ProbTopicModelingAlgorithmStat
 import org.dice_research.topicmodeling.evaluate.ArunModelSelectionEvaluator;
 import org.dice_research.topicmodeling.evaluate.GriffithsAndSteyversModelSelectionEvaluator;
 import org.dice_research.topicmodeling.evaluate.ProbTopicModelingAlgorithmParameterPrinter;
+import org.dice_research.topicmodeling.io.LodcatProbTopicModelingAlgorithmStateReader;
 import org.dice_research.topicmodeling.io.ProbTopicModelingAlgorithmStateReader;
 import org.dice_research.topicmodeling.reporting.CSVFileReporter;
 import org.dice_research.topicmodeling.testframework.EvaluationTestCase;
@@ -154,6 +155,14 @@ public class ModelEvaluationTool {
         return is;
     }
 
+    private static ProbTopicModelingAlgorithmStateReader createStateReader(String modelFile) {
+        if (modelFile.endsWith(".xml")) {
+            return new LodcatProbTopicModelingAlgorithmStateReader();
+        } else {
+            return new ProbTopicModelingAlgorithmStateReader();
+        }
+    }
+
     public static class EvaluationRun implements Runnable {
 
         private List<String> models;
@@ -173,7 +182,7 @@ public class ModelEvaluationTool {
             String modelFile = models.get(modelId);
             LOGGER.info("Starting with model " + (modelId + 1) + "/" + models.size() + ": " + modelFile);
 
-            ProbTopicModelingAlgorithmStateReader reader = new ProbTopicModelingAlgorithmStateReader();
+            ProbTopicModelingAlgorithmStateReader reader = createStateReader(modelFile);
             LOGGER.info("Reading model...");
             ProbTopicModelingAlgorithmStateSupplier stateSupplier = null;
             try (InputStream is = openModelStream(modelFile, cmd)) {
@@ -196,7 +205,7 @@ public class ModelEvaluationTool {
             }
             if (cmd.hasOption(GRIFFITHS_CMD)) {
                 testCase.addEvaluator(
-                        new GriffithsAndSteyversModelSelectionEvaluator((MalletLdaWrapper) stateSupplier));
+                        new GriffithsAndSteyversModelSelectionEvaluator((ProbTopicModelingAlgorithmStateSupplier) stateSupplier));
             }
 
             // Add reporters
