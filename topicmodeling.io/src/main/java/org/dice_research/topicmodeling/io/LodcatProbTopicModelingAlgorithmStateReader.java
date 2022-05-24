@@ -37,6 +37,10 @@ import org.dice_research.topicmodeling.algorithms.ProbTopicModelingAlgorithmStat
 import org.dice_research.topicmodeling.algorithms.WordCounter;
 import org.dice_research.topicmodeling.io.xml.XMLParserObserver;
 import org.dice_research.topicmodeling.io.xml.stream.SimpleReaderBasedXMLParser;
+import org.dice_research.topicmodeling.lang.Language;
+import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
+import org.dice_research.topicmodeling.preprocessing.Preprocessor;
+import org.dice_research.topicmodeling.utils.corpus.Corpus;
 import org.dice_research.topicmodeling.utils.doc.Document;
 import org.dice_research.topicmodeling.utils.doc.DocumentClassificationResult;
 import org.dice_research.topicmodeling.utils.doc.DocumentWordCounts;
@@ -234,5 +238,9 @@ public class LodcatProbTopicModelingAlgorithmStateReader extends ProbTopicModeli
             return null;
         }
 
+        @Override
+        public Preprocessor createPreprocessor(DocumentSupplier supplier, Language language) {
+            throw new NotImplementedException();
+        }
     }
 }
