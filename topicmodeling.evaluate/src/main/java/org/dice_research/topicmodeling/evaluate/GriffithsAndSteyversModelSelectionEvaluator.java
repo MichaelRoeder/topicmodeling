@@ -1,13 +1,16 @@
 package org.dice_research.topicmodeling.evaluate;
 
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.dice_research.topicmodeling.algorithm.mallet.MalletLdaWrapper;
 import org.dice_research.topicmodeling.algorithms.LDAModel;
 import org.dice_research.topicmodeling.algorithms.Model;
+import org.dice_research.topicmodeling.algorithms.ProbTopicModelingAlgorithmStateSupplier;
 import org.dice_research.topicmodeling.evaluate.result.EvaluationResult;
 import org.dice_research.topicmodeling.evaluate.result.ManagedEvaluationResultContainer;
 import org.dice_research.topicmodeling.evaluate.result.SingleEvaluationResult;
+import org.dice_research.topicmodeling.io.LodcatProbTopicModelingAlgorithmStateReader;
 import org.dice_research.topicmodeling.utils.corpus.Corpus;
 import org.dice_research.topicmodeling.utils.doc.Document;
 import org.dice_research.topicmodeling.utils.doc.DocumentTextWordIds;
@@ -38,7 +41,8 @@ public class GriffithsAndSteyversModelSelectionEvaluator extends AbstractEvaluat
 
     private static final int NUMBER_OF_INFERENCE_ITERATIONS = 700;
 
-    private MalletLdaWrapper ldaAlgorithm;
+    private ProbTopicModelingAlgorithmStateSupplier ldaAlgorithm;
+    private LDAModel ldaModel;
     private Corpus trainCorpus;
     private int numberOfRepeatitions = NUMBER_OF_REPEATITIONS;
 
@@ -49,8 +53,13 @@ public class GriffithsAndSteyversModelSelectionEvaluator extends AbstractEvaluat
      * @param ldaAlgorithm the LDA algorithm that comprises the model and that
      *                     should be evaluated
      */
-    public GriffithsAndSteyversModelSelectionEvaluator(MalletLdaWrapper ldaAlgorithm) {
+    public GriffithsAndSteyversModelSelectionEvaluator(ProbTopicModelingAlgorithmStateSupplier ldaAlgorithm) {
         this.ldaAlgorithm = ldaAlgorithm;
+        if (ldaAlgorithm instanceof MalletLdaWrapper) {
+            this.ldaModel = (LDAModel) ((MalletLdaWrapper) ldaAlgorithm).getModel();
+        } else {
+            this.ldaModel = null;
+        }
         this.trainCorpus = null;
     }
 
@@ -64,28 +73,36 @@ public class GriffithsAndSteyversModelSelectionEvaluator extends AbstractEvaluat
      */
     public GriffithsAndSteyversModelSelectionEvaluator(MalletLdaWrapper ldaAlgorithm, Corpus trainCorpus) {
         this.ldaAlgorithm = ldaAlgorithm;
+        this.ldaModel = (LDAModel) ldaAlgorithm.getModel();
         this.trainCorpus = trainCorpus;
     }
 
-    protected int[][] classifyDocuments(LDAModel model, int[][] tokens) {
+    protected int[][] classifyDocuments(int[][] tokens) {
 //        int topicAssignments[][] = new int[tokens.length][];
 //        for (int documentId = 0; documentId < tokens.length; ++documentId) {
 //            topicAssignments[documentId] = model.inferTopicAssignmentsForDocument(tokens[documentId]);
 //        }
 //        return topicAssignments;
-        return IntStream.range(0, tokens.length).parallel()
-                .mapToObj(d -> model.inferTopicAssignmentsForDocument(tokens[d])).toArray(int[][]::new);
+        IntStream documentIds = IntStream.range(0, tokens.length).parallel();
+        Stream<int[]> documentWordTopics;
+        if (ldaModel != null) {
+            documentWordTopics = documentIds.mapToObj(d -> ldaModel.inferTopicAssignmentsForDocument(tokens[d]));
+        } else {
+            documentWordTopics = documentIds.mapToObj(ldaAlgorithm::getWordTopicAssignmentForDocument);
+        }
+        return documentWordTopics.toArray(int[][]::new);
     }
 
     @Override
     protected EvaluationResult evaluate(Model model, ManagedEvaluationResultContainer previousResults) {
-        LDAModel ldaModel = (LDAModel) ldaAlgorithm.getModel();
         if (ldaModel != model) {
             throw new IllegalArgumentException(
                     "Expected the alread known instance of a LDA model. But got a different object of the class "
                             + model.getClass().getCanonicalName());
         }
-        ldaModel.setInferenceIterations(NUMBER_OF_INFERENCE_ITERATIONS);
+        if (ldaModel != null) {
+            ldaModel.setInferenceIterations(NUMBER_OF_INFERENCE_ITERATIONS);
+        }
         // Get tokens (i.e., words per document)
         int tokens[][] = null;
         if (trainCorpus != null) {
@@ -95,13 +112,18 @@ public class GriffithsAndSteyversModelSelectionEvaluator extends AbstractEvaluat
         }
 
         double logProbabilities[] = new double[numberOfRepeatitions];
-        int numberOfTopics = ldaModel.getNumberOfTopics();
-        int numberOfWords = ldaModel.getVocabulary().size();
-        double beta = ldaModel.getBeta();
+        int numberOfTopics = ldaAlgorithm.getNumberOfTopics();
+        int numberOfWords = ldaAlgorithm.getVocabulary().size();
+        double beta;
+        if (ldaModel != null) {
+            beta = ldaModel.getBeta();
+        } else {
+            beta = ((LodcatProbTopicModelingAlgorithmStateReader.LodcatProbTopicModelingAlgorithmStateSupplier) ldaAlgorithm).getBeta();
+        }
         double constant = numberOfTopics
                 * (Dirichlet.logGamma(numberOfWords * beta) - numberOfWords * Dirichlet.logGamma(beta));
         for (int i = 0; i < numberOfRepeatitions; ++i) {
-            logProbabilities[i] = constant + calculateLogProbApproximation(tokens, classifyDocuments(ldaModel, tokens),
+            logProbabilities[i] = constant + calculateLogProbApproximation(tokens, classifyDocuments(tokens),
                     numberOfTopics, beta, numberOfWords);
         }
 
@@ -165,7 +187,7 @@ public class GriffithsAndSteyversModelSelectionEvaluator extends AbstractEvaluat
         return tokens;
     }
 
-    protected int[][] extractTokens(MalletLdaWrapper ldaAlgorithm) {
+    protected int[][] extractTokens(ProbTopicModelingAlgorithmStateSupplier ldaAlgorithm) {
         int tokens[][] = new int[ldaAlgorithm.getNumberOfDocuments()][];
         for (int d = 0; d < tokens.length; ++d) {
             tokens[d] = ldaAlgorithm.getWordsOfDocument(d);
