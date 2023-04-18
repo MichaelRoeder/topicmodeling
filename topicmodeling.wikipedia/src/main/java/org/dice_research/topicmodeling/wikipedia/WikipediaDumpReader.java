@@ -7,15 +7,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.reflect.Constructor;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.apache.commons.io.Charsets;
 import org.dice_research.topicmodeling.io.xml.XMLParserObserver;
 import org.dice_research.topicmodeling.io.xml.stream.SimpleReaderBasedXMLParser;
 import org.dice_research.topicmodeling.preprocessing.docsupplier.AbstractDocumentSupplier;
 import org.dice_research.topicmodeling.utils.doc.Document;
 import org.dice_research.topicmodeling.utils.doc.DocumentName;
 import org.dice_research.topicmodeling.utils.doc.DocumentText;
+import org.dice_research.topicmodeling.utils.doc.ParseableDocumentProperty;
 import org.dice_research.topicmodeling.wikipedia.doc.WikipediaArticleId;
 import org.dice_research.topicmodeling.wikipedia.doc.WikipediaNamespace;
 import org.dice_research.topicmodeling.wikipedia.doc.WikipediaRedirect;
@@ -34,6 +38,8 @@ public class WikipediaDumpReader extends AbstractDocumentSupplier implements XML
     private static final String REDIRECT_XML_TAG_NAME = "redirect";
     private static final String NAMESPACE_XML_TAG_NAME = "ns";
 
+    private static final Map<String, Constructor<? extends ParseableDocumentProperty>> DOCUMENT_PROPERTY_CLASSES = getDocumentPropertyClasses();
+
     private Reader dumpReader;
     private SimpleReaderBasedXMLParser xmlParser;
     private String data;
@@ -49,7 +55,7 @@ public class WikipediaDumpReader extends AbstractDocumentSupplier implements XML
     }
 
     public static WikipediaDumpReader createReader(File file) throws FileNotFoundException {
-        return createReader(file, Charsets.UTF_8);
+        return createReader(file, StandardCharsets.UTF_8);
     }
 
     public static WikipediaDumpReader createReader(File file, Charset charset) throws FileNotFoundException {
@@ -104,18 +110,18 @@ public class WikipediaDumpReader extends AbstractDocumentSupplier implements XML
     public void handleClosingTag(String tagString) {
         if (tagString.startsWith(DOCUMENT_XML_TAG_NAME)) {
             xmlParser.stop();
-        } else if (tagString.startsWith(TITLE_XML_TAG_NAME)) {
-            if (document != null) {
-                document.addProperty(new DocumentName(data));
-            } else {
-                LOGGER.error("Found a title tag while there is no document object. Ignoring this title.");
-            }
-        } else if (tagString.startsWith(TEXT_XML_TAG_NAME)) {
-            if (document != null) {
-                document.addProperty(new DocumentText(data));
-            } else {
-                LOGGER.error("Found a text tag while there is no document object. Ignoring this text.");
-            }
+//        } else if (tagString.startsWith(TITLE_XML_TAG_NAME)) {
+//            if (document != null) {
+//                document.addProperty(new DocumentName(data));
+//            } else {
+//                LOGGER.error("Found a title tag while there is no document object. Ignoring this title.");
+//            }
+//        } else if (tagString.startsWith(TEXT_XML_TAG_NAME)) {
+//            if (document != null) {
+//                document.addProperty(new DocumentText(data));
+//            } else {
+//                LOGGER.error("Found a text tag while there is no document object. Ignoring this text.");
+//            }
         } else if (tagString.startsWith(ARTICLE_ID_XML_TAG_NAME) && (lastIdContainingTag == DOCUMENT_XML_TAG_NAME)) {
             // if this closing id tag is inside the document and not inside the revision tag
             if (document != null) {
@@ -127,15 +133,31 @@ public class WikipediaDumpReader extends AbstractDocumentSupplier implements XML
             } else {
                 LOGGER.error("Found an article id tag while there is no document object. Ignoring this id.");
             }
-        } else if (tagString.startsWith(NAMESPACE_XML_TAG_NAME)) {
+//        } else if (tagString.startsWith(NAMESPACE_XML_TAG_NAME)) {
+//            if (document != null) {
+//                try {
+//                    document.addProperty(new WikipediaNamespace(Integer.parseInt(data)));
+//                } catch (NumberFormatException e) {
+//                    LOGGER.error("Found a namespace tag but couldn't parse the id. Ignoring this namespace.", e);
+//                }
+//            } else {
+//                LOGGER.error("Found a namespace tag while there is no document object. Ignoring this namespace.");
+//            }
+        } else {
             if (document != null) {
-                try {
-                    document.addProperty(new WikipediaNamespace(Integer.parseInt(data)));
-                } catch (NumberFormatException e) {
-                    LOGGER.error("Found a namespace tag but couldn't parse the id. Ignoring this namespace.", e);
+                for (String classTagName : DOCUMENT_PROPERTY_CLASSES.keySet()) {
+                    if (tagString.startsWith(classTagName)) {
+                        try {
+                            ParseableDocumentProperty property = DOCUMENT_PROPERTY_CLASSES.get(classTagName)
+                                    .newInstance();
+                            property.parseValue(data);
+                            document.addProperty(property);
+                        } catch (Exception e) {
+                            LOGGER.error("Found a tag starting with \"" + tagString
+                                    + "\" but couldn't parse the content. It will be ignored.", e);
+                        }
+                    }
                 }
-            } else {
-                LOGGER.error("Found a namespace tag while there is no document object. Ignoring this namespace.");
             }
         }
     }
@@ -168,5 +190,17 @@ public class WikipediaDumpReader extends AbstractDocumentSupplier implements XML
                 LOGGER.error("Found a redirect tag while there is no document object. Ignoring this redirect.");
             }
         }
+    }
+
+    private static Map<String, Constructor<? extends ParseableDocumentProperty>> getDocumentPropertyClasses() {
+        Map<String, Constructor<? extends ParseableDocumentProperty>> classes = new HashMap<>();
+        try {
+            classes.put(TITLE_XML_TAG_NAME, DocumentName.class.getConstructor());
+            classes.put(TEXT_XML_TAG_NAME, DocumentText.class.getConstructor());
+            classes.put(NAMESPACE_XML_TAG_NAME, WikipediaNamespace.class.getConstructor());
+        } catch (NoSuchMethodException | SecurityException e) {
+            throw new RuntimeException("Couldn't create map of parsable Wikipedia document properties.", e);
+        }
+        return classes;
     }
 }

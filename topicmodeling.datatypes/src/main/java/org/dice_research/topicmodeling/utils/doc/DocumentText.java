@@ -19,8 +19,8 @@ package org.dice_research.topicmodeling.utils.doc;
 /**
  * Class DocumentText
  */
-public class DocumentText extends AbstractDocumentProperty implements ParseableDocumentProperty,
-        StringContainingDocumentProperty {
+public class DocumentText extends AbstractDocumentProperty
+        implements ParseableDocumentProperty, StringContainingDocumentProperty {
 
     private static final long serialVersionUID = -7559209221259716397L;
 
@@ -36,8 +36,7 @@ public class DocumentText extends AbstractDocumentProperty implements ParseableD
     /**
      * Set the value of text
      * 
-     * @param text
-     *            the new value of text
+     * @param text the new value of text
      */
     public void setText(String text) {
         this.text = text;

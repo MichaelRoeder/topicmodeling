@@ -18,7 +18,7 @@ package org.dice_research.topicmodeling.io.xml.stream;
 
 import java.io.Reader;
 
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.dice_research.topicmodeling.io.xml.XMLParserObserver;
 
 
@@ -52,7 +52,7 @@ public class SimpleReaderBasedXMLParser implements ReaderBasedTextMachineObserve
                 observer.handleClosingTag(patternMatch.substring(2, patternMatch.length() - 1));
             } else {
                 if (patternMatch.endsWith("/>")) {
-
+                    observer.handleEmptyTag(patternMatch.substring(1, patternMatch.length() - 2));
                 } else {
                     observer.handleOpeningTag(patternMatch.substring(1, patternMatch.length() - 1));
                 }

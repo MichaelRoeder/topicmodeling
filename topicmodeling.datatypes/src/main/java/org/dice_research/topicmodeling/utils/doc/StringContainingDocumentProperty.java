@@ -16,7 +16,31 @@
  */
 package org.dice_research.topicmodeling.utils.doc;
 
+/**
+ * This interface represents a {@link DocumentProperty} which contains a String
+ * as value.
+ * 
+ * @author Michael R&ouml;der (michael.roeder@uni-paderborn.de)
+ *
+ */
 public interface StringContainingDocumentProperty extends DocumentProperty {
 
+    /**
+     * Getter returning the value of this property as String.
+     * 
+     * @return the value of this property
+     */
     public String getStringValue();
+
+    /**
+     * This method returns <code>true</code> if the value of this property is empty,
+     * i.e., the value is either <code>null</code> or it is the empty String.
+     * 
+     * @return <code>true</code> if the value of this property is <code>null</code>
+     *         or the empty String, else <code>false</code>
+     */
+    public default boolean isEmpty() {
+        String value = getStringValue();
+        return value == null || value.isEmpty();
+    }
 }
