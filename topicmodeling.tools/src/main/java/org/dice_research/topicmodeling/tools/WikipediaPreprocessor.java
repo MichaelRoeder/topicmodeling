@@ -50,7 +50,7 @@ public class WikipediaPreprocessor {
             // ... are redirects to other articles
             supplier = new DocumentFilteringSupplierDecorator(supplier,
                     d -> d.getProperty(WikipediaRedirect.class) == null);
-            // ... have the namespace 0
+            // ... have another namespace than 0
             supplier = new DocumentFilteringSupplierDecorator(supplier,
                     d -> d.getProperty(WikipediaNamespace.class) != null
                             && d.getProperty(WikipediaNamespace.class).getNamespaceId() == 0);

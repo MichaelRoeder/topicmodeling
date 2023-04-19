@@ -2,17 +2,11 @@ package org.dice_research.topicmodeling.wikipedia;
 
 import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
 import org.dice_research.topicmodeling.preprocessing.docsupplier.decorator.AbstractPropertyEditingDocumentSupplierDecorator;
-import org.dice_research.topicmodeling.utils.doc.Document;
 import org.dice_research.topicmodeling.utils.doc.DocumentText;
 import org.dice_research.topicmodeling.wikipedia.markup.StackBasedMarkupDeletingMachine;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class WikipediaMarkupDeletingDocumentSupplierDecorator extends
         AbstractPropertyEditingDocumentSupplierDecorator<DocumentText> {
-
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(WikipediaMarkupDeletingDocumentSupplierDecorator.class);
 
     private boolean removeCategoryLinks = StackBasedMarkupDeletingMachine.REMOVE_CATEGORY_LINKS_DEFAULT;
     private boolean keepTableContents = StackBasedMarkupDeletingMachine.KEEP_TABLE_CONTENTS_DEFAULT;
