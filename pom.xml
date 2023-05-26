@@ -58,6 +58,7 @@
         <module>topicmodeling.evaluate</module>
         <module>topicmodeling.io.test</module>
 		<module>topicmodeling.io</module>
+        <module>topicmodeling.io.es</module>
         <module>topicmodeling.io.gensim</module>
         <module>topicmodeling.io.json</module>
         <module>topicmodeling.lang</module>

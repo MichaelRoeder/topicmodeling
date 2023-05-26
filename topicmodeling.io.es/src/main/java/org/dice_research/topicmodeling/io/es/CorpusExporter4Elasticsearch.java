@@ -1,10 +1,8 @@
-package org.dice_research.topicmodeling.io.json;
+package org.dice_research.topicmodeling.io.es;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 import org.dice_research.topicmodeling.preprocessing.docconsumer.DocumentConsumer;
@@ -13,8 +11,6 @@ import org.dice_research.topicmodeling.utils.doc.DocumentPropertyUtils;
 import org.dice_research.topicmodeling.utils.doc.StringContainingDocumentProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.gson.stream.JsonWriter;
 
 /**
  * This class writes JSON files into the given directory that can be used to
@@ -37,11 +33,8 @@ public class CorpusExporter4Elasticsearch implements DocumentConsumer {
      * The function that will be used to derive the file name for a given document.
      */
     private Function<Document, String> documentNameGeneration = d -> Integer.toString(d.getDocumentId());
-    /**
-     * The registry that contains the keys and functions to derive the values based
-     * on the given document.
-     */
-    private Map<String, Function<Document, String>> registry = new HashMap<>();
+
+    private Document2JsonTransformer transformer = new Document2JsonTransformer();
 
     /**
      * Constructor.
@@ -60,17 +53,8 @@ public class CorpusExporter4Elasticsearch implements DocumentConsumer {
             return;
         }
         String outputFile = outputDirectory.getAbsolutePath() + File.separator + fileName;
-        String value;
-        try (JsonWriter writer = new JsonWriter(new FileWriter(outputFile))) {
-            writer.beginObject();
-            for (String key : registry.keySet()) {
-                value = registry.get(key).apply(document);
-                if (value != null) {
-                    writer.name(key);
-                    writer.value(value);
-                }
-            }
-            writer.endObject();
+        try (FileWriter writer = new FileWriter(outputFile)) {
+            transformer.transform(document, writer);
         } catch (IOException e) {
             LOGGER.error("Exception while writing file \"" + outputFile + "\".", e);
         }
@@ -98,7 +82,7 @@ public class CorpusExporter4Elasticsearch implements DocumentConsumer {
      *                 given document
      */
     public void registerKeyValuePair(String key, Function<Document, String> function) {
-        registry.put(key, function);
+        transformer.registerKeyValuePair(key, function);
     }
 
     /**
@@ -112,6 +96,6 @@ public class CorpusExporter4Elasticsearch implements DocumentConsumer {
      *              get the value for the given key
      */
     public void registerStringContainingProperty(String key, Class<? extends StringContainingDocumentProperty> clazz) {
-        registry.put(key, d -> DocumentPropertyUtils.getStringOrNull(d, clazz));
+        transformer.registerStringContainingProperty(key, clazz);
     }
 }

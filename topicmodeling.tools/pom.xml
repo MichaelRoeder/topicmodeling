@@ -45,6 +45,10 @@
         </dependency>
         <dependency>
             <groupId>org.dice-research</groupId>
+            <artifactId>topicmodeling.io.es</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.dice-research</groupId>
             <artifactId>topicmodeling.preprocessing</artifactId>
         </dependency>
         <dependency>

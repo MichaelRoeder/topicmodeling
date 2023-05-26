@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 
 import org.dice_research.topicmodeling.io.xml.AbstractDocumentXmlReader;
 import org.dice_research.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
@@ -35,7 +36,7 @@ public class StreamBasedXmlDocumentSupplier extends AbstractDocumentXmlReader im
     private static final boolean USE_DOCUMENT_IDS_FROM_FILE_DEFAULT = true;
 
     private boolean useDocumentIdsFromFile;
-    private FileReader xmlFileReader;
+    private Reader xmlReader;
     private SimpleReaderBasedXMLParser xmlParser;
     private Document document;
     private int documentCount;
@@ -67,15 +68,15 @@ public class StreamBasedXmlDocumentSupplier extends AbstractDocumentXmlReader im
         return new StreamBasedXmlDocumentSupplier(reader, useDocumentIdsFromFile);
     }
 
-    private StreamBasedXmlDocumentSupplier(FileReader reader, boolean useDocumentIdsFromFile) {
+    public StreamBasedXmlDocumentSupplier(Reader reader, boolean useDocumentIdsFromFile) {
         this.useDocumentIdsFromFile = useDocumentIdsFromFile;
-        this.xmlFileReader = reader;
+        this.xmlReader = reader;
         xmlParser = new SimpleReaderBasedXMLParser(reader, this);
     }
 
     @Override
     public Document getNextDocument() {
-        if (xmlFileReader != null) {
+        if (xmlReader != null) {
             xmlParser.parse();
             if (document != null) {
                 Document nextDocument = document;
@@ -91,11 +92,11 @@ public class StreamBasedXmlDocumentSupplier extends AbstractDocumentXmlReader im
             } else {
                 // The parser has reached the end of the file
                 try {
-                    xmlFileReader.close();
+                    xmlReader.close();
                 } catch (IOException e) {
                     LOGGER.error("Error while closing the file reader used for reading the XML file.", e);
                 }
-                xmlFileReader = null;
+                xmlReader = null;
             }
         }
         return null;

@@ -102,6 +102,12 @@
                 <artifactId>topicmodeling.io.json</artifactId>
                 <version>${project.parent.version}</version>
             </dependency>
+            <!-- IO Elasticsearch -->
+            <dependency>
+                <groupId>org.dice-research</groupId>
+                <artifactId>topicmodeling.io.es</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
             <!-- IO Test -->
             <dependency>
                 <groupId>org.dice-research</groupId>
